@@ -1,0 +1,291 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+p {
+    color: #000;
+}
+
+input {
+    border: 1px solid;
+    border-radius: 10px;
+    border-color: black;
+    background-color: transparent;
+    height: 28px;
+    width: 300px;
+    color: black;
+    outline: none;
+    padding-left: 7px;
+}
+
+.input-error {
+    border-color: red;
+}
+
+.input-error:focus {
+    border-width: 2px;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+input:focus {
+    border-width: 2px;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+    -webkit-text-fill-color: black !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.login-main-window {
+    background-color: #232541;
+    height: 100vh;
+    width: 100vw;
+    overflow: auto;
+    display: flex;
+    padding-left: 6.5vw;
+    gap: 10vw;
+    align-items: center;
+}
+
+.left-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-site-name {
+    font-family: "Lexend Giga";
+    color: white;
+    font-size: 48px;
+    margin: 0;
+}
+
+.login-site-tagline {
+    color: white;
+    font-size: 18px;
+}
+
+.login-img {
+    height: 48.5vh;
+}
+
+.right-section {
+    display: flex;
+    flex-direction: column;
+    height: 520px;
+    border-radius: 18px;
+    background-color: #dfdbff;
+    padding: 30px 40px;
+    margin-top: 0px;
+}
+
+
+.login-title {
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.login-subtitle {
+    font-size: 16px;
+    margin-top: -10px;
+}
+
+.email-input-title {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.rememberMe-forgotPass-div {
+    display: flex;
+    align-items: last baseline;
+    justify-content: space-between;
+}
+
+/* Container for the checkbox and text, makes the whole area clickable */
+.checkbox-label-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    margin-top: 10px;
+}
+
+/* Visually hide the native checkbox input */
+.remember-me-checkbox {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+/* The custom visual representation of the checkbox */
+.custom-checkbox-visual {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid black;
+    /* Black border when unchecked */
+    border-radius: 4px;
+    margin-right: 8px;
+    position: relative;
+    /* Needed for the checkmark pseudo-element */
+    transition: all 0.2s ease-in-out;
+    /* Smooth transition for state changes */
+    box-sizing: border-box;
+    flex-shrink: 0;
+    /* Prevent it from shrinking in flex container */
+}
+
+/* Style for the custom visual when the native checkbox is checked */
+/* The '+' selector targets the .custom-checkbox-visual that is an immediate
+   sibling of the checked .remember-me-checkbox */
+.remember-me-checkbox:checked+.custom-checkbox-visual {
+    background-color: black;
+    border-color: black;
+}
+
+/* The checkmark using a pseudo-element */
+.custom-checkbox-visual::after {
+    content: '';
+    /* Required for pseudo-elements */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    /* Width of checkmark arm */
+    height: 10px;
+    /* Height of checkmark arm */
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    /* Only bottom and right borders */
+    transform: translate(-50%, -50%) rotate(45deg);
+    /* Position and rotate to form tick */
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    /* Smooth fade-in/out */
+}
+
+/* Show the checkmark when the checkbox is checked */
+.remember-me-checkbox:checked+.custom-checkbox-visual::after {
+    opacity: 1;
+    /* Make checkmark visible */
+}
+
+.remember-me-text {
+    font-size: 12px;
+}
+
+.forgot-password-text {
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.forgot-password-text:hover {
+    text-decoration: underline;
+}
+
+.login-button {
+    border: 2px solid black;
+    border-radius: 10px;
+    background: transparent;
+    color: black;
+    font-family: "Playfair Display";
+    font-weight: bold;
+    font-size: 15px;
+    transition: background-color 0.3s ease-in-out 0s;
+    margin-top: 30px;
+}
+
+.login-button:hover {
+    background: black;
+    color: white;
+    border: 2px solid black;
+}
+
+.login-button:focus {
+    outline: none;
+}
+
+.sign-up-div {
+    display: flex;
+    gap: 5px;
+    align-self: center;
+}
+
+.new-to-localloop-text,
+.sign-up-text {
+    font-size: 12px;
+}
+
+.sign-up-text {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.sign-up-text:hover {
+    text-decoration: underline;
+}
+
+.login-site-name2 {
+    display: none;
+}
+
+@media screen and (max-width: 1220px) {
+    .login-main-window {
+        padding-left: 5vw;
+        gap: 5vw;
+    }
+}
+
+@media screen and (max-width: 1080px) {
+    .login-main-window {
+        padding-left: 0vw;
+    }
+}
+
+@media screen and (max-width: 1130px) {
+    .login-img {
+        display: none;
+    }
+
+    .login-main-window {
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+    }
+
+    .left-section {
+        margin-top: -14vh;
+    }
+
+    .right-section input {
+        width: 57vw;
+    }
+
+    .right-section-div {
+        display: flex;
+        flex-direction: column;
+        margin-top: 12vh;
+        gap: 5vh;
+    }
+
+    .login-site-name2 {
+        display: block;
+        font-family: "Lexend Giga";
+        color: white;
+        font-size: 48px;
+        margin: 0;
+    }
+}
