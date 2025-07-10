@@ -16,6 +16,7 @@ p {
     align-items: center;
     gap: 10vw;
     padding: 10px 30px;
+    z-index: 1000;
 }
 
 .nav-bar-site-title {
@@ -90,14 +91,4 @@ p {
     .nav-bar-buttons {
         display: none;
     }
-}
-
-@media (max-width: 520px) {
-    .nav-bar-main-div {
-        padding-left: 0px;
-    }
-
-    /* .logo {
-        height: 250px;
-    } */
 }

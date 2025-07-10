@@ -44,7 +44,7 @@ function NavBar() {
     return (
         <>
             <div className="nav-bar-main-div">
-                <p className="nav-bar-site-title">Webinara</p>
+                <p className="nav-bar-site-title">Webinara.</p>
 
                 <div className="nav-bar-buttons">
                     <Link to="/">

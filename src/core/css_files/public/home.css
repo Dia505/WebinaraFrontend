@@ -10,12 +10,7 @@ body {
 }
 
 input {
-    color: black;
-    padding-left: 10px;
-}
-
-input:focus {
-    outline: none;
+    padding-left: 20px;
 }
 
 .home-main-window {
@@ -28,4 +23,149 @@ input:focus {
     background-color: #232541;
     height: 100vh;
     width: 100vw;
+    display: flex;
+}
+
+.home-img {
+    height: 80vh;
+    margin-top: 15vh;
+    margin-left: 5vw;
+}
+
+.home-title-div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 35vh;
+}
+
+.home-title {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.home-subtitle {
+    font-size: 18px;
+    font-weight: lighter;
+    width: 40vw;
+}
+
+.home-search-bar {
+    position: relative;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    height: 45px;
+    width: 30vw;
+    margin-top: 3vh;
+}
+
+.home-search-icon {
+    position: absolute;
+    height: 30px;
+    margin-top: 4vh;
+    margin-left: -44px;
+    cursor: pointer;
+}
+
+.home-webinar-div {
+    margin-left: 9.5vw;
+    margin-right: 150px;
+}
+
+.home-webinar-text {
+    font-size: 26px;
+    color: black;
+}
+
+.home-about-testimonial-div {
+    background-color: #2e3375;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10vh;
+    padding: 70px 50px;
+    gap: 10vh;
+}
+
+.home-about-div {
+    display: flex;
+    gap: 4vw;
+    align-items: center;
+}
+
+.home-about-img {
+    border-radius: 20px;
+}
+
+.home-about-title {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.home-about-subtitle {
+    font-weight: lighter;
+}
+
+.home-testimonials-div {
+    display: flex;
+    gap: 4vw;
+    align-items: center;
+    margin-left: 10vw;
+}
+
+.home-testimonials-text-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.home-testimonials-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.home-testimonials-subtitle {
+    width: 30vw;
+}
+
+@media (max-width: 1262px) {
+    .home-about-div {
+        flex-direction: column;
+    }
+
+    .home-testimonials-div {
+        margin-left: 0vw;
+    }
+}
+
+@media (max-width: 720px) {
+    .home-about-img {
+        height: 58vw;
+    }
+
+    .home-testimonials-div {
+        flex-direction: column;
+        align-items: start;
+        margin-left: 5vw;
+    }
+
+    .home-testimonials-subtitle {
+        width: 80vw;
+    }
+}
+
+@media (max-width: 648px) {
+    .home-about-testimonial-div {
+        padding: 70px 20px;
+    }
+
+    .home-about-img {
+        margin-right: 80px;
+    }
+
+    .home-about-subtitle {
+        width: 90vw;
+    }
 }

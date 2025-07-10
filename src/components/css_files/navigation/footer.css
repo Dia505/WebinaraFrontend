@@ -1,0 +1,31 @@
+.footer-main-div {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+}
+
+.footer-site-title {
+    font-family: "Lexend Giga";
+    color: black;
+    font-size: 15vw;
+    margin: 0;
+}
+
+.footer-line-divider {
+    height: 1px;
+    background-color: black;
+    width: 100%;
+    margin-top: -40px;
+}
+
+.footer-copyright {
+    color: black;
+    font-weight: lighter;
+    margin-left: 4vw;
+}
+
+@media (max-width: 1000px) {
+    .footer-line-divider {
+        margin-top: -20px;
+    }
+}
