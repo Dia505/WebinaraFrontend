@@ -8,6 +8,7 @@ import { AuthProvider } from './context/auth_context';
 const queryClient = new QueryClient();
 
 const Login = lazy(() => import("./core/public/login"));
+const Register = lazy(() => import("./core/public/register"));
 
 function App() {
   const routes = [
@@ -17,6 +18,16 @@ function App() {
       element: (
         <Suspense>
           <Login />
+        </Suspense>
+      ),
+      errorElement: <>error</>
+    },
+
+    {
+      path: "/register",
+      element: (
+        <Suspense>
+          <Register />
         </Suspense>
       ),
       errorElement: <>error</>

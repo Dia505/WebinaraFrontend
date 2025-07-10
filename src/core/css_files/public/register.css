@@ -14,9 +14,10 @@ input {
     background-color: transparent;
     height: 28px;
     width: 300px;
-    color: white;
     outline: none;
-    padding-left: 7px;
+    padding-left: 15px;
+    padding-top: 4px;
+    padding-bottom: 2px;
 }
 
 .input-error {
@@ -31,6 +32,7 @@ input {
     color: red;
     font-size: 12px;
     margin-top: 4px;
+    margin-bottom: 0px;
 }
 
 input:focus {
@@ -43,126 +45,171 @@ input:-webkit-autofill {
     transition: background-color 5000s ease-in-out 0s;
 }
 
-.login-main-window {
+input::placeholder {
+    color: rgba(0, 0, 0, 0.65);
+}
+
+select {
+    border: 1px solid;
+    border-radius: 10px;
+    border-color: black;
+    background-color: transparent;
+    width: 150px;
+    height: 35.5px;
+    outline: none;
+    padding-left: 10px;
+    padding-top: 4px;
+    padding-bottom: 2px;
+}
+
+.select-error {
+    border-color: red;
+}
+
+.select-error option {
+    background-color: black;
+    color: white;
+}
+
+.register-main-window {
     background-color: #232541;
     height: 100vh;
     width: 100vw;
     overflow: auto;
     display: flex;
-    padding-left: 6.5vw;
-    gap: 10vw;
+    padding-left: 5vw;
+    gap: 13vw;
     align-items: center;
 }
 
-.left-section {
+.register-left-section {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.login-site-name {
+.register-site-name {
     font-family: "Lexend Giga";
     color: white;
     font-size: 48px;
     margin: 0;
 }
 
-.login-site-tagline {
+.register-site-tagline {
     color: white;
     font-size: 18px;
 }
 
-.login-img {
+.register-img {
     height: 48.5vh;
 }
 
-/* background-color: #dfdbff; */
-
-.right-section {
+.register-right-section {
     display: flex;
     flex-direction: column;
-    height: 520px;
+    height: 600px;
     border-radius: 18px;
-    padding: 30px 40px;
+    padding: 20px 40px 80px 40px;
     margin-top: 0px;
-    
-    /* Base glassmorphism */
+
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(30px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    
-    /* Shine effect */
+
     position: relative;
     overflow: hidden;
 }
 
-.right-section::after {
+.register-right-section::after {
     content: '';
     position: absolute;
     top: -50%;
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(45deg, 
-        transparent 30%, 
-        rgba(255, 255, 255, 0.1) 50%, 
-        transparent 70%
-    );
+    background: linear-gradient(45deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.1) 50%,
+            transparent 70%);
     opacity: 0;
     pointer-events: none;
     animation: shineEvery5s 5s ease-out infinite;
 }
 
 @keyframes shineEvery5s {
-    0% { 
+    0% {
         transform: translateX(-100%) translateY(-100%) rotate(45deg);
         opacity: 0;
     }
-    12% { /* 12% of 5s = 0.6s to fade in */
+
+    12% {
         opacity: 1;
     }
-    60% { /* 60% of 5s = 3s total shine duration */
+
+    60% {
         transform: translateX(100%) translateY(100%) rotate(45deg);
         opacity: 0;
     }
-    61%, 100% { /* Stay hidden for remaining 2s */
+
+    61%,
+    100% {
         transform: translateX(-100%) translateY(-100%) rotate(45deg);
         opacity: 0;
     }
 }
 
-.login-title {
+.register-title {
     font-weight: bold;
     font-size: 22px;
 }
 
-.login-subtitle {
-    font-size: 16px;
+.register-subtitle {
+    font-size: 15px;
     margin-top: -10px;
     font-weight: 600;
 }
 
-.email-input-title {
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-.rememberMe-forgotPass-div {
+.input-fields-div {
     display: flex;
-    align-items: last baseline;
-    justify-content: space-between;
+    flex-direction: column;
+    margin-top: 15px;
+    gap: 15px;
 }
 
-.checkbox-label-container {
+.address-city-div {
+    display: flex;
+    gap: 1.5vw;
+}
+
+.address-input {
+    width: 130px;
+}
+
+.address-input-error {
+    border-color: red;
+    width: 130px;
+}
+
+.address-input-error:focus {
+    border-width: 2px;
+}
+
+.city-drop-down option {
+    background-color: black;
+    color: white;
+}
+
+.terms-and-condition-div {
     display: flex;
     align-items: center;
     cursor: pointer;
     user-select: none;
     margin-top: 10px;
+    gap: 5px;
 }
 
-.remember-me-checkbox {
+.terms-and-condition-checkbox {
     position: absolute;
     opacity: 0;
     width: 0;
@@ -170,7 +217,7 @@ input:-webkit-autofill {
     pointer-events: none;
 }
 
-.custom-checkbox-visual {
+.terms-and-condition-custom-checkbox-visual {
     display: inline-block;
     width: 20px;
     height: 20px;
@@ -183,12 +230,16 @@ input:-webkit-autofill {
     flex-shrink: 0;
 }
 
-.remember-me-checkbox:checked+.custom-checkbox-visual {
+.checkbox-error {
+    border-color: red;
+}
+
+.terms-and-condition-checkbox:checked+.terms-and-condition-custom-checkbox-visual {
     background-color: black;
     border-color: black;
 }
 
-.custom-checkbox-visual::after {
+.terms-and-condition-custom-checkbox-visual::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -202,24 +253,26 @@ input:-webkit-autofill {
     transition: opacity 0.2s ease-in-out;
 }
 
-.remember-me-checkbox:checked+.custom-checkbox-visual::after {
+.terms-and-condition-checkbox:checked+.terms-and-condition-custom-checkbox-visual::after {
     opacity: 1;
 }
 
-.remember-me-text {
-    font-size: 12px;
+.terms-and-condition-text-div {
+    width: 290px;
 }
 
-.forgot-password-text {
+.terms-and-condition-text {
     font-size: 12px;
-    cursor: pointer;
+    font-weight: 500;
+    color: #7d7c7c;
 }
 
-.forgot-password-text:hover {
+.terms-and-conditions-highlights {
+    color: #dfdbff;
     text-decoration: underline;
 }
 
-.login-button {
+.register-button {
     border: 2px solid black;
     border-radius: 10px;
     background: transparent;
@@ -227,83 +280,86 @@ input:-webkit-autofill {
     font-weight: bold;
     font-size: 15px;
     transition: background-color 0.3s ease-in-out 0s;
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
-.login-button:hover {
+.register-button:hover {
     background: black;
     color: white;
     border: 2px solid black;
 }
 
-.login-button:focus {
+.register-button:focus {
     outline: none;
 }
 
-.sign-up-div {
+.register-login-div {
     display: flex;
     gap: 5px;
     align-self: center;
 }
 
-.new-to-localloop-text,
-.sign-up-text {
-    font-size: 13px;
+.register-already-have-account-text,
+.register-login-text {
+    font-size: 14px;
 }
 
-.sign-up-text {
+.register-login-text {
     font-weight: bold;
     cursor: pointer;
 }
 
-.sign-up-text:hover {
+.register-login-text:hover {
     text-decoration: underline;
 }
 
-.login-site-name2 {
+.register-site-name2 {
     display: none;
 }
 
 @media screen and (max-width: 1220px) {
-    .login-main-window {
+    .register-main-window {
         padding-left: 5vw;
         gap: 5vw;
     }
 }
 
-@media screen and (max-width: 1080px) {
-    .login-main-window {
+@media screen and (max-width: 1175px) {
+    .register-main-window {
         padding-left: 0vw;
     }
 }
 
-@media screen and (max-width: 1130px) {
-    .login-img {
+@media screen and (max-width: 1125px) {
+    .register-main-window {
+        gap: 0vw;
+    }
+}
+
+@media screen and (max-width: 1060px) {
+    .register-img {
         display: none;
     }
 
-    .login-main-window {
+    .register-main-window {
         flex-direction: column;
         align-items: center;
         gap: 0;
+        padding-bottom: 10vh;
     }
 
-    .left-section {
-        margin-top: -14vh;
+    .register-left-section {
+        margin-top: -10vh;
     }
 
-    .right-section input {
-        width: 57vw;
-    }
-
-    .right-section-div {
+    .register-right-section-div {
         display: flex;
         flex-direction: column;
-        margin-top: 7vh;
-        gap: 5vh;
+        gap: 10px;
+        margin-top: 1vh;
     }
 
-    .login-site-name2 {
+    .register-site-name2 {
         display: block;
         font-family: "Lexend Giga";
         color: white;
