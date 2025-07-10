@@ -65,6 +65,7 @@ input:-webkit-autofill {
     color: white;
     font-size: 48px;
     margin: 0;
+    cursor: pointer;
 }
 
 .login-site-tagline {

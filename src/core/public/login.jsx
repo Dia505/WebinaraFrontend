@@ -72,7 +72,7 @@ function Login() {
             <div className="login-main-window">
 
                 <div className='left-section'>
-                    <p className="login-site-name">Webinara.</p>
+                    <p className="login-site-name" onClick={() => navigate("/")}>Webinara.</p>
                     <p className="login-site-tagline">Learn. Connect. Grow - one webinar at a time.</p>
 
                     <img className='login-img' src='src\assets\login.png' />

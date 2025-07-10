@@ -1,0 +1,103 @@
+p {
+    color: white;
+}
+
+.nav-bar-main-div {
+    display: flex;
+    position: fixed;
+    top: 4vh;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    align-items: center;
+    gap: 10vw;
+    padding: 10px 30px;
+}
+
+.nav-bar-site-title {
+    font-family: "Lexend Giga";
+    color: white;
+    font-size: 26px;
+    margin: 0;
+}
+
+.nav-bar-buttons {
+    display: flex;
+    gap: 5vw;
+}
+
+.nav-bar-buttons p:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.login-signup-div {
+    display: flex;
+    gap: 10px;
+}
+
+.login-signup-div button:hover {
+    border-color: black;
+}
+
+.nav-bar-login-btn {
+    color: black;
+    background-color: transparent;
+    border: 1px black solid;
+    font-weight: bold;
+    font-size: 14px;
+    width: 143px;
+    height: 38px;
+    padding-top: 1px;
+    padding-bottom: 2px;
+}
+
+.nav-bar-signup-btn {
+    font-weight: bold;
+    font-size: 14px;
+    width: 143px;
+    height: 38px;
+    padding-top: 1px;
+    padding-bottom: 2px;
+}
+
+.active-link {
+    text-decoration: underline;
+}
+
+.profile {
+    height: 50px;
+    width: 50px;
+    border: 1px black solid;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    object-fit: cover;
+    object-position: center;
+}
+
+.explorer-menu-window {
+    position: absolute;
+    top: 12vh;
+    right: 4vw;
+}
+
+@media (max-width: 965px) {
+    .nav-bar-buttons {
+        display: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .nav-bar-main-div {
+        padding-left: 0px;
+    }
+
+    /* .logo {
+        height: 250px;
+    } */
+}

@@ -9,6 +9,7 @@ const queryClient = new QueryClient();
 
 const Login = lazy(() => import("./core/public/login"));
 const Register = lazy(() => import("./core/public/register"));
+const Home = lazy(() => import("./core/public/home"));
 
 function App() {
   const routes = [
@@ -28,6 +29,16 @@ function App() {
       element: (
         <Suspense>
           <Register />
+        </Suspense>
+      ),
+      errorElement: <>error</>
+    },
+
+    {
+      path: "/",
+      element: (
+        <Suspense>
+          <Home />
         </Suspense>
       ),
       errorElement: <>error</>

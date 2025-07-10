@@ -95,7 +95,7 @@ function Register() {
         <>
             <div className="register-main-window">
                 <div className='register-left-section'>
-                    <p className="register-site-name">Webinara.</p>
+                    <p className="register-site-name" onClick={() => navigate("/")}>Webinara.</p>
                     <p className="register-site-tagline">Learn. Connect. Grow - one webinar at a time.</p>
 
                     <img className='register-img' src='src\assets\login.png' />

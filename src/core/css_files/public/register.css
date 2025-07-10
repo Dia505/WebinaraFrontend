@@ -93,6 +93,7 @@ select {
     color: white;
     font-size: 48px;
     margin: 0;
+    cursor: pointer;
 }
 
 .register-site-tagline {
