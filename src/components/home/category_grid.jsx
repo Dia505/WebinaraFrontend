@@ -7,7 +7,7 @@ function CategoryGrid() {
     const navigate = useNavigate();
 
     const handleCategoryClick = (category) => {
-        navigate(`/search?category=${encodeURIComponent(category)}`);
+        navigate(`/explore?category=${encodeURIComponent(category)}`);
     };
 
     return(

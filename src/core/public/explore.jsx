@@ -1,0 +1,179 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
+
+import ExploreWebinarGrid from "../../components/explore/explore_webinar_grid";
+import NavBar from "../../components/navigation/nav_bar";
+import "../css_files/public/explore.css";
+import searchIcon from "../../assets/search_icon.png"
+
+function Explore() {
+    const [searchQuery, setSearchQuery] = useState("");
+    const [category, setCategory] = useState("");
+    const [dateRange, setDateRange] = useState("");
+    const [level, setLevel] = useState("");
+    const [language, setLanguage] = useState("");
+    const [webinars, setWebinars] = useState([]);
+    const [fullyBookedWebinars, setFullyBookedWebinars] = useState([]);
+
+    const { query } = useParams();
+    const [searchParams] = useSearchParams();
+    const categoryFromQuery = searchParams.get("category");
+
+    useEffect(() => {
+        if (categoryFromQuery) {
+            setCategory(categoryFromQuery);
+        }
+    }, [categoryFromQuery]);
+
+    useEffect(() => {
+
+        if (!categoryFromQuery) {
+            const fetchWebinars = async () => {
+                try {
+                    const webinarResponse = await axios.get("http://localhost:3000/api/webinar/home-webinars");
+                    const webinarsData = webinarResponse.data;
+                    setWebinars(webinarsData);
+
+                    const fullyBooked = [];
+
+                    for (const webinar of webinarsData) {
+                        if (!webinar._id || webinar.totalSeats === null) continue;
+
+                        const fullBookingResponse = await axios.get(
+                            `http://localhost:3000/api/webinar/check-full-booking/${webinar._id}`
+                        );
+
+                        const isFullyBooked = fullBookingResponse?.data?.full;
+                        if (isFullyBooked) {
+                            fullyBooked.push(webinar);
+                        }
+                    }
+
+                    setFullyBookedWebinars(fullyBooked);
+                } catch (error) {
+                    console.error("Error fetching webinars:", error);
+                }
+            };
+            fetchWebinars();
+        }
+    }, [categoryFromQuery]);
+
+    useEffect(() => {
+        const fetchFilteredEvents = async () => {
+            try {
+                const params = new URLSearchParams();
+                if (category) params.append("category", category);
+                if (level) params.append("level", level);
+                if (language) params.append("language", language);
+                if (dateRange) params.append("dateRange", dateRange);
+
+                const response = await axios.get(`http://localhost:3000/api/webinar/filter?${params.toString()}`);
+                setWebinars(response.data);
+            } catch (error) {
+                console.error("Error fetching filtered webinars:", error);
+            }
+        };
+
+        if (category || level || language || dateRange) {
+            fetchFilteredEvents();
+        }
+    }, [category, level, language, dateRange]);
+
+    useEffect(() => {
+        if (query) {
+            setSearchQuery(query);
+            handleSearch(query);
+        }
+    }, [query]);
+
+    const handleSearch = async (customQuery) => {
+        const q = (customQuery ?? searchQuery).trim();
+        if (!q) return;
+
+        try {
+            const response = await axios.get(`http://localhost:3000/api/webinar/search?query=${encodeURIComponent(q)}`);
+            setWebinars(response.data);
+        } catch (error) {
+            console.error("Search failed:", error);
+        }
+    };
+
+    return (
+        <div className="explore-main-window">
+            <NavBar />
+
+            <div className="search-bar-div">
+                <p className="explore-title">Explore</p>
+                <p className="explore-subtitle">Find webinars that match your interests and goals.</p>
+                <div>
+                    <input
+                        className="explore-search-bar"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") handleSearch();
+                        }}
+                    />
+                    <img
+                        className="explore-search-icon"
+                        src={searchIcon}
+                        onClick={handleSearch}
+                        alt="Search"
+                    />
+                </div>
+            </div>
+
+            <div className="explore-bottom-div">
+                <div className="explore-filter-div">
+                    <div className="explore-filter-level1">
+                        <select value={dateRange} onChange={(e) => setDateRange(e.target.value)}>
+                            <option value="" disabled hidden>Select a time frame</option>
+                            <option value="today">Today</option>
+                            <option value="this-week">This week</option>
+                            <option value="next-7-days">Next 7 days</option>
+                            <option value="this-month">This month</option>
+                        </select>
+
+                        <select value={level} onChange={(e) => setLevel(e.target.value)}>
+                            <option value="" disabled hidden>Choose a level</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                        </select>
+
+                        <select value={language} onChange={(e) => setLanguage(e.target.value)}>
+                            <option value="" disabled hidden>Choose a language</option>
+                            <option value="English">English</option>
+                            <option value="Nepali">Nepali</option>
+                            <option value="Hindi">Hindi</option>
+                        </select>
+                    </div>
+
+                    <div className="explore-filter-level2">
+                        {[
+                            "Business", "Technology", "Design", "Health",
+                            "Education", "Career", "Finance", "Marketing",
+                            "Lifestyle", "Creative"
+                        ].map((cat) => (
+                            <div
+                                key={cat}
+                                className={`explore-category-card ${category === cat ? 'selected' : ''}`}
+                                onClick={() => setCategory(cat)}
+                            >
+                                <p className="explore-category-title">{cat}</p>
+                            </div>
+                        ))}
+                    </div>
+
+                </div>
+
+                <div className="explore-webinar-grid-div">
+                    <ExploreWebinarGrid webinars={webinars} fullyBookedWebinars={fullyBookedWebinars} />
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default Explore;

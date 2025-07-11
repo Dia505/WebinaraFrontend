@@ -1,0 +1,8 @@
+.explore-webinars-div {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2vw;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}

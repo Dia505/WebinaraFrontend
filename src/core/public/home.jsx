@@ -15,7 +15,7 @@ function Home() {
 
     const handleSearch = () => {
         if (searchQuery.trim()) {
-            navigate(`/search/${encodeURIComponent(searchQuery.trim())}`);
+            navigate(`/explore/${encodeURIComponent(searchQuery.trim())}`);
         }
     };
 

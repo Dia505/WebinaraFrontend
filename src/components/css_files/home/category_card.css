@@ -11,10 +11,10 @@
 .category-card:hover {
     background-color: #232541;
     border: 4px solid #7d97f9;
+}
 
-    .category-title {
-        color: white;
-    }
+.category-card:hover .category-title {
+    color: white;
 }
 
 .category-title {

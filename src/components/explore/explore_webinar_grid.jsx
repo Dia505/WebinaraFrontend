@@ -1,14 +1,15 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth_context";
+import "../css_files/explore/explore_webinar_grid.css";
 import "../css_files/home/webinar_grid.css";
+import greyCalendar from "../../assets/grey_calendar.png";
+import greyClock from "../../assets/grey_clock.png";
+import greyBarChart from "../../assets/grey_bar_chart.png";
+import greyLanguage from "../../assets/grey_language.png"
 
-function WebinarGrid() {
-    const [webinars, setWebinars] = useState([]);
-    const [fullyBookedWebinars, setFullyBookedWebinars] = useState([]);
+function ExploreWebinarGrid({ webinars, fullyBookedWebinars }) {
     const navigate = useNavigate();
-    const {authToken} = useAuth();
+    const { authToken } = useAuth();
 
     const formatTo12Hour = (timeStr) => {
         if (!timeStr) return "";
@@ -22,62 +23,33 @@ function WebinarGrid() {
         }).toLowerCase();
     };
 
-    useEffect(() => {
-        const fetchWebinars = async () => {
-            try {
-                const webinarResponse = await axios.get("http://localhost:3000/api/webinar/home-webinars");
-                const webinarsData = webinarResponse.data;
-                setWebinars(webinarsData);
-
-                const fullyBooked = [];
-
-                for (const webinar of webinarsData) {
-                    if (webinar.totalSeats === null) continue;
-
-                    const fullBookingResponse = await axios.get(
-                        `http://localhost:3000/api/webinar/check-full-booking/${webinar._id}`
-                    );
-
-                    const isFullyBooked = fullBookingResponse?.data?.full;
-                    if (isFullyBooked) {
-                        fullyBooked.push(webinar);
-                    }
-                }
-
-                setFullyBookedWebinars(fullyBooked);
-            } catch (error) {
-                console.error("Error fetching webinars:", error);
-            }
-        };
-
-        fetchWebinars();
-    }, []);
+    console.log("Webinar list: ", webinars)
 
     return (
-        <div className="webinars-div">
+        <div className="explore-webinars-div">
             {webinars.map((webinar) => {
-                const isFullyBooked = fullyBookedWebinars.some(fb => fb._id === webinar._id);
+                const isFullyBooked = fullyBookedWebinars.some(fb => fb._id === webinar._doc?._id || webinar._id);
 
                 return (
                     <div
-                        key={webinar._id}
+                        key={webinar._doc?._id || webinar._id}
                         className={
-                            webinar.totalSeats != null && !isFullyBooked
+                            webinar._doc?.totalSeats || webinar.totalSeats != null && !isFullyBooked
                                 ? "webinar-card-hover"
                                 : "webinar-card"
                         }
-                        onClick={() => navigate(`/webinar-details/${webinar._id}`)}
+                        onClick={() => navigate(`/webinar-details/${webinar._doc?._id || webinar._id}`)}
                     >
                         <img className="webinar-img" src={webinar.webinarPhoto} alt="webinar" />
 
                         <div className="webinar-details-div">
-                            <p className="webinar-title">{webinar.title}</p>
+                            <p className="webinar-title">{webinar._doc?.title || webinar.title}</p>
                         </div>
 
                         <div className="webinar-icon-detail-div">
-                            <img className="webinar-icon" src="src/assets/grey_calendar.png" alt="calendar" />
+                            <img className="webinar-icon" src={greyCalendar} alt="calendar" />
                             <p className="webinar-detail">
-                                {new Date(webinar.date).toLocaleDateString('en-US', {
+                                {new Date(webinar._doc?.date || webinar.date).toLocaleDateString('en-US', {
                                     year: 'numeric',
                                     month: 'long',
                                     day: 'numeric',
@@ -86,41 +58,41 @@ function WebinarGrid() {
                         </div>
 
                         <div className="webinar-icon-detail-div">
-                            <img className="webinar-icon" src="src/assets/grey_clock.png" alt="clock" />
+                            <img className="webinar-icon" src={greyClock} alt="clock" />
                             <p className="webinar-detail">
-                                {webinar.endTime
-                                    ? `${formatTo12Hour(webinar.startTime)} - ${formatTo12Hour(webinar.endTime)}`
-                                    : `${formatTo12Hour(webinar.startTime)} onwards`}
+                                {webinar._doc?.endTime || webinar.endTime
+                                    ? `${formatTo12Hour(webinar._doc?.startTime || webinar.startTime)} - ${formatTo12Hour(webinar._doc?.endTime || webinar.endTime)}`
+                                    : `${formatTo12Hour(webinar._doc?.startTime || webinar.startTime)} onwards`}
                             </p>
                         </div>
 
                         <div className="webinar-icon-detail-div">
-                            <img className="webinar-icon" src="src/assets/grey_bar_chart.png" alt="level" />
+                            <img className="webinar-icon" src={greyBarChart} alt="level" />
                             <p className="webinar-detail">
-                                {webinar.level}
+                                {webinar._doc?.level || webinar.level}
                             </p>
                         </div>
 
                         <div className="webinar-icon-detail-div">
-                            <img className="webinar-icon" src="src/assets/grey_language.png" alt="language" />
+                            <img className="webinar-icon" src={greyLanguage} alt="language" />
                             <p className="webinar-detail">
-                                {webinar.language}
+                                {webinar._doc?.language || webinar.language}
                             </p>
                         </div>
 
                         <div className="webinar-seats-div">
                             {isFullyBooked && <div className="fully-booked">Fully Booked</div>}
-                            {webinar.totalSeats != null && <p className="limited-seats-text">*Limited seats</p>}
+                            {webinar._doc?.totalSeats || webinar.totalSeats != null && <p className="limited-seats-text">*Limited seats</p>}
                         </div>
 
-                        {webinar.totalSeats != null && (
+                        {webinar._doc?.totalSeats || webinar.totalSeats != null && (
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
                                 <button
                                     className="webinar-btn"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         if (authToken) {
-                                            navigate(`/webinar-details/${webinar._id}`, {
+                                            navigate(`/webinar-details/${webinar._doc?._id || webinar._id}`, {
                                                 state: { openBookingForm: true },
                                             });
                                         } else {
@@ -139,4 +111,4 @@ function WebinarGrid() {
     );
 }
 
-export default WebinarGrid;
+export default ExploreWebinarGrid;

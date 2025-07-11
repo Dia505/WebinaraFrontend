@@ -10,6 +10,7 @@ const queryClient = new QueryClient();
 const Login = lazy(() => import("./core/public/login"));
 const Register = lazy(() => import("./core/public/register"));
 const Home = lazy(() => import("./core/public/home"));
+const Explore = lazy(() => import("./core/public/explore"));
 
 function App() {
   const routes = [
@@ -39,6 +40,26 @@ function App() {
       element: (
         <Suspense>
           <Home />
+        </Suspense>
+      ),
+      errorElement: <>error</>
+    },
+
+    {
+      path: "/explore",
+      element: (
+        <Suspense>
+          <Explore />
+        </Suspense>
+      ),
+      errorElement: <>error</>
+    },
+
+    {
+      path: "/explore/:query",
+      element: (
+        <Suspense>
+          <Explore />
         </Suspense>
       ),
       errorElement: <>error</>

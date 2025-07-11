@@ -1,0 +1,134 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    overflow-x: hidden;
+    background-color: white;
+}
+
+input {
+    padding-left: 10px;
+}
+
+select {
+    border: 1px solid;
+    border-radius: 10px;
+    border-color: black;
+    background-color: transparent;
+    width: 250px;
+    height: 45px;
+    color: black;
+    outline: none;
+    padding-left: 10px;
+    padding-top: 4px;
+    padding-bottom: 2px;
+}
+
+select option {
+    background-color: black;
+    color: white;
+}
+
+.explore-main-window {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-bar-div {
+    display: flex;
+    flex-direction: column;
+    background-color: #232541;
+    align-items: center;
+    height: 40vh;
+    width: 100vw;
+    padding-top: 20vh;
+}
+
+.explore-title {
+    font-size: 48px;
+    margin: 0;
+}
+
+.explore-subtitle {
+    font-size: 22px;
+    font-weight: lighter;
+}
+
+.explore-search-bar {
+    position: relative;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    height: 45px;
+    width: 30vw;
+    margin-top: 3vh;
+}
+
+.explore-search-icon {
+    position: absolute;
+    height: 30px;
+    margin-top: 4vh;
+    margin-left: -44px;
+    cursor: pointer;
+}
+
+.explore-bottom-div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5vh;
+    align-items: center;
+    gap: 2vh;
+}
+
+.explore-filter-div {
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+    align-items: center;
+}
+
+.explore-filter-level1 {
+    display: flex;
+    gap: 20px;
+}
+
+.explore-filter-level2 {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding-left: 10vw;
+}
+
+.explore-category-card {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    border: 2px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color ease-in 0.2s;
+    padding: 10px 50px;
+}
+
+.explore-category-card:hover,
+.explore-category-card.selected {
+    background-color: #232541;
+    border: 4px solid #7d97f9;
+}
+
+.explore-category-card:hover .explore-category-title,
+.explore-category-card.selected .explore-category-title {
+    color: white;
+}
+
+.explore-category-title {
+    color: black;
+    margin: 0;
+}
+
+.explore-webinar-grid-div {
+    padding: 40px;
+}

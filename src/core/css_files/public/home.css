@@ -3,10 +3,8 @@ body {
     margin: 0;
     padding: 0;
     width: 100vw;
-    /* Forces body to match full viewport width */
     overflow-x: hidden;
     background-color: white;
-    /* Only hides horizontal scrolling */
 }
 
 input {
