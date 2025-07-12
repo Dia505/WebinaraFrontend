@@ -38,7 +38,7 @@ function ExploreWebinarGrid({ webinars, fullyBookedWebinars }) {
                                 ? "webinar-card-hover"
                                 : "webinar-card"
                         }
-                        onClick={() => navigate(`/webinar-details/${webinar._doc?._id || webinar._id}`)}
+                        onClick={() => navigate(`/view-webinar/${webinar._doc?._id || webinar._id}`)}
                     >
                         <img className="webinar-img" src={webinar.webinarPhoto} alt="webinar" />
 

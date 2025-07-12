@@ -4,6 +4,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 
 import ExploreWebinarGrid from "../../components/explore/explore_webinar_grid";
 import NavBar from "../../components/navigation/nav_bar";
+import Footer from "../../components/navigation/footer";
 import "../css_files/public/explore.css";
 import searchIcon from "../../assets/search_icon.png"
 
@@ -172,6 +173,8 @@ function Explore() {
                     <ExploreWebinarGrid webinars={webinars} fullyBookedWebinars={fullyBookedWebinars} />
                 </div>
             </div>
+
+            <Footer/>
         </div>
     );
 }

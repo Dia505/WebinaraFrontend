@@ -11,6 +11,7 @@ const Login = lazy(() => import("./core/public/login"));
 const Register = lazy(() => import("./core/public/register"));
 const Home = lazy(() => import("./core/public/home"));
 const Explore = lazy(() => import("./core/public/explore"));
+const ViewWebinar = lazy(() => import("./core/public/view_webinar"));
 
 function App() {
   const routes = [
@@ -60,6 +61,16 @@ function App() {
       element: (
         <Suspense>
           <Explore />
+        </Suspense>
+      ),
+      errorElement: <>error</>
+    },
+
+    {
+      path: "/view-webinar/:_id",
+      element: (
+        <Suspense>
+          <ViewWebinar />
         </Suspense>
       ),
       errorElement: <>error</>
