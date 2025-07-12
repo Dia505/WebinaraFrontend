@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/auth_context";
 import blueCalendar from "../../assets/blue_calendar.png";
 import blueClock from "../../assets/blue_clock.png";
+import blueLanguage from "../../assets/blue_language.png";
 import blueLevel from "../../assets/blue_level.png";
-import blueLanguage from "../../assets/blue_language.png"
+import { useAuth } from "../../context/auth_context";
 
 import "../css_files/view_webinar/similar_webinars.css";
 
@@ -14,6 +14,7 @@ function SimilarWebinars({ category, currentWebinarId }) {
     const navigate = useNavigate();
     const { authToken } = useAuth();
     const [fullyBookedWebinars, setFullyBookedWebinars] = useState([]);
+    const [alreadyBookedWebinars, setAlreadyBookedWebinars] = useState([]);
 
     const formatTo12Hour = (timeStr) => {
         if (!timeStr) return "";
@@ -60,6 +61,28 @@ function SimilarWebinars({ category, currentWebinarId }) {
                 }
 
                 setFullyBookedWebinars(fullyBooked);
+
+                const alreadyBooked = [];
+
+                for (const webinar of webinars) {
+                    if (webinar.totalSeats === null) continue;
+
+                    const alreadyBookedResponse = await axios.get(
+                        `http://localhost:3000/api/booking/check-booking/${webinar._id}`, {
+                        headers: {
+                            Authorization: `Bearer ${authToken}`
+                        }
+                    }
+                    );
+
+                    const isAlreadyBooked = alreadyBookedResponse?.data?.alreadyBooked;
+                    if (isAlreadyBooked) {
+                        alreadyBooked.push(webinar);
+                    }
+                }
+
+                setAlreadyBookedWebinars(alreadyBooked);
+
             } catch (error) {
                 console.error("Error fetching events:", error);
             }
@@ -73,12 +96,13 @@ function SimilarWebinars({ category, currentWebinarId }) {
             <div className="similar-webinars-div">
                 {similarWebinars.map((webinar) => {
                     const isFullyBooked = fullyBookedWebinars.some(fb => fb._id === webinar._id);
+                    const isAlreadyBooked = alreadyBookedWebinars.some(ab => ab._id === webinar._id);
 
                     return (
                         <div
                             key={webinar._id}
                             className={
-                                webinar.totalSeats != null && !isFullyBooked
+                                webinar.totalSeats != null && !isFullyBooked && !isAlreadyBooked
                                     ? "webinar-card-hover"
                                     : "webinar-card"
                             }
@@ -121,7 +145,21 @@ function SimilarWebinars({ category, currentWebinarId }) {
                             </div>
 
                             <div className="webinar-seats-div">
-                                {isFullyBooked && <div className="fully-booked">Fully Booked</div>}
+                                {(isAlreadyBooked || isFullyBooked) && (
+                                    <div
+                                        className={
+                                            isAlreadyBooked
+                                                ? "already-booked"
+                                                : isFullyBooked
+                                                    ? "fully-booked"
+                                                    : ""
+                                        }
+                                    >
+                                        {isAlreadyBooked
+                                            ? "Seat booked ✅"
+                                            : "Fully Booked"}
+                                    </div>
+                                )}
                                 {webinar.totalSeats != null && (
                                     <p className="limited-seats-text">*Limited seats</p>
                                 )}

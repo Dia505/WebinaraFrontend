@@ -77,9 +77,9 @@
     font-weight: 600;
 }
 
-.webinars-seats-div {
+.webinar-seats-div {
     display: flex;
-    gap: 10px;
+    gap: 20px;
 }
 
 .fully-booked {
@@ -93,6 +93,19 @@
     font-weight: 600;
     margin-top: 10px;
     background-color: red;
+    width: 130px;
+}
+
+.already-booked {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-top: 10px;
+    background-color: rgb(80, 231, 80);
     width: 130px;
 }
 

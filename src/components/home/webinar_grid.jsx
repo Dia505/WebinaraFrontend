@@ -7,8 +7,9 @@ import "../css_files/home/webinar_grid.css";
 function WebinarGrid() {
     const [webinars, setWebinars] = useState([]);
     const [fullyBookedWebinars, setFullyBookedWebinars] = useState([]);
+    const [alreadyBookedWebinars, setAlreadyBookedWebinars] = useState([]);
     const navigate = useNavigate();
-    const {authToken} = useAuth();
+    const { authToken } = useAuth();
 
     const formatTo12Hour = (timeStr) => {
         if (!timeStr) return "";
@@ -45,6 +46,28 @@ function WebinarGrid() {
                 }
 
                 setFullyBookedWebinars(fullyBooked);
+
+                const alreadyBooked = [];
+
+                for (const webinar of webinarsData) {
+                    if (webinar.totalSeats === null) continue;
+
+                    const alreadyBookedResponse = await axios.get(
+                        `http://localhost:3000/api/booking/check-booking/${webinar._id}`, {
+                        headers: {
+                            Authorization: `Bearer ${authToken}`
+                        }
+                    }
+                    );
+
+                    const isAlreadyBooked = alreadyBookedResponse?.data?.alreadyBooked;
+                    if (isAlreadyBooked) {
+                        alreadyBooked.push(webinar);
+                    }
+                }
+
+                setAlreadyBookedWebinars(alreadyBooked);
+
             } catch (error) {
                 console.error("Error fetching webinars:", error);
             }
@@ -57,12 +80,13 @@ function WebinarGrid() {
         <div className="webinars-div">
             {webinars.map((webinar) => {
                 const isFullyBooked = fullyBookedWebinars.some(fb => fb._id === webinar._id);
+                const isAlreadyBooked = alreadyBookedWebinars.some(ab => ab._id === webinar._id);
 
                 return (
                     <div
                         key={webinar._id}
                         className={
-                            webinar.totalSeats != null && !isFullyBooked
+                            webinar.totalSeats != null && !isFullyBooked && !isAlreadyBooked
                                 ? "webinar-card-hover"
                                 : "webinar-card"
                         }
@@ -109,7 +133,22 @@ function WebinarGrid() {
                         </div>
 
                         <div className="webinar-seats-div">
-                            {isFullyBooked && <div className="fully-booked">Fully Booked</div>}
+                            {(isAlreadyBooked || isFullyBooked) && (
+                                <div
+                                    className={
+                                        isAlreadyBooked
+                                            ? "already-booked"
+                                            : isFullyBooked
+                                                ? "fully-booked"
+                                                : ""
+                                    }
+                                >
+                                    {isAlreadyBooked
+                                        ? "Seat booked ✅"
+                                        : "Fully Booked"}
+                                </div>
+                            )}
+
                             {webinar.totalSeats != null && <p className="limited-seats-text">*Limited seats</p>}
                         </div>
 

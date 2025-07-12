@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
+import blueCalendar from "../../assets/blue_calendar.png";
+import blueClock from "../../assets/blue_clock.png";
+import blueLanguage from "../../assets/blue_language.png";
+import blueLevel from "../../assets/blue_level.png";
 import { useAuth } from "../../context/auth_context";
 import "../css_files/explore/explore_webinar_grid.css";
 import "../css_files/home/webinar_grid.css";
-import blueCalendar from "../../assets/blue_calendar.png";
-import blueClock from "../../assets/blue_clock.png";
-import blueLevel from "../../assets/blue_level.png";
-import blueLanguage from "../../assets/blue_language.png";
 
-function ExploreWebinarGrid({ webinars, fullyBookedWebinars }) {
+function ExploreWebinarGrid({ webinars, fullyBookedWebinars, alreadyBookedWebinars }) {
     const navigate = useNavigate();
     const { authToken } = useAuth();
 
@@ -23,16 +23,19 @@ function ExploreWebinarGrid({ webinars, fullyBookedWebinars }) {
         }).toLowerCase();
     };
 
+    console.log("Already booked webinars: ", alreadyBookedWebinars);
+
     return (
         <div className="explore-webinars-div">
             {webinars.map((webinar) => {
-                const isFullyBooked = fullyBookedWebinars.some(fb => fb._id === webinar._doc?._id || webinar._id);
+                const isFullyBooked = fullyBookedWebinars.some(fb => fb._id === webinar._doc?._id || fb._id === webinar._id);
+                const isAlreadyBooked = alreadyBookedWebinars.some(ab => ab._id === webinar._doc?._id || ab._id === webinar._id);
 
                 return (
                     <div
                         key={webinar._doc?._id || webinar._id}
                         className={
-                            webinar._doc?.totalSeats || webinar.totalSeats != null && !isFullyBooked
+                            webinar._doc?.totalSeats != null || webinar.totalSeats != null && !isFullyBooked && !isAlreadyBooked
                                 ? "webinar-card-hover"
                                 : "webinar-card"
                         }
@@ -79,7 +82,21 @@ function ExploreWebinarGrid({ webinars, fullyBookedWebinars }) {
                         </div>
 
                         <div className="webinar-seats-div">
-                            {isFullyBooked && <div className="fully-booked">Fully Booked</div>}
+                            {(isAlreadyBooked || isFullyBooked) && (
+                                <div
+                                    className={
+                                        isAlreadyBooked
+                                            ? "already-booked"
+                                            : isFullyBooked
+                                                ? "fully-booked"
+                                                : ""
+                                    }
+                                >
+                                    {isAlreadyBooked
+                                        ? "Seat booked ✅"
+                                        : "Fully Booked"}
+                                </div>
+                            )}
                             {webinar._doc?.totalSeats || webinar.totalSeats != null && <p className="limited-seats-text">*Limited seats</p>}
                         </div>
 

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
+import { useAuth } from "../../context/auth_context";
 
 import searchIcon from "../../assets/search_icon.png";
 import ExploreWebinarGrid from "../../components/explore/explore_webinar_grid";
@@ -17,6 +18,8 @@ function Explore() {
     const [language, setLanguage] = useState("");
     const [webinars, setWebinars] = useState([]);
     const [fullyBookedWebinars, setFullyBookedWebinars] = useState([]);
+    const [alreadyBookedWebinars, setAlreadyBookedWebinars] = useState([]);
+    const {authToken} = useAuth();
 
     const { query } = useParams();
     const [searchParams] = useSearchParams();
@@ -53,6 +56,27 @@ function Explore() {
                     }
 
                     setFullyBookedWebinars(fullyBooked);
+
+                    const alreadyBooked = [];
+
+                for (const webinar of webinarsData) {
+                    if (webinar.totalSeats === null) continue;
+
+                    const alreadyBookedResponse = await axios.get(
+                        `http://localhost:3000/api/booking/check-booking/${webinar._id}`, {
+                        headers: {
+                            Authorization: `Bearer ${authToken}`
+                        }
+                    }
+                    );
+
+                    const isAlreadyBooked = alreadyBookedResponse?.data?.alreadyBooked;
+                    if (isAlreadyBooked) {
+                        alreadyBooked.push(webinar);
+                    }
+                }
+
+                setAlreadyBookedWebinars(alreadyBooked);
                 } catch (error) {
                     console.error("Error fetching webinars:", error);
                 }
@@ -177,7 +201,7 @@ function Explore() {
                             <p className="no-results-message">Looks like there’s nothing here right now. Try something else!</p>
                         </div>
                     ) : (
-                        <ExploreWebinarGrid webinars={webinars} fullyBookedWebinars={fullyBookedWebinars} />
+                        <ExploreWebinarGrid webinars={webinars} fullyBookedWebinars={fullyBookedWebinars} alreadyBookedWebinars={alreadyBookedWebinars} />
                     )}
                 </div>
             </div>

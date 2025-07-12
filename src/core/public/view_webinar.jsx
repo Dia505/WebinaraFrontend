@@ -1,20 +1,22 @@
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../context/auth_context";
 
+import facebook from "../../assets/facebook2.png";
+import instagram from "../../assets/instagram.png";
+import tiktok from "../../assets/tiktok.png";
 import viewCalendar from "../../assets/view_webinar_calendar.png";
 import viewClock from "../../assets/view_webinar_clock.png";
 import viewLanguage from "../../assets/view_webinar_language.png";
 import viewLevel from "../../assets/view_webinar_level.png";
-import NavBar from "../../components/navigation/nav_bar";
-import "../css_files/public/view_webinar.css";
-import facebook from "../../assets/facebook2.png";
-import instagram from "../../assets/instagram.png";
-import tiktok from "../../assets/tiktok.png";
 import x from "../../assets/X.png";
-import SimilarWebinars from "../../components/view_webinar/similar_webinars";
 import Footer from "../../components/navigation/footer";
+import NavBar from "../../components/navigation/nav_bar";
+import BookSeatsForm from "../../components/view_webinar/book_seats_form";
+import SimilarWebinars from "../../components/view_webinar/similar_webinars";
+import "../css_files/public/view_webinar.css";
 
 function ViewWebinar() {
     const { _id } = useParams();
@@ -22,6 +24,9 @@ function ViewWebinar() {
     const [webinar, setWebinar] = useState(null);
     const [isFullyBooked, setIsFullyBooked] = useState(false);
     const [showBookingForm, setShowBookingForm] = useState(false);
+    const navigate = useNavigate();
+    const [user, setUser] = useState(null);
+    const [alreadyBooked, setAlreadyBooked] = useState(false);
 
     const formatTo12Hour = (timeStr) => {
         if (!timeStr) return "";
@@ -61,6 +66,54 @@ function ViewWebinar() {
 
         fetchWebinarDetails();
     }, [_id]);
+
+    useEffect(() => {
+        const checkIfBooked = async () => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:3000/api/booking/check-booking/${_id}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${authToken}`
+                        }
+                    }
+                );
+                setAlreadyBooked(response.data.alreadyBooked);
+            } catch (error) {
+                console.error("Error checking booking status:", error);
+            }
+        };
+
+        if (_id && authToken) {
+            checkIfBooked();
+        }
+    }, [_id, authToken]);
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                if (!authToken) return;
+
+                const decoded = jwtDecode(authToken);
+                const userId = decoded._id;
+
+                const response = await axios.get(
+                    `http://localhost:3000/api/user/${userId}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${authToken}`,
+                        },
+                    }
+                );
+
+                setUser(response.data);
+            } catch (error) {
+                console.error("Error fetching user details:", error);
+            }
+        };
+
+        fetchUserDetails();
+    }, [authToken]);
 
     return (
         <>
@@ -125,12 +178,18 @@ function ViewWebinar() {
                             <div className="view-webinar-fully-booked-div">
                                 Fully booked
                             </div>
-                        ) : (webinar?.totalSeats != null) && (
+                        )
+                        : alreadyBooked ? (
+                            <div className="view-webinar-already-booked-div">
+                                Seat booked ✅
+                            </div>
+                        )
+                        : (webinar?.totalSeats != null) && (
                             <button
                                 className="view-webinar-ticket-btn"
                                 onClick={() => {
                                     if (authToken) {
-                                        setShowBuyTicketsForm(true);
+                                        setShowBookingForm(true);
                                     } else {
                                         navigate("/login");
                                     }
@@ -187,11 +246,33 @@ function ViewWebinar() {
 
                     <div className="view-webinar-similar-webinars-div">
                         <p className="view-webinar-similar-webinars-text">Similar webinars</p>
-                        <SimilarWebinars category={webinar?.category} currentWebinarId={webinar?._id}/>
+                        <SimilarWebinars category={webinar?.category} currentWebinarId={webinar?._id} />
                     </div>
                 </div>
 
-                <Footer/>
+                <Footer />
+
+                {showBookingForm && (
+                    <>
+                        <div className="view-webinar-overlay" onClick={() => setShowBookingForm(false)}></div>
+                        <div className="view-webinar-form-modal">
+                            <BookSeatsForm
+                                closeForm={() => setShowBookingForm(false)}
+                                webinarId={webinar._id}
+                                webinarPhoto={webinar.webinarPhoto}
+                                title={webinar.title}
+                                level={webinar.level}
+                                language={webinar.language}
+                                date={webinar.date}
+                                startTime={webinar.startTime}
+                                endTime={webinar.endTime}
+                                fullName={user?.fullName}
+                                mobileNumber={user?.mobileNumber}
+                                email={user?.email}
+                            />
+                        </div>
+                    </>
+                )}
             </div>
         </>
     )

@@ -1,0 +1,140 @@
+input {
+    border: 1px solid;
+    border-radius: 10px;
+    border-color: black;
+    background-color: transparent;
+    height: 28px;
+    width: 200px;
+    color: #6b6b6b;
+    outline: none;
+    padding-left: 15px;
+    padding-top: 4px;
+    padding-bottom: 2px;
+}
+
+.booking-form-main-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.booking-form-main-div p {
+    color: black;
+}
+
+.booking-form-img {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    opacity: 0.41;
+}
+
+.booking-form-event-details-div {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: -10px;
+    padding-left: 20px;
+}
+
+.booking-form-close-btn {
+    font-size: 40px;
+    font-weight: lighter;
+    cursor: pointer;
+    margin-left: 565px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.booking-form-title-div {
+    width: 400px;
+}
+
+.booking-form-title {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.booking-form-details-container {
+    display: flex;
+    gap: 15px;
+}
+
+.booking-form-icon-detail-div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.booking-form-icon {
+    height: 30px;
+}
+
+.booking-form-detail {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.booking-form-bottom-div {
+    display: flex;
+    gap: 5vw;
+}
+
+.booking-form-explorer-details-div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.booking-form-btn-div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 31vh;
+    margin-left: 5vw;
+}
+
+.booking-form-button {
+    border: 1px solid black;
+    border-radius: 10px;
+    background: transparent;
+    color: black;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out 0s;
+    margin-left: 2vw;
+    width: 10vw;
+}
+
+.booking-form-button:hover {
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+}
+
+.book-form-loading {
+    height: 30px;
+    width: 30px;
+    margin-left: 8vw;
+}
+
+.plus-seat-btn.disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+@media (max-width: 800px) {
+    .booking-form-close-btn {
+        margin-left: 69vw;
+    }
+
+    .booking-form-details-container {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 564px) {
+    .booking-form-close-btn {
+        margin-left: 75vw;
+    }
+}
