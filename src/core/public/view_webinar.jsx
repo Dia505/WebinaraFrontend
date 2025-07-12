@@ -13,6 +13,8 @@ import facebook from "../../assets/facebook2.png";
 import instagram from "../../assets/instagram.png";
 import tiktok from "../../assets/tiktok.png";
 import x from "../../assets/X.png";
+import SimilarWebinars from "../../components/view_webinar/similar_webinars";
+import Footer from "../../components/navigation/footer";
 
 function ViewWebinar() {
     const { _id } = useParams();
@@ -182,7 +184,14 @@ function ViewWebinar() {
                             </div>
                         </div>
                     </div>
+
+                    <div className="view-webinar-similar-webinars-div">
+                        <p className="view-webinar-similar-webinars-text">Similar webinars</p>
+                        <SimilarWebinars category={webinar?.category} currentWebinarId={webinar?._id}/>
+                    </div>
                 </div>
+
+                <Footer/>
             </div>
         </>
     )

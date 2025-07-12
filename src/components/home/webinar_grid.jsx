@@ -75,7 +75,7 @@ function WebinarGrid() {
                         </div>
 
                         <div className="webinar-icon-detail-div">
-                            <img className="webinar-icon" src="src/assets/grey_calendar.png" alt="calendar" />
+                            <img className="webinar-icon" src="src/assets/blue_calendar.png" alt="calendar" />
                             <p className="webinar-detail">
                                 {new Date(webinar.date).toLocaleDateString('en-US', {
                                     year: 'numeric',
@@ -86,7 +86,7 @@ function WebinarGrid() {
                         </div>
 
                         <div className="webinar-icon-detail-div">
-                            <img className="webinar-icon" src="src/assets/grey_clock.png" alt="clock" />
+                            <img className="webinar-icon" src="src/assets/blue_clock.png" alt="clock" />
                             <p className="webinar-detail">
                                 {webinar.endTime
                                     ? `${formatTo12Hour(webinar.startTime)} - ${formatTo12Hour(webinar.endTime)}`
@@ -95,14 +95,14 @@ function WebinarGrid() {
                         </div>
 
                         <div className="webinar-icon-detail-div">
-                            <img className="webinar-icon" src="src/assets/grey_bar_chart.png" alt="level" />
+                            <img className="webinar-icon" src="src/assets/blue_level.png" alt="level" />
                             <p className="webinar-detail">
                                 {webinar.level}
                             </p>
                         </div>
 
                         <div className="webinar-icon-detail-div">
-                            <img className="webinar-icon" src="src/assets/grey_language.png" alt="language" />
+                            <img className="webinar-icon" src="src/assets/blue_language.png" alt="language" />
                             <p className="webinar-detail">
                                 {webinar.language}
                             </p>

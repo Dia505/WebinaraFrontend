@@ -2,11 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 
+import searchIcon from "../../assets/search_icon.png";
 import ExploreWebinarGrid from "../../components/explore/explore_webinar_grid";
-import NavBar from "../../components/navigation/nav_bar";
 import Footer from "../../components/navigation/footer";
+import NavBar from "../../components/navigation/nav_bar";
 import "../css_files/public/explore.css";
-import searchIcon from "../../assets/search_icon.png"
+import noResultsImg from "../../assets/no_search_result.png";
 
 function Explore() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -170,11 +171,18 @@ function Explore() {
                 </div>
 
                 <div className="explore-webinar-grid-div">
-                    <ExploreWebinarGrid webinars={webinars} fullyBookedWebinars={fullyBookedWebinars} />
+                    {webinars.length === 0 ? (
+                        <div className="no-results-div">
+                            <img className="no-results-img" src={noResultsImg} />
+                            <p className="no-results-message">Looks like there’s nothing here right now. Try something else!</p>
+                        </div>
+                    ) : (
+                        <ExploreWebinarGrid webinars={webinars} fullyBookedWebinars={fullyBookedWebinars} />
+                    )}
                 </div>
             </div>
 
-            <Footer/>
+            <Footer />
         </div>
     );
 }

@@ -2,10 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth_context";
 import "../css_files/explore/explore_webinar_grid.css";
 import "../css_files/home/webinar_grid.css";
-import greyCalendar from "../../assets/grey_calendar.png";
-import greyClock from "../../assets/grey_clock.png";
-import greyBarChart from "../../assets/grey_bar_chart.png";
-import greyLanguage from "../../assets/grey_language.png"
+import blueCalendar from "../../assets/blue_calendar.png";
+import blueClock from "../../assets/blue_clock.png";
+import blueLevel from "../../assets/blue_level.png";
+import blueLanguage from "../../assets/blue_language.png";
 
 function ExploreWebinarGrid({ webinars, fullyBookedWebinars }) {
     const navigate = useNavigate();
@@ -22,8 +22,6 @@ function ExploreWebinarGrid({ webinars, fullyBookedWebinars }) {
             hour12: true,
         }).toLowerCase();
     };
-
-    console.log("Webinar list: ", webinars)
 
     return (
         <div className="explore-webinars-div">
@@ -47,7 +45,7 @@ function ExploreWebinarGrid({ webinars, fullyBookedWebinars }) {
                         </div>
 
                         <div className="webinar-icon-detail-div">
-                            <img className="webinar-icon" src={greyCalendar} alt="calendar" />
+                            <img className="webinar-icon" src={blueCalendar} alt="calendar" />
                             <p className="webinar-detail">
                                 {new Date(webinar._doc?.date || webinar.date).toLocaleDateString('en-US', {
                                     year: 'numeric',
@@ -58,7 +56,7 @@ function ExploreWebinarGrid({ webinars, fullyBookedWebinars }) {
                         </div>
 
                         <div className="webinar-icon-detail-div">
-                            <img className="webinar-icon" src={greyClock} alt="clock" />
+                            <img className="webinar-icon" src={blueClock} alt="clock" />
                             <p className="webinar-detail">
                                 {webinar._doc?.endTime || webinar.endTime
                                     ? `${formatTo12Hour(webinar._doc?.startTime || webinar.startTime)} - ${formatTo12Hour(webinar._doc?.endTime || webinar.endTime)}`
@@ -67,14 +65,14 @@ function ExploreWebinarGrid({ webinars, fullyBookedWebinars }) {
                         </div>
 
                         <div className="webinar-icon-detail-div">
-                            <img className="webinar-icon" src={greyBarChart} alt="level" />
+                            <img className="webinar-icon" src={blueLevel} alt="level" />
                             <p className="webinar-detail">
                                 {webinar._doc?.level || webinar.level}
                             </p>
                         </div>
 
                         <div className="webinar-icon-detail-div">
-                            <img className="webinar-icon" src={greyLanguage} alt="language" />
+                            <img className="webinar-icon" src={blueLanguage} alt="language" />
                             <p className="webinar-detail">
                                 {webinar._doc?.language || webinar.language}
                             </p>

@@ -185,3 +185,12 @@ body {
     height: 44px;
     margin-right: 12px;
 }
+
+.view-webinar-similar-webinars-div {
+    padding: 3vw 5vw;
+}
+
+.view-webinar-similar-webinars-text {
+    color: black;
+    font-size: 26px;
+}
