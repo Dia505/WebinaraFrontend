@@ -1,0 +1,50 @@
+.user-side-bar-main-window {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #232541;
+    height: 82vh;
+    padding-top: 10vh;
+    padding-left: 2vw;
+    padding-right: 2vw;
+}
+
+.user-side-bar-btn-div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    padding-left: 25px;
+    padding-right: 85px;
+    border-radius: 10px;
+}
+
+.user-side-bar-btn-div:hover {
+    background-color: #7d97f9;
+}
+
+.active-user-side-bar-btn {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    padding-left: 25px;
+    padding-right: 85px;
+    border-radius: 10px;
+    background-color: #7d97f9;
+}
+
+.user-side-bar-icon {
+    height: 40px;
+}
+
+.user-side-bar-btn {
+    font-weight: lighter;
+    font-size: 18px;
+}
+
+@media (max-width: 1160px) {
+    .user-side-bar-main-window {
+        display: none;
+    }
+}
