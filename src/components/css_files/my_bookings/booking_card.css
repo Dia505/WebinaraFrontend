@@ -1,0 +1,59 @@
+.booking-card-main-div {
+    display: flex;
+    border: 1px black solid;
+    padding: 20px;
+    gap: 20px;
+}
+
+.booking-card-img {
+    width: 115px;
+    height: 115px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.booking-card-details-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.booking-card-event-title {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: black;
+}
+
+.booking-card-location-date-time-div {
+    display: flex;
+    gap: 30px;
+}
+
+.booking-card-icon-detail-div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.booking-card-icon {
+    height: 25px;
+}
+
+.booking-card-detail {
+    color: #7A7A7A;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.booking-card-seats {
+    font-size: 14px;
+    color: #1EC20A;
+    margin-top: 0px;
+}
+
+@media (max-width: 850px) {
+    .booking-card-location-date-time-div {
+        flex-direction: column;
+        gap: 0;
+    }
+}

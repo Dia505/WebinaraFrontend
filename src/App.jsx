@@ -14,6 +14,7 @@ const Home = lazy(() => import("./core/public/home"));
 const Explore = lazy(() => import("./core/public/explore"));
 const ViewWebinar = lazy(() => import("./core/public/view_webinar"));
 const UserProfile = lazy(() => import("./core/private/user/user_profile"));
+const MyBookings = lazy(() => import("./core/private/user/my_bookings"));
 
 function App() {
   const routes = [
@@ -83,6 +84,13 @@ function App() {
       path: "/user-profile",
       element: (
         <AuthRoute requiredRole="user" element={<Suspense><UserProfile /></Suspense>} />
+      )
+    },
+
+    {
+      path: "/my-bookings",
+      element: (
+        <AuthRoute requiredRole="user" element={<Suspense><MyBookings /></Suspense>} />
       )
     },
   ]

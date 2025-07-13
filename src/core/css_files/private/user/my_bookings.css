@@ -1,0 +1,75 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    overflow-x: hidden;
+    background-color: white;
+}
+
+.my-bookings-main-window {
+    display: flex;
+    flex-direction: column;
+}
+
+.my-bookings-nav-bar-div {
+    width: 100vw;
+    height: 18vh;
+    position: fixed;
+    top: 0;
+    background-color: #232541;
+}
+
+.my-bookings-side-bar-content-div {
+    display: flex;
+    margin-top: 18vh;
+}
+
+.my-bookings-main-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 5vh;
+    padding-left: 10vh;
+}
+
+.my-bookings-title {
+    font-size: 22px;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: black;
+}
+
+.my-bookings-filter-div {
+    display: flex;
+    gap: 40px;
+}
+
+.my-bookings-filter-btn {
+    font-size: 17px;
+    cursor: pointer;
+    color: black;
+}
+
+.my-bookings-filter-btn:hover {
+    text-decoration: underline;
+}
+
+.my-bookings-filter-btn-selected {
+    font-size: 17px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.my-bookings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+@media (max-width: 1160px) {
+    .my-bookings-main-section {
+        padding-left: 5vw;
+        padding-right: 5vw;
+    }
+}
