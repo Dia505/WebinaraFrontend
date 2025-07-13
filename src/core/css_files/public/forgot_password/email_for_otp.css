@@ -42,7 +42,7 @@ input:-webkit-autofill {
     transition: background-color 5000s ease-in-out 0s;
 }
 
-.login-main-window {
+.email-for-otp-main-window {
     background-color: #232541;
     height: 100vh;
     width: 100vw;
@@ -53,13 +53,13 @@ input:-webkit-autofill {
     align-items: center;
 }
 
-.left-section {
+.email-for-otp-left-section {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.login-site-name {
+.email-for-otp-site-name {
     font-family: "Lexend Giga";
     color: white;
     font-size: 48px;
@@ -67,157 +67,88 @@ input:-webkit-autofill {
     cursor: pointer;
 }
 
-.login-site-tagline {
+.email-for-otp-site-tagline {
     color: white;
     font-size: 18px;
 }
 
-.login-img {
+.email-for-otp-img {
     height: 48.5vh;
 }
 
-.right-section {
+.email-for-otp-right-section {
     display: flex;
     flex-direction: column;
     height: 520px;
     border-radius: 18px;
     padding: 30px 40px;
     margin-top: 0px;
-    
+
     /* Base glassmorphism */
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(30px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    
+
     /* Shine effect */
     position: relative;
     overflow: hidden;
 }
 
-.right-section::after {
+.email-for-otp-right-section::after {
     content: '';
     position: absolute;
     top: -50%;
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(45deg, 
-        transparent 30%, 
-        rgba(255, 255, 255, 0.1) 50%, 
-        transparent 70%
-    );
+    background: linear-gradient(45deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.1) 50%,
+            transparent 70%);
     opacity: 0;
     pointer-events: none;
     animation: shineEvery5s 5s ease-out infinite;
 }
 
 @keyframes shineEvery5s {
-    0% { 
+    0% {
         transform: translateX(-100%) translateY(-100%) rotate(45deg);
         opacity: 0;
     }
-    12% { /* 12% of 5s = 0.6s to fade in */
+
+    12% {
         opacity: 1;
     }
-    60% { /* 60% of 5s = 3s total shine duration */
+
+    60% {
         transform: translateX(100%) translateY(100%) rotate(45deg);
         opacity: 0;
     }
-    61%, 100% { /* Stay hidden for remaining 2s */
+
+    61%,
+    100% {
         transform: translateX(-100%) translateY(-100%) rotate(45deg);
         opacity: 0;
     }
 }
 
-.login-title {
+.email-for-otp-title {
     font-weight: bold;
     font-size: 22px;
 }
 
-.login-subtitle {
+.email-for-otp-subtitle {
     font-size: 16px;
     margin-top: -10px;
-    font-weight: 600;
 }
 
-.email-input-title {
+.email-for-otp-input-title {
     font-size: 14px;
     margin-bottom: 10px;
 }
 
-.rememberMe-forgotPass-div {
-    display: flex;
-    align-items: last baseline;
-    justify-content: space-between;
-}
-
-.checkbox-label-container {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    user-select: none;
-    margin-top: 10px;
-}
-
-.remember-me-checkbox {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-    pointer-events: none;
-}
-
-.custom-checkbox-visual {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 2px solid black;
-    border-radius: 4px;
-    margin-right: 8px;
-    position: relative;
-    transition: all 0.2s ease-in-out;
-    box-sizing: border-box;
-    flex-shrink: 0;
-}
-
-.remember-me-checkbox:checked+.custom-checkbox-visual {
-    background-color: black;
-    border-color: black;
-}
-
-.custom-checkbox-visual::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: translate(-50%, -50%) rotate(45deg);
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out;
-}
-
-.remember-me-checkbox:checked+.custom-checkbox-visual::after {
-    opacity: 1;
-}
-
-.remember-me-text {
-    font-size: 12px;
-}
-
-.forgot-password-text {
-    font-size: 12px;
-    cursor: pointer;
-}
-
-.forgot-password-text:hover {
-    text-decoration: underline;
-}
-
-.login-button {
+.email-for-otp-button {
     border: 2px solid black;
     border-radius: 10px;
     background: transparent;
@@ -228,84 +159,85 @@ input:-webkit-autofill {
     margin-top: 30px;
 }
 
-.login-button:hover {
+.email-for-otp-button:hover {
     background: black;
     color: white;
     border: 2px solid black;
 }
 
-.login-button:focus {
+.email-for-otp-button:focus {
     outline: none;
 }
 
-.sign-up-div {
-    display: flex;
-    gap: 5px;
-    align-self: center;
+.email-for-otp-back-text {
+    font-size: 14px;
+    font-weight: lighter;
+    margin-left: 100px;
 }
 
-.new-to-localloop-text,
-.sign-up-text {
-    font-size: 13px;
-}
-
-.sign-up-text {
+.email-for-otp-login-btn {
     font-weight: bold;
     cursor: pointer;
 }
 
-.sign-up-text:hover {
+.email-for-otp-login-btn:hover {
     text-decoration: underline;
 }
 
-.login-site-name2 {
-    display: none;
+.email-for-otp-loading {
+    height: 30px;
+    width: 30px;
+    margin-left: 140px;
+    margin-top: 4vh;
 }
 
 @media screen and (max-width: 1220px) {
-    .login-main-window {
+    .email-for-otp-main-window {
         padding-left: 5vw;
         gap: 5vw;
     }
 }
 
 @media screen and (max-width: 1080px) {
-    .login-main-window {
+    .email-for-otp-main-window {
         padding-left: 0vw;
     }
 }
 
 @media screen and (max-width: 1130px) {
-    .login-img {
+    .email-for-otp-img {
         display: none;
     }
 
-    .login-main-window {
+    .email-for-otp-main-window {
         flex-direction: column;
         align-items: center;
         gap: 0;
     }
 
-    .left-section {
-        margin-top: -14vh;
+    .email-for-otp-left-section {
+        margin-top: 3vh;
     }
 
-    .right-section input {
+    .email-for-otp-right-section {
+        margin-top: 5vh;
+    }
+
+    .email-for-otp-right-section input {
         width: 57vw;
     }
 
-    .right-section-div {
-        display: flex;
-        flex-direction: column;
-        margin-top: 7vh;
-        gap: 5vh;
+    .email-for-otp-loading {
+        margin-left: 27vw;
     }
 
-    .login-site-name2 {
-        display: block;
-        font-family: "Lexend Giga";
-        color: white;
-        font-size: 48px;
-        margin: 0;
+    .email-for-otp-back-text {
+        margin-left: 23vw;
+    }
+}
+
+@media screen and (max-width: 680px) {
+    .email-for-otp-back-text {
+        margin-left: 19vw;
     }
 }

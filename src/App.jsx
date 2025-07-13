@@ -15,7 +15,10 @@ const Explore = lazy(() => import("./core/public/explore"));
 const ViewWebinar = lazy(() => import("./core/public/view_webinar"));
 const UserProfile = lazy(() => import("./core/private/user/user_profile"));
 const MyBookings = lazy(() => import("./core/private/user/my_bookings"));
-
+const EmailForOtp = lazy(() => import("./core/public/forgot_password/email_for_otp"));
+const VerifyOtp = lazy(() => import("./core/public/forgot_password/verify_otp"));
+const ResetPassword = lazy(() => import("./core/public/forgot_password/reset_password"));
+ 
 function App() {
   const routes = [
     //--------------------------------Public Routes---------------------------------------
@@ -74,6 +77,36 @@ function App() {
       element: (
         <Suspense>
           <ViewWebinar />
+        </Suspense>
+      ),
+      errorElement: <>error</>
+    },
+
+    {
+      path: "/email-for-otp",
+      element: (
+        <Suspense>
+          <EmailForOtp />
+        </Suspense>
+      ),
+      errorElement: <>error</>
+    },
+
+    {
+      path: "/verify-otp",
+      element: (
+        <Suspense>
+          <VerifyOtp />
+        </Suspense>
+      ),
+      errorElement: <>error</>
+    },
+
+    {
+      path: "/reset-password",
+      element: (
+        <Suspense>
+          <ResetPassword />
         </Suspense>
       ),
       errorElement: <>error</>
