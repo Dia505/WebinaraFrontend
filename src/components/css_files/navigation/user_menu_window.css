@@ -1,0 +1,67 @@
+.user-menu-window-div {
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border-radius: 15px;
+    border: 5px solid #7d97f9;
+    background-color: white;
+    gap: 10px;
+}
+
+.user-main-window-user-details-div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-left: 30px;
+    padding-right: 100px;
+}
+
+.user-main-window-user-img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: 1px black solid;
+    object-fit: cover;
+    object-position: center;
+}
+
+.user-main-window-user-name {
+    font-size: 18px;
+    color: black;
+}
+
+.user-main-window-nav-btns-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-main-window-btn-div, .user-main-window-logout-div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    padding-left: 40px;
+}
+
+.user-main-window-btn-div:hover {
+    background-color: rgba(116, 116, 116, 0.25);
+}
+
+.user-main-window-icon {
+    height: 30px;
+}
+
+.user-main-window-btn, .user-main-window-logout-btn {
+    font-weight: lighter;
+    color: black;
+}
+
+.user-main-window-logout-div {
+    margin-top: 20px;
+}
+
+.user-main-window-logout-btn:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}

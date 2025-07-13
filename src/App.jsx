@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from './context/auth_context';
+import AuthRoute from './routes/auth_route';
 
 const queryClient = new QueryClient();
 
@@ -12,6 +13,7 @@ const Register = lazy(() => import("./core/public/register"));
 const Home = lazy(() => import("./core/public/home"));
 const Explore = lazy(() => import("./core/public/explore"));
 const ViewWebinar = lazy(() => import("./core/public/view_webinar"));
+const UserProfile = lazy(() => import("./core/private/user/user_profile"));
 
 function App() {
   const routes = [
@@ -74,7 +76,15 @@ function App() {
         </Suspense>
       ),
       errorElement: <>error</>
-    }
+    },
+
+    //-------------------------------------------------------------------------------------------------
+    {
+      path: "/user-profile",
+      element: (
+        <AuthRoute requiredRole="user" element={<Suspense><UserProfile /></Suspense>} />
+      )
+    },
   ]
 
   const router = createBrowserRouter(routes);

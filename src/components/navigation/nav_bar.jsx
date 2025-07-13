@@ -1,10 +1,11 @@
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth_context";
-import { jwtDecode } from "jwt-decode";
 
 import "../css_files/navigation/nav_bar.css";
+import UserMenuWindow from "./user_menu_window";
 
 function NavBar() {
     const { authToken } = useAuth();
@@ -14,6 +15,7 @@ function NavBar() {
     const navigate = useNavigate();
 
     const [user, setUser] = useState(null);
+    const [isMenuWindowOpen, setIsMenuWindowOpen] = useState(false);
 
     useEffect(() => {
         const fetchUserDetails = async () => {
@@ -60,12 +62,8 @@ function NavBar() {
 
                 <div className="nav-bar-auth-buttons">
                     {isLoggedIn ? (
-                        <img className="profile" src={
-                            user?.profilePicture
-                            // ? user.profilePicture
-                            // : "http://localhost:3000/user-images/default_profile_img.png"
-                        }
-                        // onClick={() => { setIsMenuWindowOpen((prev) => !prev) }}
+                        <img className="profile" src={user?.profilePicture}
+                            onClick={() => { setIsMenuWindowOpen((prev) => !prev) }}
                         />
                     ) : (
                         <div className="login-signup-div">
@@ -74,6 +72,17 @@ function NavBar() {
                         </div>
                     )}
                 </div>
+
+                {isMenuWindowOpen && (
+                    <div className="user-menu-window">
+                        <UserMenuWindow
+                            userProfilePicture={user?.profilePicture}
+                            userFullName={user?.fullName}
+                            isMenuWindowOpen={isMenuWindowOpen}
+                            setIsMenuWindowOpen={setIsMenuWindowOpen}
+                        />
+                    </div>
+                )}
             </div>
         </>
     )
