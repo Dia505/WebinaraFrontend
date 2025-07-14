@@ -57,7 +57,9 @@ function WebinarCard({ webinarPhoto, title, date, startTime, endTime, level, lan
 
                 <div className="webinar-card-btns-div">
                     <button className="webinar-card-btn" onClick={() => navigate(`/webinar-details/${_id}`)}>Details</button>
-                    <button className="webinar-card-btn" onClick={onInsightsClick}>Insights</button>
+                    {totalSeats != null && (
+                        <button className="webinar-card-btn" onClick={onInsightsClick}>Insights</button>
+                    )}
                 </div>
             </div>
         </>

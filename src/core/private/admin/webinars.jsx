@@ -6,7 +6,7 @@ import { useAuth } from "../../../context/auth_context";
 
 import noWebinars from "../../../assets/no_webinars.png";
 // import EventCreationWrapper from "../../../components/organizer_events/event_creation_wrapper";
-// import Insights from "../../../components/organizer_events/insights";
+import Insights from "../../../components/webinars/insights";
 import AdminSideBar from "../../../components/navigation/admin_side_bar";
 import WebinarCard from "../../../components/webinars/webinar_card";
 import "../../css_files/private/admin/webinars.css";
@@ -95,24 +95,24 @@ function Webinars() {
 
                         }
                     </div>
-
-                    {/* {showCreateEventForm && (
+{/* 
+                    {showCreateEventForm && (
                         <>
                             <div className="my-events-overlay" onClick={() => setShowCreateEventForm(false)}></div>
                             <div className="my-events-form-modal">
                                 <EventCreationWrapper closeForm={() => setShowCreateEventForm(false)} />
                             </div>
                         </>
-                    )}
+                    )} */}
 
-                    {showInsights && selectedEventForInsights && (
+                    {showInsights && selectedWebinarForInsights && (
                         <>
-                            <div className="my-events-overlay" onClick={() => setShowInsights(false)}></div>
-                            <div className="my-events-form-modal2">
-                                <Insights event={selectedEventForInsights} closeForm={() => setShowInsights(false)} />
+                            <div className="webinars-overlay" onClick={() => setShowInsights(false)}></div>
+                            <div className="webinars-form-modal2">
+                                <Insights webinar={selectedWebinarForInsights} closeForm={() => setShowInsights(false)} />
                             </div>
                         </>
-                    )} */}
+                    )}
 
                 </div>
             </div>

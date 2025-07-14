@@ -204,7 +204,6 @@ body {
 
 @media (max-width: 740px) {
     .webinars-form-modal2 {
-        top: 3vh;
         left: 5vw;
     }
 }
