@@ -1,0 +1,371 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    overflow-x: hidden;
+    background-color: white;
+}
+
+.webinar-details-main-window {
+    display: flex;
+}
+
+.webinar-details-main-div {
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    margin-left: 250px;
+    gap: 5vh;
+}
+
+.webinar-details-img {
+    height: 55vh;
+    width: 30vw;
+    border-radius: 10px;
+    object-fit: cover;
+    object-position: center;
+    margin-left: 25vw;
+}
+
+.webinar-details-title-edit-div {
+    display: flex;
+    gap: 1vw;
+    margin-left: 2vw;
+}
+
+.webinar-details-title,
+.host-details-title {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: black;
+}
+
+.webinar-details-edit-icon {
+    height: 35px;
+    cursor: pointer;
+}
+
+.webinar-details-details-div {
+    display: flex;
+    gap: 10vw;
+    margin-left: 10vw;
+}
+
+.webinar-details-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.webinar-details-detail-title {
+    color: #666666;
+    font-size: 18px;
+}
+
+.webinar-details-detail {
+    color: black;
+}
+
+.webinar-details-subtitle-div {
+    width: 300px;
+}
+
+.webinar-details-divider {
+    height: 1px;
+    width: 70vw;
+    background-color: black;
+    margin-left: 2vw;
+}
+
+.host-details-title {
+    margin-left: 2vw;
+}
+
+.host-details-div {
+    display: flex;
+    gap: 20px;
+    margin-left: 5vw;
+}
+
+.host-details-img {
+    height: 250px;
+    width: 250px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+}
+
+.webinar-details-host-expertise-div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 300px;
+}
+
+.host-expertise-item {
+    background-color: black;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.webinar-details-social-link-div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 350px;
+}
+
+.webinar-details-social-link {
+    background-color: black;
+    border-radius: 20px;
+    padding: 8px 30px 8px 30px;
+    width: fit-content;
+}
+
+.host-social-link {
+    font-size: 14px;
+    color: #7d97f9;
+}
+
+.webinar-details-delete-btn {
+    transition: background-color 0.3s ease;
+    border-radius: 15px;
+    width: 215px;
+    padding: 12px 0;
+    margin-top: 25px;
+    margin-left: 40px;
+    color: black;
+    font-weight: 600;
+    background-color: transparent;
+    border: 2px red solid;
+    margin-left: 30vw;
+}
+
+.webinar-details-delete-btn:hover {
+    background-color: black;
+    color: red;
+    border: 2px black solid;
+}
+
+.webinar-details-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.67);
+    z-index: 999;
+}
+
+.webinar-details-delete-form-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 600px;
+    border: 2px black solid;
+    border-radius: 20px;
+    padding-bottom: 50px;
+}
+
+.webinar-details-form-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 600px;
+    border: 2px black solid;
+    border-radius: 20px;
+    padding-bottom: 50px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.webinar-details-form-modal2 {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+
+    background: white;
+    padding: 2rem;
+    border: 4px solid black;
+    border-radius: 20px;
+
+    width: 90%;
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.webinar-details-delete-pop-up {
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 60px;
+    padding-right: 60px;
+    align-items: center;
+    gap: 10px;
+}
+
+.webinar-details-delete-icon {
+    height: 7vh;
+}
+
+.webinar-details-delete-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 0;
+    color: black;
+}
+
+.webinar-details-subtitle-div p {
+    color: black;
+    text-align: center;
+}
+
+.webinar-details-delete-pop-up-btns {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.delete-pop-up-cancel-btn {
+    border: 2px solid black;
+    border-radius: 15px;
+    background: transparent;
+    color: black;
+    font-weight: bold;
+    font-size: 15px;
+    width: 150px;
+}
+
+.delete-pop-up-delete-btn {
+    background-color: black;
+    border-radius: 15px;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    width: 150px;
+}
+
+@media (max-width: 1220px) {
+    .webinar-details-details-div {
+        margin-left: 0vw;
+    }
+
+    .webinar-details-title-edit-div {
+        margin-left: 0vw;
+    }
+
+    .webinar-details-divider {
+        margin-left: 0vw;
+    }
+
+    .host-details-title {
+        margin-left: 0vw;
+    }
+
+    .host-details-div {
+        margin-left: 0vw;
+    }
+}
+
+@media (max-width: 1100px) {
+    .webinar-details-main-div {
+        margin-left: 230px;
+    }
+}
+
+@media (max-width: 1050px) {
+    .webinar-details-side-bar {
+        display: none;
+    }
+
+    .webinar-details-main-div {
+        margin-left: 5vw;
+    }
+
+    .webinar-details-img {
+        width: 370px;
+    }
+
+    .webinar-details-divider {
+        width: 75vw;
+    }
+
+    .host-details-div {
+        flex-direction: column;
+        gap: 0px;
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 850px) {
+    .webinar-details-main-div {
+        margin-left: 0px;
+        padding-left: 20px;
+    }
+}
+
+@media (max-width: 830px) {
+    .webinar-details-details-div{
+        flex-direction: column;
+        gap: 0px;
+        padding: 0 20px;
+    }
+
+    .webinar-details-details {
+        gap: 0px;
+    }
+
+    .webinar-details-detail-title {
+        font-size: 16px;
+    }
+
+    .webinar-details-subtitle-div {
+        width: 100%;
+        word-wrap: break-word;
+    }
+
+    .webinar-details-subtitle-div p {
+        text-align: start;
+    }
+
+    .webinar-details-delete-form-modal {
+        width: 80vw;
+    }
+
+    .webinar-details-divider {
+        width: 90vw;
+    }
+}
+
+@media (max-width: 725px) {
+    .webinar-details-img {
+        margin-left: 8vw;
+    }
+}
+
+@media (max-width: 600px) {
+    .webinar-details-delete-btn {
+        margin-left: 24vw;
+    }
+
+    .webinar-details-form-modal {
+        max-width: 380px;
+    }
+}
