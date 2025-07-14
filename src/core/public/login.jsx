@@ -40,7 +40,11 @@ function Login() {
 
             login(response.token);
 
-            navigate("/");
+            if (response.role === "user") {
+                navigate("/");
+            } else if (response.role === "admin") {
+                navigate("/dashboard");
+            }
         },
         onError: (error) => {
             console.log(error);

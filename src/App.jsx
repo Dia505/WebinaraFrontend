@@ -18,6 +18,7 @@ const MyBookings = lazy(() => import("./core/private/user/my_bookings"));
 const EmailForOtp = lazy(() => import("./core/public/forgot_password/email_for_otp"));
 const VerifyOtp = lazy(() => import("./core/public/forgot_password/verify_otp"));
 const ResetPassword = lazy(() => import("./core/public/forgot_password/reset_password"));
+const Dashboard = lazy(() => import("./core/private/admin/dashboard"));
  
 function App() {
   const routes = [
@@ -124,6 +125,13 @@ function App() {
       path: "/my-bookings",
       element: (
         <AuthRoute requiredRole="user" element={<Suspense><MyBookings /></Suspense>} />
+      )
+    },
+
+    {
+      path: "/dashboard",
+      element: (
+        <AuthRoute requiredRole="admin" element={<Suspense><Dashboard /></Suspense>} />
       )
     },
   ]

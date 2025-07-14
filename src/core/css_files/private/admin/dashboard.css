@@ -1,0 +1,12 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    overflow-x: hidden;
+    background-color: white;
+}
+
+.dashboard-main-window {
+    display: flex;
+}

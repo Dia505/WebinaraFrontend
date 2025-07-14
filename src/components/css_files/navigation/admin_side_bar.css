@@ -1,0 +1,128 @@
+p {
+    color: white;
+}
+
+.admin-side-bar-main-div {
+    display: flex;
+    flex-direction: column;
+    background-color: #232541;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 500;
+    padding-top: 20px;
+    width: 250px;
+    gap: 13vh;
+}
+
+.admin-side-bar-site-title {
+    font-family: "Lexend Giga";
+    color: white;
+    font-size: 26px;
+    margin-left: 2vw;
+}
+
+.admin-side-bar-nav-btns-div {
+    display: flex;
+    flex-direction: column;
+    margin-top: -13vh;
+}
+
+.main-menu-text {
+    font-size: 14px;
+    padding-left: 17px;
+}
+
+.admin-side-bar-divider {
+    height: 1px;
+    background-color: black;
+}
+
+.admin-side-bar-btn-div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    padding-left: 17px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: relative; 
+    overflow: hidden;
+}
+
+.admin-side-bar-btn-div:hover {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.admin-side-bar-btn-div:hover::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, 
+        transparent 30%, 
+        rgba(255, 255, 255, 0.1) 50%, 
+        transparent 70%
+    );
+    opacity: 0;
+    pointer-events: none;
+    animation: shineEvery5s 5s ease-out infinite;
+}
+
+@keyframes shineEvery5s {
+    0% { 
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        opacity: 0;
+    }
+    12% {
+        opacity: 1;
+    }
+    60% { 
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+        opacity: 0;
+    }
+    61%, 100% { 
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        opacity: 0;
+    }
+}
+
+.admin-side-bar-selected-btn {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    padding-left: 17px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.admin-side-bar-icon {
+    height: 30px;
+}
+
+.admin-side-bar-webinar-icon {
+    height: 40px;
+}
+
+.admin-side-bar-logout-div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-left: 4.2vw;
+    position: fixed;
+    bottom: 4vh;
+}
+
+.admin-side-bar-logout-btn:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
