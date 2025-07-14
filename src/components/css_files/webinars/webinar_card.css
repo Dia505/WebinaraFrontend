@@ -1,0 +1,129 @@
+.webinar-card-main-div {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    transition: height 0.3s ease;
+    height: 500px;
+    cursor: pointer;
+    width: 250px;
+    align-items: center;
+}
+
+.webinar-card-main-div:hover {
+    height: 650px; 
+}
+
+.webinar-card-img {
+    width: 100%;
+    height: 188px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 8px;
+    display: block;
+}
+
+.webinar-card-title {
+    font-weight: 600;
+    font-size: 17px;
+    color: black;
+}
+
+.webinar-card-icon-detail-div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.webinar-card-icon {
+    height: 25px;
+}
+
+.webinar-card-detail {
+    color: #7A7A7A;
+    font-weight: 600;
+}
+
+.limited-seats-text {
+    color: red;
+    font-size: 14px;
+}
+
+.webinar-card-btns-div {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.webinar-card-btn {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease, background-color 0.3s ease;
+  border-radius: 15px;
+  width: 215px;
+  padding: 12px 0;
+  color: black;
+  background-color: white;
+  border: 2px black solid;
+}
+
+.webinar-card-btn:hover {
+    background-color: black;
+    color: white;
+    border: 2px black solid;
+}
+
+.webinar-card-main-div:hover .webinar-card-btn {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+@media (max-width: 1350px) {
+    .webinar-card-img {
+        height: 15vw;
+    }
+
+    .webinar-card-main-div,
+    .webinar-card-main-div-hover {
+        width: 27vw;
+    }
+}
+
+@media (max-width: 1140px) {
+    .webinar-card-img {
+        height: 20vw;
+    }
+
+    .webinar-card-main-div,
+    .webinar-card-main-div-hover {
+        width: 45vw;
+    }
+}
+
+@media (max-width: 880px) {
+    .webinar-card-img {
+        height: 20vw;
+    }
+
+    .webinar-card-main-div,
+    .webinar-card-main-div-hover {
+        width: 32vw;
+    }
+}
+
+@media (max-width: 790px) {
+    .webinar-card-img {
+        height: 30vw;
+    }
+
+    .webinar-card-main-div,
+    .webinar-card-main-div-hover {
+        width: 60vw;
+    }
+}

@@ -32,8 +32,8 @@ function AdminSideBar() {
                         </div>
                     </Link>
 
-                    <Link to="/webinar">
-                        <div className={location.pathname === "/webinar" ? "admin-side-bar-selected-btn" : "admin-side-bar-btn-div"}>
+                    <Link to="/webinars">
+                        <div className={location.pathname === "/webinars" ? "admin-side-bar-selected-btn" : "admin-side-bar-btn-div"}>
                             <img className="admin-side-bar-webinar-icon" src={webinar} />
                             <p>Webinars</p>
                         </div>

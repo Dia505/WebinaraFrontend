@@ -19,6 +19,7 @@ const EmailForOtp = lazy(() => import("./core/public/forgot_password/email_for_o
 const VerifyOtp = lazy(() => import("./core/public/forgot_password/verify_otp"));
 const ResetPassword = lazy(() => import("./core/public/forgot_password/reset_password"));
 const Dashboard = lazy(() => import("./core/private/admin/dashboard"));
+const Webinars = lazy(() => import("./core/private/admin/webinars"));
  
 function App() {
   const routes = [
@@ -132,6 +133,13 @@ function App() {
       path: "/dashboard",
       element: (
         <AuthRoute requiredRole="admin" element={<Suspense><Dashboard /></Suspense>} />
+      )
+    },
+
+    {
+      path: "/webinars",
+      element: (
+        <AuthRoute requiredRole="admin" element={<Suspense><Webinars /></Suspense>} />
       )
     },
   ]
