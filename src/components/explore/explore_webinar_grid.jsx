@@ -23,34 +23,32 @@ function ExploreWebinarGrid({ webinars, fullyBookedWebinars, alreadyBookedWebina
         }).toLowerCase();
     };
 
-    console.log("Already booked webinars: ", alreadyBookedWebinars);
-
     return (
         <div className="explore-webinars-div">
             {webinars.map((webinar) => {
-                const isFullyBooked = fullyBookedWebinars.some(fb => fb._id === webinar._doc?._id || fb._id === webinar._id);
-                const isAlreadyBooked = alreadyBookedWebinars.some(ab => ab._id === webinar._doc?._id || ab._id === webinar._id);
+                const isFullyBooked = fullyBookedWebinars.some(fb => fb._id === webinar._id);
+                const isAlreadyBooked = alreadyBookedWebinars.some(ab => ab._id === webinar._id);
 
                 return (
                     <div
-                        key={webinar._doc?._id || webinar._id}
+                        key={webinar._id}
                         className={
-                            webinar._doc?.totalSeats != null || webinar.totalSeats != null && !isFullyBooked && !isAlreadyBooked
+                            webinar.totalSeats != null && !isFullyBooked && !isAlreadyBooked
                                 ? "webinar-card-hover"
                                 : "webinar-card"
                         }
-                        onClick={() => navigate(`/view-webinar/${webinar._doc?._id || webinar._id}`)}
+                        onClick={() => navigate(`/view-webinar/${webinar._id}`)}
                     >
                         <img className="webinar-img" src={webinar.webinarPhoto} alt="webinar" />
 
                         <div className="webinar-details-div">
-                            <p className="webinar-title">{webinar._doc?.title || webinar.title}</p>
+                            <p className="webinar-title">{webinar.title}</p>
                         </div>
 
                         <div className="webinar-icon-detail-div">
                             <img className="webinar-icon" src={blueCalendar} alt="calendar" />
                             <p className="webinar-detail">
-                                {new Date(webinar._doc?.date || webinar.date).toLocaleDateString('en-US', {
+                                {new Date(webinar.date).toLocaleDateString('en-US', {
                                     year: 'numeric',
                                     month: 'long',
                                     day: 'numeric',
@@ -61,23 +59,23 @@ function ExploreWebinarGrid({ webinars, fullyBookedWebinars, alreadyBookedWebina
                         <div className="webinar-icon-detail-div">
                             <img className="webinar-icon" src={blueClock} alt="clock" />
                             <p className="webinar-detail">
-                                {webinar._doc?.endTime || webinar.endTime
-                                    ? `${formatTo12Hour(webinar._doc?.startTime || webinar.startTime)} - ${formatTo12Hour(webinar._doc?.endTime || webinar.endTime)}`
-                                    : `${formatTo12Hour(webinar._doc?.startTime || webinar.startTime)} onwards`}
+                                {webinar.endTime
+                                    ? `${formatTo12Hour(webinar.startTime)} - ${formatTo12Hour(webinar.endTime)}`
+                                    : `${formatTo12Hour(webinar.startTime)} onwards`}
                             </p>
                         </div>
 
                         <div className="webinar-icon-detail-div">
                             <img className="webinar-icon" src={blueLevel} alt="level" />
                             <p className="webinar-detail">
-                                {webinar._doc?.level || webinar.level}
+                                {webinar.level}
                             </p>
                         </div>
 
                         <div className="webinar-icon-detail-div">
                             <img className="webinar-icon" src={blueLanguage} alt="language" />
                             <p className="webinar-detail">
-                                {webinar._doc?.language || webinar.language}
+                                {webinar.language}
                             </p>
                         </div>
 
@@ -97,17 +95,17 @@ function ExploreWebinarGrid({ webinars, fullyBookedWebinars, alreadyBookedWebina
                                         : "Fully Booked"}
                                 </div>
                             )}
-                            {webinar._doc?.totalSeats || webinar.totalSeats != null && <p className="limited-seats-text">*Limited seats</p>}
+                            {webinar.totalSeats != null && <p className="limited-seats-text">*Limited seats</p>}
                         </div>
 
-                        {webinar._doc?.totalSeats || webinar.totalSeats != null && (
+                        {webinar.totalSeats != null && (
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
                                 <button
                                     className="webinar-btn"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         if (authToken) {
-                                            navigate(`/webinar-details/${webinar._doc?._id || webinar._id}`, {
+                                            navigate(`/webinar-details/${webinar._id}`, {
                                                 state: { openBookingForm: true },
                                             });
                                         } else {
