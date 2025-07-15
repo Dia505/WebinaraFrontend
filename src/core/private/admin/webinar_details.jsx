@@ -6,8 +6,8 @@ import { useAuth } from "../../../context/auth_context";
 
 import deleteIcon from "../../../assets/delete.png";
 import editIcon from "../../../assets/edit.png";
-// import EventEditForm from "../../../components/organizer_events/event_edit_form";
 import AdminSideBar from "../../../components/navigation/admin_side_bar";
+import EditWebinarForm from "../../../components/webinars/edit_webinar_form";
 import "../../css_files/private/admin/webinar_details.css";
 
 function WebinarDetails() {
@@ -55,6 +55,12 @@ function WebinarDetails() {
     const handleDeleteWebinar = async () => {
         try {
             await axios.delete(`http://localhost:3000/api/webinar/${webinar._id}`, {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                }
+            });
+
+            await axios.delete(`http://localhost:3000/api/host/${webinar.hostId._id}`, {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 }
@@ -173,7 +179,7 @@ function WebinarDetails() {
                                         try {
                                             domain = new URL(link).hostname.replace("www.", "");
                                         } catch {
-                                            domain = link; 
+                                            domain = link;
                                         }
 
                                         return (
@@ -227,14 +233,14 @@ function WebinarDetails() {
                         </>
                     )}
 
-                    {/* {showWebinarEditForm && (
+                    {showWebinarEditForm && (
                         <>
                             <div className="webinar-details-overlay" onClick={() => setShowWebinarEditForm(false)}></div>
                             <div className="webinar-details-form-modal2">
-                                <WebinarEditForm webinar={webinar} closeForm={() => setShowWebinarEditForm(false)} />
+                                <EditWebinarForm webinar={webinar} closeForm={() => setShowWebinarEditForm(false)} />
                             </div>
                         </>
-                    )} */}
+                    )}
                 </div>
             </div>
         </>

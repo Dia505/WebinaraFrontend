@@ -7,53 +7,47 @@ import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useAuth } from '../../context/auth_context';
 
-import createWebinarImg from "../../assets/create_webinar_img.jpg";
 import "../css_files/webinars/create_webinar_form.css";
 
 const fullWebinarSchema = yup.object().shape({
-    // Webinar fields
-    title: yup.string().required("*required"),
+    title: yup.string(),
     subtitle: yup
         .string()
-        .required("*required")
         .max(300, "Subtitle must be less than 300 characters"),
-    category: yup.string().required("*required"),
-    level: yup.string().required("*required"),
-    language: yup.string().required("*required"),
+    category: yup.string(),
+    level: yup.string(),
+    language: yup.string(),
     date: yup
         .date()
-        .transform((value, originalValue) => (originalValue === "" ? undefined : value))
-        .required("*required"),
-    startTime: yup.string().required("*required"),
+        .transform((value, originalValue) => (originalValue === "" ? undefined : value)),
+    startTime: yup.string(),
     endTime: yup.string(),
-    webinarPhoto: yup.mixed().required("*Please upload an image"),
+    webinarPhoto: yup.mixed(),
 
-    // Host fields (nested)
     host: yup.object().shape({
-        fullName: yup.string().required("*required"),
+        fullName: yup.string(),
         bio: yup
             .string()
-            .required("*required")
             .max(300, "Bio must be less than 300 characters"),
-        email: yup.string().email("Invalid email").required("*required"),
-        expertise: yup.string().required("*required"),
+        email: yup.string().email("Invalid email"),
+        expertise: yup.string(),
         socialMediaLinks: yup
             .array()
-            .of(yup.string().url("Invalid URL").required("*required"))
+            .of(yup.string().url("Invalid URL"))
             .min(1, "*At least one website is required"),
-        profilePicture: yup.mixed().required("*Please upload an image"),
+        profilePicture: yup.mixed(),
     }),
 });
 
-function CreateWebinarForm({ closeForm }) {
+function EditWebinarForm({ webinar, closeForm }) {
     const { authToken } = useAuth();
 
-    const [previewImage, setPreviewImage] = useState(createWebinarImg);
+    const [previewImage, setPreviewImage] = useState("");
     const [selectedFile, setSelectedFile] = useState(null);
     const [subtitleLength, setSubtitleLength] = useState(0);
     const [limitedSeats, setLimitedSeats] = useState(false);
 
-    const [hostPreviewImg, setHostPreviewImg] = useState(createWebinarImg);
+    const [hostPreviewImg, setHostPreviewImg] = useState("");
     const [selectedHostImg, setSelectedHostImg] = useState(null);
     const [bioLength, setBioLength] = useState(0);
     const [chipInput, setChipInput] = useState("");
@@ -71,6 +65,41 @@ function CreateWebinarForm({ closeForm }) {
         resolver: yupResolver(fullWebinarSchema),
         mode: "all"
     });
+
+    useEffect(() => {
+        const fetchWebinarDetails = async () => {
+            try {
+                if (webinar) {
+                    setValue("title", webinar.title);
+                    setValue("subtitle", webinar.subtitle);
+                    setSubtitleLength(webinar.subtitle.length);
+                    setValue("category", webinar.category);
+                    setValue("level", webinar.level);
+                    setValue("language", webinar.language);
+                    setValue("date", webinar.date?.split("T")[0]);
+                    setValue("startTime", webinar.startTime);
+                    setValue("endTime", webinar.endTime);
+                    if (webinar.totalSeats != null) {
+                        setLimitedSeats(true);
+                        setValue("totalSeats", webinar.totalSeats);
+                    }
+                    setPreviewImage(webinar.webinarPhoto);
+                }
+
+                setValue("host.fullName", webinar.hostId.fullName);
+                setValue("host.bio", webinar.hostId.bio);
+                setSubtitleLength(webinar.hostId.bio.length);
+                setValue("host.email", webinar.hostId.email);
+                setValue("host.expertise", webinar.hostId.expertise.join(", "));
+                setHostPreviewImg(webinar.hostId.profilePicture);
+                setChips(webinar.hostId.socialMediaLinks || []);
+            } catch (err) {
+                console.error("Failed to fetch webinar data", err);
+            }
+        };
+
+        fetchWebinarDetails();
+    }, [webinar]);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -122,87 +151,92 @@ function CreateWebinarForm({ closeForm }) {
         setValue("host.socialMediaLinks", chips, { shouldValidate: true });
     }, [chips]);
 
-    const submitWebinar = async (data) => {
+    const onSubmit = async (data) => {
         try {
-            // Step 1: Create host first
-            const hostFormData = new FormData();
-            hostFormData.append("fullName", data.host.fullName);
-            hostFormData.append("bio", data.host.bio);
-            hostFormData.append("email", data.host.email);
+            const updatedHost = {
+                fullName: data.host.fullName,
+                bio: data.host.bio,
+                email: data.host.email,
+                expertise: data.host.expertise.split(',').map(e => e.trim()),
+                socialMediaLinks: data.host.socialMediaLinks,
+            }
 
-            data.host.expertise
-                .split(',')
-                .map(item => item.trim())
-                .forEach(item => {
-                    hostFormData.append("expertise[]", item);
+            if (hostPreviewImg !== webinar.hostId.profilePicture && selectedHostImg) {
+                const formData = new FormData();
+                formData.append("profilePicture", selectedHostImg);
+
+                const hostProfilePictureResponse = await fetch(
+                    `http://localhost:3000/api/host/${webinar.hostId._id}/profile-picture`,
+                    {
+                        method: "PUT",
+                        headers: {
+                            Authorization: `Bearer ${authToken}`,
+                        },
+                        body: formData,
+                    }
+                );
+            }
+
+            const hostReponse = await fetch(
+                `http://localhost:3000/api/host/${webinar.hostId._id}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        Authorization: `Bearer ${authToken}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(updatedHost),
+                }
+            );
+
+            const updatedWebinar = {
+                title: data.title,
+                subtitle: data.subtitle,
+                category: data.category,
+                level: data.level,
+                language: data.language,
+                date: data.date,
+                startTime: data.startTime,
+                endTime: data.endTime,
+                totalSeats: limitedSeats ? data.totalSeats : null
+            }
+
+            await fetch(`http://localhost:3000/api/webinar/${webinar._id}`, {
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(updatedWebinar),
+            });
+
+            if (selectedFile) {
+                const imageForm = new FormData();
+                imageForm.append("webinarPhoto", selectedFile);
+
+                await fetch(`http://localhost:3000/api/webinar/${webinar._id}/webinar-image`, {
+                    method: "PUT",
+                    headers: {
+                        Authorization: `Bearer ${authToken}`,
+                    },
+                    body: imageForm,
                 });
-
-
-            data.host.socialMediaLinks.forEach(url => {
-                hostFormData.append("socialMediaLinks[]", url);
-            });
-            if (selectedHostImg) hostFormData.append("profilePicture", selectedHostImg);
-
-            const hostResponse = await axios.post("http://localhost:3000/api/host", hostFormData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    Authorization: `Bearer ${authToken}`,
-                },
-            });
-
-            const hostId = hostResponse.data.host._id;
-
-            // Step 2: Create webinar using hostId
-            const webinarFormData = new FormData();
-            webinarFormData.append("title", data.title);
-            webinarFormData.append("subtitle", data.subtitle);
-            webinarFormData.append("category", data.category);
-            webinarFormData.append("level", data.level);
-            webinarFormData.append("language", data.language);
-            webinarFormData.append("date", new Date(data.date).toISOString());
-            webinarFormData.append("startTime", data.startTime);
-            if (data.endTime) webinarFormData.append("endTime", data.endTime);
-            if (data.totalSeats) webinarFormData.append("totalSeats", data.totalSeats);
-            webinarFormData.append("hostId", hostId);
-
-            if (selectedFile) webinarFormData.append("webinarPhoto", selectedFile);
-
-            const webinarResponse = await axios.post("http://localhost:3000/api/webinar", webinarFormData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    Authorization: `Bearer ${authToken}`,
-                },
-            });
-
-            toast.success("Webinar created successfully!", {
-                position: "top-center",
-                autoClose: 3000,
-                theme: "colored",
-            });
-
-            const webinarId = webinarResponse.data._id;
+            }
+            
+            toast.success("Webinar updated successfully!");
+            navigate(`/webinar-details/${webinar._id}`);
             closeForm();
-            navigate(`/webinar-details/${webinarId}`);
         } catch (err) {
-            console.error("Failed to create webinar: ", err);
-            toast.error("Failed to create the webinar. Please try again.", {
-                position: "top-center",
-                autoClose: 3000,
-                theme: "colored",
-            });
+            console.error("Failed to update webinar:", err);
+            toast.error("Update failed.");
         }
-    };
-
-    const onSubmit = (data) => {
-        console.log("Submitting webinar with data:", data);
-        submitWebinar(data);
     };
 
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="create-webinar-form-main-div">
-                    <p className="create-webinar-form-title">Create webinar</p>
+                    <p className="create-webinar-form-title">Edit webinar</p>
                     <p className='create-webinar-form-title2'>Webinar details</p>
 
                     <div className="create-webinar-form-centre-div">
@@ -488,7 +522,7 @@ function CreateWebinarForm({ closeForm }) {
                                     type="submit"
                                     className="create-webinar-form-update-btn"
                                 >
-                                    Create webinar
+                                    Update webinar
                                 </button>
                             </div>
                         </div>
@@ -499,4 +533,4 @@ function CreateWebinarForm({ closeForm }) {
     )
 }
 
-export default CreateWebinarForm;
+export default EditWebinarForm;
