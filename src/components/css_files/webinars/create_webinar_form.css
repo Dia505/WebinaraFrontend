@@ -1,0 +1,358 @@
+input {
+    border: 1px solid;
+    border-radius: 10px;
+    border-color: black;
+    background-color: transparent;
+    height: 28px;
+    width: 300px;
+    color: black;
+    outline: none;
+    padding-left: 15px;
+    padding-top: 4px;
+    padding-bottom: 2px;
+}
+
+.input-error {
+    border-color: red;
+}
+
+.input-error:focus {
+    border-width: 2px;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+    margin-bottom: 0px;
+}
+
+input:focus {
+    border-width: 2px;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+    -webkit-text-fill-color: black !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+input[type="date"],
+input[type="time"] {
+    color: #333;
+    background-color: white;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 1;
+}
+
+
+textarea {
+    border: 1px solid;
+    border-radius: 10px;
+    border-color: black;
+    background-color: transparent;
+    color: black;
+    outline: none;
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 300px;
+    height: 80px;
+}
+
+.textarea-error {
+    border-color: red;
+}
+
+.textarea-error:focus {
+    border-width: 2px;
+}
+
+.textarea:focus {
+    border-width: 2px;
+}
+
+select {
+    border: 1px solid;
+    border-radius: 10px;
+    border-color: black;
+    background-color: transparent;
+    width: 21vw;
+    height: 35.5px;
+    color: black;
+    outline: none;
+    padding-left: 15px;
+    padding-top: 4px;
+    padding-bottom: 2px;
+}
+
+select option {
+    background-color: black;
+    color: white;
+}
+
+.select-error {
+    border-color: red;
+}
+
+.select-error option {
+    background-color: black;
+    color: white;
+}
+
+.create-webinar-form-main-div {
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+}
+
+.create-webinar-form-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 0;
+    color: black;
+}
+
+.create-webinar-form-centre-div {
+    display: flex;
+    gap: 3vw;
+}
+
+.create-webinar-form-img-div {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.create-webinar-form-hidden-img-input {
+    display: none;
+}
+
+.create-webinar-form-img-btn {
+    border: 2px solid black;
+    border-radius: 15px;
+    background: transparent;
+    color: black;
+    font-family: "Playfair Display";
+    font-weight: bold;
+    font-size: 15px;
+    transition: background-color 0.3s ease-in-out 0s;
+}
+
+.create-webinar-form-img-btn:hover {
+    background: black;
+    color: white;
+    border: 2px solid black;
+}
+
+.create-webinar-form-img-btn:focus {
+    outline: none;
+}
+
+.create-webinar-form-img {
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+}
+
+.create-webinar-form-input-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.create-webinar-form-input-label {
+    color: #666666;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.textarea-container {
+    position: relative;
+}
+
+.char-count {
+    position: absolute;
+    bottom: 6px;
+    right: 10px;
+    font-size: 12px;
+    color: #666;
+}
+
+.create-webinar-form-address-city-div {
+    display: flex;
+    gap: 1.5vw;
+}
+
+.create-webinar-form-address-input {
+    width: 130px;
+}
+
+.create-webinar-form-address-input-error {
+    border-color: red;
+    width: 130px;
+}
+
+.create-webinar-form-city-drop-down {
+    width: 150px;
+}
+
+.create-webinar-form-city-drop-down option {
+    background-color: black;
+    color: white;
+}
+
+.create-webinar-form-city-drop-down-error {
+    border-color: red;
+    width: 150px;
+}
+
+.checkbox-label-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.limited-seating-checkbox-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+.custom-checkbox-visual {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    border: 2px solid black;
+    border-radius: 4px;
+    margin-right: 8px;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.limited-seating-checkbox-input:checked+.custom-checkbox-visual {
+    background-color: black;
+    border-color: black;
+}
+
+.custom-checkbox-visual::after {
+    content: '';
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    width: 5px;
+    height: 13px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: translate(-50%, -50%) rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.limited-seating-checkbox-input:checked+.custom-checkbox-visual::after {
+    opacity: 1;
+}
+
+.checkbox-label-text {
+    font-size: 16px;
+    color: #666666;
+}
+
+.create-webinar-form-btns-div {
+    display: flex;
+    gap: 15px;
+    margin-top: 3vh;
+}
+
+.create-webinar-form-cancel-btn {
+    border: 2px solid black;
+    border-radius: 15px;
+    background: transparent;
+    color: black;
+    font-family: "Playfair Display";
+    font-weight: bold;
+    font-size: 15px;
+    width: 10vw;
+}
+
+.create-webinar-form-update-btn {
+    background-color: black;
+    border-radius: 15px;
+    color: white;
+    font-family: "Playfair Display";
+    font-weight: bold;
+    font-size: 15px;
+    width: 10vw;
+}
+
+.create-webinar-divider {
+    height: 1px;
+    background-color: black;
+    margin-top: 3vh;
+}
+
+.create-webinar-form-title2 {
+    color: black;
+    font-size: 18px;
+}
+
+.chip-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chip-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: 300px;
+}
+
+.chip {
+  background-color: black;
+  padding-left: 15px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+.chip-close {
+  margin-left: 0px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+@media (max-width: 1200px) {
+
+    .create-webinar-form-cancel-btn,
+    .create-webinar-form-update-btn {
+        width: 140px;
+    }
+}
+
+@media (max-width: 720px) {
+    .create-webinar-form-centre-div {
+        flex-direction: column;
+        gap: 3vw;
+    }
+
+    .create-webinar-form-img {
+        height: 60vw;
+        width: 100%;
+    }
+}
+
