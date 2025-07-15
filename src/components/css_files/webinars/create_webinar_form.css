@@ -49,7 +49,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     opacity: 1;
 }
 
-
 textarea {
     border: 1px solid;
     border-radius: 10px;
@@ -279,7 +278,6 @@ select option {
     border-radius: 15px;
     background: transparent;
     color: black;
-    font-family: "Playfair Display";
     font-weight: bold;
     font-size: 15px;
     width: 10vw;
@@ -289,7 +287,6 @@ select option {
     background-color: black;
     border-radius: 15px;
     color: white;
-    font-family: "Playfair Display";
     font-weight: bold;
     font-size: 15px;
     width: 10vw;
