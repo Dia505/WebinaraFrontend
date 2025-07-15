@@ -130,375 +130,374 @@ function CreateWebinarForm({ closeForm }) {
             hostFormData.append("fullName", data.host.fullName);
             hostFormData.append("bio", data.host.bio);
             hostFormData.append("email", data.host.email);
-            hostFormData.append("expertise", data.host.expertise
+
+            data.host.expertise
                 .split(',')
                 .map(item => item.trim())
                 .forEach(item => {
                     hostFormData.append("expertise[]", item);
-                }));
-    hostFormData.append("socialMediaLinks", JSON.stringify(data.host.socialMediaLinks));
-    if (selectedHostImg) hostFormData.append("profilePicture", selectedHostImg);
+                });
 
-    const hostResponse = await axios.post("http://localhost:3000/api/host", hostFormData, {
-        headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${authToken}`,
-        },
-    });
 
-    const hostId = hostResponse.data._id;
+            data.host.socialMediaLinks.forEach(url => {
+                hostFormData.append("socialMediaLinks[]", url);
+            });
+            if (selectedHostImg) hostFormData.append("profilePicture", selectedHostImg);
 
-    // Step 2: Create webinar using hostId
-    const webinarFormData = new FormData();
-    webinarFormData.append("title", data.title);
-    webinarFormData.append("subtitle", data.subtitle);
-    webinarFormData.append("category", data.category);
-    webinarFormData.append("level", data.level);
-    webinarFormData.append("language", data.language);
-    webinarFormData.append("city", data.city);
-    webinarFormData.append("date", new Date(data.date).toISOString());
-    webinarFormData.append("startTime", data.startTime);
-    if (data.endTime) webinarFormData.append("endTime", data.endTime);
-    if (data.totalSeats) webinarFormData.append("totalSeats", data.totalSeats);
-    webinarFormData.append("hostId", hostId);
+            const hostResponse = await axios.post("http://localhost:3000/api/host", hostFormData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${authToken}`,
+                },
+            });
 
-    if (selectedFile) webinarFormData.append("webinarPhoto", selectedFile);
+            const hostId = hostResponse.data.host._id;
 
-    const webinarResponse = await axios.post("http://localhost:3000/api/webinar", webinarFormData, {
-        headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${authToken}`,
-        },
-    });
+            // Step 2: Create webinar using hostId
+            const webinarFormData = new FormData();
+            webinarFormData.append("title", data.title);
+            webinarFormData.append("subtitle", data.subtitle);
+            webinarFormData.append("category", data.category);
+            webinarFormData.append("level", data.level);
+            webinarFormData.append("language", data.language);
+            webinarFormData.append("date", new Date(data.date).toISOString());
+            webinarFormData.append("startTime", data.startTime);
+            if (data.endTime) webinarFormData.append("endTime", data.endTime);
+            if (data.totalSeats) webinarFormData.append("totalSeats", data.totalSeats);
+            webinarFormData.append("hostId", hostId);
 
-    toast.success("Webinar created successfully!", {
-        position: "top-center",
-        autoClose: 3000,
-        theme: "colored",
-    });
+            if (selectedFile) webinarFormData.append("webinarPhoto", selectedFile);
 
-    const webinarId = webinarResponse.data._id;
-    closeForm();
-    navigate(`/view-webinar/${webinarId}`);
-} catch (err) {
-    console.error("Failed to create webinar: ", err);
-    toast.error("Failed to create the webinar. Please try again.", {
-        position: "top-center",
-        autoClose: 3000,
-        theme: "colored",
-    });
-}
+            const webinarResponse = await axios.post("http://localhost:3000/api/webinar", webinarFormData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${authToken}`,
+                },
+            });
+
+            toast.success("Webinar created successfully!", {
+                position: "top-center",
+                autoClose: 3000,
+                theme: "colored",
+            });
+
+            const webinarId = webinarResponse.data._id;
+            closeForm();
+            navigate(`/webinar-details/${webinarId}`);
+        } catch (err) {
+            console.error("Failed to create webinar: ", err);
+            toast.error("Failed to create the webinar. Please try again.", {
+                position: "top-center",
+                autoClose: 3000,
+                theme: "colored",
+            });
+        }
     };
 
-const onSubmit = (data) => {
-    console.log("Submitting webinar with data:", data);
-    submitWebinar(data);
-};
+    const onSubmit = (data) => {
+        console.log("Submitting webinar with data:", data);
+        submitWebinar(data);
+    };
 
-// const onSubmit = (data) => 
-//     console.log("Form submitted ✅", data);
-//     alert("Submit fired!");
-// };
+    return (
+        <>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="create-webinar-form-main-div">
+                    <p className="create-webinar-form-title">Create webinar</p>
+                    <p className='create-webinar-form-title2'>Webinar details</p>
 
-return (
-    <>
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="create-webinar-form-main-div">
-                <p className="create-webinar-form-title">Create webinar</p>
-                <p className='create-webinar-form-title2'>Webinar details</p>
+                    <div className="create-webinar-form-centre-div">
+                        <div className="create-webinar-form-img-div">
+                            <img className="create-webinar-form-img" src={previewImage} alt="webinar" />
 
-                <div className="create-webinar-form-centre-div">
-                    <div className="create-webinar-form-img-div">
-                        <img className="create-webinar-form-img" src={previewImage} alt="webinar" />
-
-                        <input
-                            type="file"
-                            accept="image/*"
-                            id="createWebinarImgInput"
-                            className="create-webinar-form-hidden-img-input"
-                            onChange={(e) => {
-                                handleImageChange(e);
-                                setValue("webinarPhoto", e.target.files[0], { shouldValidate: true });
-                            }}
-                        />
-
-                        <button
-                            className="create-webinar-form-img-btn"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                document.getElementById("createWebinarImgInput").click();
-                            }}
-                        >
-                            Upload picture
-                        </button>
-                        {errors.webinarPhoto && <p className="error-message">{errors.webinarPhoto.message}</p>}
-                    </div>
-
-                    <div className="create-webinar-form-input-div">
-                        <div>
-                            <p className='create-webinar-form-input-label'>Title</p>
                             <input
-                                type='text'
-                                name='title'
-                                {...register("title")}
-                                className={errors.title ? "input-error" : ""}
-                            />
-                            {errors.title && <p className="error-message">{errors.title.message}</p>}
-                        </div>
-
-                        <div className="textarea-container">
-                            <p className='create-webinar-form-input-label'>Subtitle</p>
-                            <textarea
-                                name='subtitle'
-                                maxLength={300}
-                                {...register("subtitle")}
-                                className={errors.subtitle ? "input-error" : ""}
+                                type="file"
+                                accept="image/*"
+                                id="createWebinarImgInput"
+                                className="create-webinar-form-hidden-img-input"
                                 onChange={(e) => {
-                                    setSubtitleLength(e.target.value.length);
-                                    register("subtitle").onChange(e);
+                                    handleImageChange(e);
+                                    setValue("webinarPhoto", e.target.files[0], { shouldValidate: true });
                                 }}
                             />
-                            <span className="char-count">{subtitleLength}/300</span>
-                            {errors.subtitle && <p className="error-message">{errors.subtitle.message}</p>}
-                        </div>
 
-
-                        <div>
-                            <p className='create-webinar-form-input-label'>Category</p>
-                            <select
-                                {...register("category")}
-                                defaultValue=""
-                                className={errors.category ? 'select-error' : ''}
+                            <button
+                                className="create-webinar-form-img-btn"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    document.getElementById("createWebinarImgInput").click();
+                                }}
                             >
-                                <option value="" disabled hidden>Select a category</option>
-                                <option value="Business">Business</option>
-                                <option value="Technology">Technology</option>
-                                <option value="Design">Design</option>
-                                <option value="Health">Health</option>
-                                <option value="Education">Education</option>
-                                <option value="Career">Career</option>
-                                <option value="Finance">Finance</option>
-                                <option value="Marketing">Marketing</option>
-                                <option value="Lifestyle">Lifestyle</option>
-                                <option value="Creative">Creative</option>
-                            </select>
-                            {errors.category && <p className="error-message">{errors.category.message}</p>}
+                                Upload picture
+                            </button>
+                            {errors.webinarPhoto && <p className="error-message">{errors.webinarPhoto.message}</p>}
                         </div>
 
-                        <div>
-                            <p className='create-webinar-form-input-label'>Level</p>
-                            <select
-                                {...register("level")}
-                                defaultValue=""
-                                className={errors.level ? 'select-error' : ''}
-                            >
-                                <option value="" disabled hidden>Select a level</option>
-                                <option value="Beginner">Beginner</option>
-                                <option value="Intermediate">Intermediate</option>
-                                <option value="Advanced">Advanced</option>
-                            </select>
-                            {errors.level && <p className="error-message">{errors.level.message}</p>}
-                        </div>
-
-                        <div>
-                            <p className='create-webinar-form-input-label'>Language</p>
-                            <select
-                                {...register("language")}
-                                defaultValue=""
-                                className={errors.language ? 'select-error' : ''}
-                            >
-                                <option value="" disabled hidden>Select a language</option>
-                                <option value="English">English</option>
-                                <option value="Nepali">Nepali</option>
-                                <option value="Hindi">Hindi</option>
-                            </select>
-                            {errors.language && <p className="error-message">{errors.language.message}</p>}
-                        </div>
-
-                        <div>
-                            <p className='create-webinar-form-input-label'>Date</p>
-                            <input
-                                type='date'
-                                name='date'
-                                {...register("date")}
-                                className={errors.date ? "input-error" : ""}
-                            />
-                            {errors.date && <p className="error-message">{errors.date.message}</p>}
-                        </div>
-
-                        <div className='create-webinar-form-address-city-div'>
+                        <div className="create-webinar-form-input-div">
                             <div>
-                                <p className='create-webinar-form-input-label'>Start time</p>
+                                <p className='create-webinar-form-input-label'>Title</p>
                                 <input
-                                    className={errors.address ? 'create-webinar-form-address-input-error' : 'create-webinar-form-address-input'}
-                                    type='time'
-                                    {...register("startTime")}
-                                />
-                                {errors.startTime && <p className="error-message">{errors.startTime.message}</p>}
-                            </div>
-
-                            <div>
-                                <p className='create-webinar-form-input-label'>End time</p>
-                                <input
-                                    className='create-webinar-form-address-input'
-                                    type='time'
-                                    {...register("endTime")}
-                                />
-                            </div>
-                        </div>
-
-                        <label className="checkbox-label-container">
-                            <input
-                                className="limited-seating-checkbox-input"
-                                type="checkbox"
-                                onChange={handleCheckboxChange}
-                            />
-                            <span className="custom-checkbox-visual"></span>
-                            <p className="checkbox-label-text">Limited seating?</p>
-                        </label>
-
-                        {limitedSeats === true && (
-                            <div>
-                                <input
-                                    className={errors.totalSeats ? "input-error" : ""}
                                     type='text'
-                                    name='totalSeats'
-                                    {...register("totalSeats")}
-                                    placeholder='Total number of seats'
+                                    name='title'
+                                    {...register("title")}
+                                    className={errors.title ? "input-error" : ""}
                                 />
-                                {errors.totalSeats && <p className="error-message">{errors.totalSeats.message}</p>}
+                                {errors.title && <p className="error-message">{errors.title.message}</p>}
                             </div>
-                        )}
-                    </div>
-                </div>
 
-                <div className='create-webinar-divider'></div>
-
-                <p className='create-webinar-form-title2'>Host details</p>
-
-                <div className="create-webinar-form-centre-div">
-                    <div className="create-webinar-form-img-div">
-                        <img className="create-webinar-form-img" src={hostPreviewImg} alt="webinar" />
-
-                        <input
-                            type="file"
-                            accept="image/*"
-                            id="createHostImgInput"
-                            className="create-webinar-form-hidden-img-input"
-                            onChange={(e) => {
-                                handleHostImageChange(e);
-                                setValue("host.profilePicture", e.target.files[0], { shouldValidate: true });
-                            }}
-                        />
-
-                        <button
-                            className="create-webinar-form-img-btn"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                document.getElementById("createHostImgInput").click();
-                            }}
-                        >
-                            Upload picture
-                        </button>
-                    </div>
-
-                    <div className="create-webinar-form-input-div">
-                        <div>
-                            <p className='create-webinar-form-input-label'>Full name</p>
-                            <input
-                                type='text'
-                                name='host.fullName'
-                                {...register("host.fullName")}
-                                className={errors?.host?.fullName ? "input-error" : ""}
-                            />
-                            {errors?.host?.fullName && <p className="error-message">{errors?.host?.fullName.message}</p>}
-                        </div>
-
-                        <div className="textarea-container">
-                            <p className='create-webinar-form-input-label'>Bio</p>
-                            <textarea
-                                name='host.bio'
-                                maxLength={300}
-                                {...register("host.bio")}
-                                className={errors?.host?.bio ? "input-error" : ""}
-                                onChange={(e) => {
-                                    setBioLength(e.target.value.length);
-                                    register("host.bio").onChange(e);
-                                }}
-                            />
-                            <span className="char-count">{bioLength}/300</span>
-                            {errors?.host?.bio && <p className="error-message">{errors?.host?.bio.message}</p>}
-                        </div>
-
-                        <div>
-                            <p className='create-webinar-form-input-label'>Email address</p>
-                            <input
-                                type='text'
-                                name='host.email'
-                                {...register("host.email")}
-                                className={errors?.host?.email ? "input-error" : ""}
-                            />
-                            {errors?.host?.email && <p className="error-message">{errors?.host?.email.message}</p>}
-                        </div>
-
-                        <div>
-                            <p className='create-webinar-form-input-label'>Expertise</p>
-                            <input
-                                type='text'
-                                name='host.expertise'
-                                {...register("host.expertise")}
-                                placeholder="e.g., design, tech, research"
-                                className={errors?.host?.expertise ? "input-error" : ""}
-                            />
-                            {errors?.host?.expertise && <p className="error-message">{errors?.host?.expertise.message}</p>}
-                        </div>
-
-                        <div>
-                            <p className='create-webinar-form-input-label'>Social media links</p>
-                            <div className="chip-input-wrapper">
-                                <input
-                                    type="url"
-                                    placeholder="Paste URL and press Enter"
-                                    value={chipInput}
-                                    onChange={(e) => setChipInput(e.target.value)}
-                                    onKeyDown={handleChipKeyDown}
-                                    className={errors?.host?.socialMediaLinks ? "input-error" : ""}
+                            <div className="textarea-container">
+                                <p className='create-webinar-form-input-label'>Subtitle</p>
+                                <textarea
+                                    name='subtitle'
+                                    maxLength={300}
+                                    {...register("subtitle")}
+                                    className={errors.subtitle ? "input-error" : ""}
+                                    onChange={(e) => {
+                                        setSubtitleLength(e.target.value.length);
+                                        register("subtitle").onChange(e);
+                                    }}
                                 />
+                                <span className="char-count">{subtitleLength}/300</span>
+                                {errors.subtitle && <p className="error-message">{errors.subtitle.message}</p>}
+                            </div>
 
-                                <div className="chip-container">
-                                    {chips.map((url, index) => (
-                                        <span key={index} className="chip">
-                                            {new URL(url).hostname.replace(/^www\./, '')}
-                                            <button
-                                                type="button"
-                                                className="chip-close"
-                                                onClick={() => handleRemoveChip(index)}
-                                            >×</button>
-                                        </span>
-                                    ))}
+
+                            <div>
+                                <p className='create-webinar-form-input-label'>Category</p>
+                                <select
+                                    {...register("category")}
+                                    defaultValue=""
+                                    className={errors.category ? 'select-error' : ''}
+                                >
+                                    <option value="" disabled hidden>Select a category</option>
+                                    <option value="Business">Business</option>
+                                    <option value="Technology">Technology</option>
+                                    <option value="Design">Design</option>
+                                    <option value="Health">Health</option>
+                                    <option value="Education">Education</option>
+                                    <option value="Career">Career</option>
+                                    <option value="Finance">Finance</option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Lifestyle">Lifestyle</option>
+                                    <option value="Creative">Creative</option>
+                                </select>
+                                {errors.category && <p className="error-message">{errors.category.message}</p>}
+                            </div>
+
+                            <div>
+                                <p className='create-webinar-form-input-label'>Level</p>
+                                <select
+                                    {...register("level")}
+                                    defaultValue=""
+                                    className={errors.level ? 'select-error' : ''}
+                                >
+                                    <option value="" disabled hidden>Select a level</option>
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Advanced">Advanced</option>
+                                </select>
+                                {errors.level && <p className="error-message">{errors.level.message}</p>}
+                            </div>
+
+                            <div>
+                                <p className='create-webinar-form-input-label'>Language</p>
+                                <select
+                                    {...register("language")}
+                                    defaultValue=""
+                                    className={errors.language ? 'select-error' : ''}
+                                >
+                                    <option value="" disabled hidden>Select a language</option>
+                                    <option value="English">English</option>
+                                    <option value="Nepali">Nepali</option>
+                                    <option value="Hindi">Hindi</option>
+                                </select>
+                                {errors.language && <p className="error-message">{errors.language.message}</p>}
+                            </div>
+
+                            <div>
+                                <p className='create-webinar-form-input-label'>Date</p>
+                                <input
+                                    type='date'
+                                    name='date'
+                                    {...register("date")}
+                                    className={errors.date ? "input-error" : ""}
+                                />
+                                {errors.date && <p className="error-message">{errors.date.message}</p>}
+                            </div>
+
+                            <div className='create-webinar-form-address-city-div'>
+                                <div>
+                                    <p className='create-webinar-form-input-label'>Start time</p>
+                                    <input
+                                        className={errors.address ? 'create-webinar-form-address-input-error' : 'create-webinar-form-address-input'}
+                                        type='time'
+                                        {...register("startTime")}
+                                    />
+                                    {errors.startTime && <p className="error-message">{errors.startTime.message}</p>}
                                 </div>
 
-                                {errors?.host?.socialMediaLinks && (
-                                    <p className="error-message-2">{errors?.host?.socialMediaLinks.message}</p>
-                                )}
+                                <div>
+                                    <p className='create-webinar-form-input-label'>End time</p>
+                                    <input
+                                        className='create-webinar-form-address-input'
+                                        type='time'
+                                        {...register("endTime")}
+                                    />
+                                </div>
                             </div>
+
+                            <label className="checkbox-label-container">
+                                <input
+                                    className="limited-seating-checkbox-input"
+                                    type="checkbox"
+                                    onChange={handleCheckboxChange}
+                                />
+                                <span className="custom-checkbox-visual"></span>
+                                <p className="checkbox-label-text">Limited seating?</p>
+                            </label>
+
+                            {limitedSeats === true && (
+                                <div>
+                                    <input
+                                        className={errors.totalSeats ? "input-error" : ""}
+                                        type='text'
+                                        name='totalSeats'
+                                        {...register("totalSeats")}
+                                        placeholder='Total number of seats'
+                                    />
+                                    {errors.totalSeats && <p className="error-message">{errors.totalSeats.message}</p>}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className='create-webinar-divider'></div>
+
+                    <p className='create-webinar-form-title2'>Host details</p>
+
+                    <div className="create-webinar-form-centre-div">
+                        <div className="create-webinar-form-img-div">
+                            <img className="create-webinar-form-img" src={hostPreviewImg} alt="webinar" />
+
+                            <input
+                                type="file"
+                                accept="image/*"
+                                id="createHostImgInput"
+                                className="create-webinar-form-hidden-img-input"
+                                onChange={(e) => {
+                                    handleHostImageChange(e);
+                                    setValue("host.profilePicture", e.target.files[0], { shouldValidate: true });
+                                }}
+                            />
+
+                            <button
+                                className="create-webinar-form-img-btn"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    document.getElementById("createHostImgInput").click();
+                                }}
+                            >
+                                Upload picture
+                            </button>
                         </div>
 
-                        <div className='create-webinar-form-btns-div'>
-                            <button type='button' className='create-webinar-form-cancel-btn' onClick={closeForm}>Cancel</button>
-                            <button
-                                type="submit"
-                                className="create-webinar-form-update-btn"
-                            >
-                                Create webinar
-                            </button>
+                        <div className="create-webinar-form-input-div">
+                            <div>
+                                <p className='create-webinar-form-input-label'>Full name</p>
+                                <input
+                                    type='text'
+                                    name='host.fullName'
+                                    {...register("host.fullName")}
+                                    className={errors?.host?.fullName ? "input-error" : ""}
+                                />
+                                {errors?.host?.fullName && <p className="error-message">{errors?.host?.fullName.message}</p>}
+                            </div>
+
+                            <div className="textarea-container">
+                                <p className='create-webinar-form-input-label'>Bio</p>
+                                <textarea
+                                    name='host.bio'
+                                    maxLength={300}
+                                    {...register("host.bio")}
+                                    className={errors?.host?.bio ? "input-error" : ""}
+                                    onChange={(e) => {
+                                        setBioLength(e.target.value.length);
+                                        register("host.bio").onChange(e);
+                                    }}
+                                />
+                                <span className="char-count">{bioLength}/300</span>
+                                {errors?.host?.bio && <p className="error-message">{errors?.host?.bio.message}</p>}
+                            </div>
+
+                            <div>
+                                <p className='create-webinar-form-input-label'>Email address</p>
+                                <input
+                                    type='text'
+                                    name='host.email'
+                                    {...register("host.email")}
+                                    className={errors?.host?.email ? "input-error" : ""}
+                                />
+                                {errors?.host?.email && <p className="error-message">{errors?.host?.email.message}</p>}
+                            </div>
+
+                            <div>
+                                <p className='create-webinar-form-input-label'>Expertise</p>
+                                <input
+                                    type='text'
+                                    name='host.expertise'
+                                    {...register("host.expertise")}
+                                    placeholder="e.g., design, tech, research"
+                                    className={errors?.host?.expertise ? "input-error" : ""}
+                                />
+                                {errors?.host?.expertise && <p className="error-message">{errors?.host?.expertise.message}</p>}
+                            </div>
+
+                            <div>
+                                <p className='create-webinar-form-input-label'>Social media links</p>
+                                <div className="chip-input-wrapper">
+                                    <input
+                                        type="url"
+                                        placeholder="Paste URL and press Enter"
+                                        value={chipInput}
+                                        onChange={(e) => setChipInput(e.target.value)}
+                                        onKeyDown={handleChipKeyDown}
+                                        className={errors?.host?.socialMediaLinks ? "input-error" : ""}
+                                    />
+
+                                    <div className="chip-container">
+                                        {chips.map((url, index) => (
+                                            <span key={index} className="chip">
+                                                {new URL(url).hostname.replace(/^www\./, '')}
+                                                <button
+                                                    type="button"
+                                                    className="chip-close"
+                                                    onClick={() => handleRemoveChip(index)}
+                                                >×</button>
+                                            </span>
+                                        ))}
+                                    </div>
+
+                                    {errors?.host?.socialMediaLinks && (
+                                        <p className="error-message-2">{errors?.host?.socialMediaLinks.message}</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className='create-webinar-form-btns-div'>
+                                <button type='button' className='create-webinar-form-cancel-btn' onClick={closeForm}>Cancel</button>
+                                <button
+                                    type="submit"
+                                    className="create-webinar-form-update-btn"
+                                >
+                                    Create webinar
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
-    </>
-)
+            </form>
+        </>
+    )
 }
 
 export default CreateWebinarForm;
