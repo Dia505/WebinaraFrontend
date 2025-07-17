@@ -16,10 +16,11 @@ function Dashboard() {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/user`, {
+                const response = await axios.get(`https://localhost:443/api/user`, {
                     headers: {
                         Authorization: `Bearer ${authToken}`
-                    }
+                    },
+                    withCredentials: true
                 });
                 setUsers(response.data);
                 setUserCount(response.data.length);
@@ -34,10 +35,11 @@ function Dashboard() {
     useEffect(() => {
         const fetchWebinars = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/webinar`, {
+                const response = await axios.get(`https://localhost:443/api/webinar`, {
                     headers: {
                         Authorization: `Bearer ${authToken}`
-                    }
+                    },
+                    withCredentials: true
                 });
 
                 setWebinarCount(response.data.length);

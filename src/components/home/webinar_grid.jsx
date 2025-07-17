@@ -26,7 +26,7 @@ function WebinarGrid() {
     useEffect(() => {
         const fetchWebinars = async () => {
             try {
-                const webinarResponse = await axios.get("http://localhost:3000/api/webinar/home-webinars");
+                const webinarResponse = await axios.get("https://localhost:443/api/webinar/home-webinars");
                 const webinarsData = webinarResponse.data;
                 setWebinars(webinarsData);
 
@@ -36,7 +36,7 @@ function WebinarGrid() {
                     if (webinar.totalSeats === null) continue;
 
                     const fullBookingResponse = await axios.get(
-                        `http://localhost:3000/api/webinar/check-full-booking/${webinar._id}`
+                        `https://localhost:443/api/webinar/check-full-booking/${webinar._id}`
                     );
 
                     const isFullyBooked = fullBookingResponse?.data?.full;
@@ -53,10 +53,11 @@ function WebinarGrid() {
                     if (webinar.totalSeats === null) continue;
 
                     const alreadyBookedResponse = await axios.get(
-                        `http://localhost:3000/api/booking/check-booking/${webinar._id}`, {
+                        `https://localhost:443/api/booking/check-booking/${webinar._id}`, {
                         headers: {
                             Authorization: `Bearer ${authToken}`
-                        }
+                        },
+                        withCredentials: true
                     }
                     );
 

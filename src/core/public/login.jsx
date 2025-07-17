@@ -32,7 +32,7 @@ function Login() {
     const loginUser = useMutation({
         mutationKey: "LOGIN",
         mutationFn: async (data) => {
-            const response = await axios.post("http://localhost:3000/api/auth/login", data);
+            const response = await axios.post("https://localhost:443/api/auth/login", data);
             return response.data;
         },
         onSuccess: (response) => {

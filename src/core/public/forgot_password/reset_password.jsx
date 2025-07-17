@@ -40,7 +40,7 @@ function ResetPassword() {
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.put("http://localhost:3000/api/reset/reset-password", {
+            const response = await axios.put("https://localhost:443/api/reset/reset-password", {
                 email: email,
                 otp: otp,
                 newPassword: data.password,

@@ -37,13 +37,14 @@ function BookSeatsForm({ webinarId, webinarPhoto, title, level, language, date, 
         };
 
         try {
-            const response = await fetch("http://localhost:3000/api/booking",
+            const response = await fetch("https://localhost:443/api/booking",
                 {
                     method: "POST",
                     headers: {
                         Authorization: `Bearer ${authToken}`,
                         "Content-Type": "application/json",
                     },
+                    credentials: 'include',
                     body: JSON.stringify(bookingData),
                 }
             );

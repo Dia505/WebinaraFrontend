@@ -143,11 +143,12 @@ function CreateWebinarForm({ closeForm }) {
             });
             if (selectedHostImg) hostFormData.append("profilePicture", selectedHostImg);
 
-            const hostResponse = await axios.post("http://localhost:3000/api/host", hostFormData, {
+            const hostResponse = await axios.post("https://localhost:443/api/host", hostFormData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${authToken}`,
                 },
+                withCredentials: true
             });
 
             const hostId = hostResponse.data.host._id;
@@ -167,11 +168,12 @@ function CreateWebinarForm({ closeForm }) {
 
             if (selectedFile) webinarFormData.append("webinarPhoto", selectedFile);
 
-            const webinarResponse = await axios.post("http://localhost:3000/api/webinar", webinarFormData, {
+            const webinarResponse = await axios.post("https://localhost:443/api/webinar", webinarFormData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${authToken}`,
                 },
+                withCredentials: true
             });
 
             toast.success("Webinar created successfully!", {

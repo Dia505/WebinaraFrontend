@@ -16,11 +16,12 @@ function MyBookings() {
     useEffect(() => {
         const fetchUpcomingBookings = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/api/booking/upcoming",
+                const response = await axios.get("https://localhost:443/api/booking/upcoming",
                     {
                         headers: {
                             Authorization: `Bearer ${authToken}`,
                         },
+                        withCredentials: true,
                     }
                 );
                 setUpcomingBookings(response.data);
@@ -35,11 +36,12 @@ function MyBookings() {
     useEffect(() => {
         const fetchPastBookings = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/api/booking/past",
+                const response = await axios.get("https://localhost:443/api/booking/past",
                     {
                         headers: {
                             Authorization: `Bearer ${authToken}`,
                         },
+                        withCredentials: true,
                     }
                 );
                 setPastBookings(response.data);

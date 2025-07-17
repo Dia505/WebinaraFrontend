@@ -30,7 +30,7 @@ function VerifyOtp() {
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post("http://localhost:3000/api/reset/verify-otp", {
+            const response = await axios.post("https://localhost:443/api/reset/verify-otp", {
                 email: email,
                 otp: data.otp,
             });

@@ -29,7 +29,7 @@ function EmailForOtp() {
     const onSubmit = async (data) => {
         setIsLoading(true);
         try {
-            const response = await axios.post("http://localhost:3000/api/reset/send-otp", data);
+            const response = await axios.post("https://localhost:443/api/reset/send-otp", data);
             console.log("Email: ", data.email);
             navigate('/verify-otp', { state: { email: data.email } });
         } catch (error) {

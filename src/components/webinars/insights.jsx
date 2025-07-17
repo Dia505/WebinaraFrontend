@@ -11,11 +11,12 @@ function Insights({ webinar, closeForm }) {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/booking/webinar/${webinar?._id}`,
+                const response = await axios.get(`https://localhost:443/api/booking/webinar/${webinar?._id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${authToken}`
-                        }
+                        },
+                        withCredentials: true,
                     }
                 );
                 const bookings = response.data;

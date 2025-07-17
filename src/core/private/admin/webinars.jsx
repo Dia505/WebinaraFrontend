@@ -31,11 +31,12 @@ function Webinars() {
     useEffect(() => {
         const fetchWebinars = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/webinar`,
+                const response = await axios.get(`https://localhost:443/api/webinar`,
                     {
                         headers: {
                             Authorization: `Bearer ${authToken}`
-                        }
+                        },
+                        withCredentials: true
                     }
                 );
                 setWebinars(response.data);

@@ -45,13 +45,13 @@ function ViewWebinar() {
     useEffect(() => {
         const fetchWebinarDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/webinar/${_id}`);
+                const response = await axios.get(`https://localhost:443/api/webinar/${_id}`);
                 const webinarData = response.data;
                 setWebinar(webinarData);
 
                 if (webinarData.totalSeats != null) {
                     const fullyBookedResponse = await axios.get(
-                        `http://localhost:3000/api/webinar/check-full-booking/${_id}`
+                        `https://localhost:443/api/webinar/check-full-booking/${_id}`
                     );
                     setIsFullyBooked(fullyBookedResponse.data?.full ?? false);
                     return;
@@ -71,11 +71,12 @@ function ViewWebinar() {
         const checkIfBooked = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:3000/api/booking/check-booking/${_id}`,
+                    `https://localhost:443/api/booking/check-booking/${_id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${authToken}`
-                        }
+                        },
+                        withCredentials: true
                     }
                 );
                 setAlreadyBooked(response.data.alreadyBooked);
@@ -98,11 +99,12 @@ function ViewWebinar() {
                 const userId = decoded._id;
 
                 const response = await axios.get(
-                    `http://localhost:3000/api/user/${userId}`,
+                    `https://localhost:443/api/user/${userId}`,
                     {
                         headers: {
                             Authorization: `Bearer ${authToken}`,
                         },
+                        withCredentials: true
                     }
                 );
 

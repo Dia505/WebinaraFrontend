@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
 import { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -166,19 +165,20 @@ function EditWebinarForm({ webinar, closeForm }) {
                 formData.append("profilePicture", selectedHostImg);
 
                 const hostProfilePictureResponse = await fetch(
-                    `http://localhost:3000/api/host/${webinar.hostId._id}/profile-picture`,
+                    `https://localhost:443/api/host/${webinar.hostId._id}/profile-picture`,
                     {
                         method: "PUT",
                         headers: {
                             Authorization: `Bearer ${authToken}`,
                         },
                         body: formData,
+                        credentials: 'include'
                     }
                 );
             }
 
             const hostReponse = await fetch(
-                `http://localhost:3000/api/host/${webinar.hostId._id}`,
+                `https://localhost:443/api/host/${webinar.hostId._id}`,
                 {
                     method: "PUT",
                     headers: {
@@ -186,6 +186,7 @@ function EditWebinarForm({ webinar, closeForm }) {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify(updatedHost),
+                    credentials: 'include'
                 }
             );
 
@@ -201,28 +202,30 @@ function EditWebinarForm({ webinar, closeForm }) {
                 totalSeats: limitedSeats ? data.totalSeats : null
             }
 
-            await fetch(`http://localhost:3000/api/webinar/${webinar._id}`, {
+            await fetch(`https://localhost:443/api/webinar/${webinar._id}`, {
                 method: "PUT",
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(updatedWebinar),
+                credentials: 'include'
             });
 
             if (selectedFile) {
                 const imageForm = new FormData();
                 imageForm.append("webinarPhoto", selectedFile);
 
-                await fetch(`http://localhost:3000/api/webinar/${webinar._id}/webinar-image`, {
+                await fetch(`https://localhost:443/api/webinar/${webinar._id}/webinar-image`, {
                     method: "PUT",
                     headers: {
                         Authorization: `Bearer ${authToken}`,
                     },
                     body: imageForm,
+                    credentials: 'include'
                 });
             }
-            
+
             toast.success("Webinar updated successfully!");
             navigate(`/webinar-details/${webinar._id}`);
             closeForm();

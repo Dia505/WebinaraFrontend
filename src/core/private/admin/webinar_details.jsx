@@ -43,7 +43,7 @@ function WebinarDetails() {
     useEffect(() => {
         const fetchWebinarDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/webinar/${_id}`);
+                const response = await axios.get(`https://localhost:443/api/webinar/${_id}`);
                 setWebinar(response.data);
             } catch (error) {
                 console.error("Error fetching webinar:", error);
@@ -54,16 +54,18 @@ function WebinarDetails() {
 
     const handleDeleteWebinar = async () => {
         try {
-            await axios.delete(`http://localhost:3000/api/webinar/${webinar._id}`, {
+            await axios.delete(`https://localhost:443/api/webinar/${webinar._id}`, {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
-                }
+                },
+                withCredentials: true
             });
 
-            await axios.delete(`http://localhost:3000/api/host/${webinar.hostId._id}`, {
+            await axios.delete(`https://localhost:443/api/host/${webinar.hostId._id}`, {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
-                }
+                },
+                withCredentials: true
             });
 
             toast.success("Webinar deleted successfully!");

@@ -36,7 +36,7 @@ function Explore() {
         if (!categoryFromQuery) {
             const fetchWebinars = async () => {
                 try {
-                    const webinarResponse = await axios.get("http://localhost:3000/api/webinar/home-webinars");
+                    const webinarResponse = await axios.get("https://localhost:443/api/webinar/home-webinars");
                     const webinarsData = webinarResponse.data;
                     setWebinars(webinarsData);
 
@@ -46,7 +46,7 @@ function Explore() {
                         if (!webinar._id || webinar.totalSeats === null) continue;
 
                         const fullBookingResponse = await axios.get(
-                            `http://localhost:3000/api/webinar/check-full-booking/${webinar._id}`
+                            `https://localhost:443/api/webinar/check-full-booking/${webinar._id}`
                         );
 
                         const isFullyBooked = fullBookingResponse?.data?.full;
@@ -63,10 +63,11 @@ function Explore() {
                     if (webinar.totalSeats === null) continue;
 
                     const alreadyBookedResponse = await axios.get(
-                        `http://localhost:3000/api/booking/check-booking/${webinar._id}`, {
+                        `https://localhost:443/api/booking/check-booking/${webinar._id}`, {
                         headers: {
                             Authorization: `Bearer ${authToken}`
-                        }
+                        },
+                        withCredentials: true
                     }
                     );
 
@@ -94,7 +95,7 @@ function Explore() {
                 if (language) params.append("language", language);
                 if (dateRange) params.append("dateRange", dateRange);
 
-                const response = await axios.get(`http://localhost:3000/api/webinar/filter?${params.toString()}`);
+                const response = await axios.get(`https://localhost:443/api/webinar/filter?${params.toString()}`);
                 setWebinars(response.data);
             } catch (error) {
                 console.error("Error fetching filtered webinars:", error);
@@ -118,7 +119,7 @@ function Explore() {
         if (!q) return;
 
         try {
-            const response = await axios.get(`http://localhost:3000/api/webinar/search?query=${encodeURIComponent(q)}`);
+            const response = await axios.get(`https://localhost:443/api/webinar/search?query=${encodeURIComponent(q)}`);
             setWebinars(response.data);
         } catch (error) {
             console.error("Search failed:", error);

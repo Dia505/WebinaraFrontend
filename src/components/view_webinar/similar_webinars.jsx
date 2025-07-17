@@ -35,7 +35,7 @@ function SimilarWebinars({ category, currentWebinarId }) {
 
         const fetchSimilarWebinars = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/webinar/webinar-category?category=${category}`);
+                const response = await axios.get(`https://localhost:443/api/webinar/webinar-category?category=${category}`);
                 let webinars = response.data;
 
                 webinars = webinars.filter(webinar => webinar._id !== currentWebinarId);
@@ -51,7 +51,7 @@ function SimilarWebinars({ category, currentWebinarId }) {
                     if (!webinar._id || webinar.totalSeats === null) continue;
 
                     const fullBookingResponse = await axios.get(
-                        `http://localhost:3000/api/webinar/check-full-booking/${webinar._id}`
+                        `https://localhost:443/api/webinar/check-full-booking/${webinar._id}`
                     );
 
                     const isFullyBooked = fullBookingResponse?.data?.full;
@@ -68,10 +68,11 @@ function SimilarWebinars({ category, currentWebinarId }) {
                     if (webinar.totalSeats === null) continue;
 
                     const alreadyBookedResponse = await axios.get(
-                        `http://localhost:3000/api/booking/check-booking/${webinar._id}`, {
+                        `https://localhost:443/api/booking/check-booking/${webinar._id}`, {
                         headers: {
                             Authorization: `Bearer ${authToken}`
-                        }
+                        },
+                        withCredentials: true
                     }
                     );
 

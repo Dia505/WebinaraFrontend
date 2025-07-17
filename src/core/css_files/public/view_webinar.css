@@ -90,6 +90,8 @@ body {
 .view-webinar-subtitle-btn-div {
     display: flex;
     gap: 13vw;
+    padding-left: 15vw;
+    padding-right: 15vw;
 }
 
 .view-webinar-subtitle {
@@ -98,8 +100,10 @@ body {
 
 .view-webinar-ticket-btn {
     border-radius: 10px;
-    width: 170px;
+    width: 20vw;
+    height: 7vh;
     outline: none;
+
 }
 
 .view-webinar-fully-booked-div {

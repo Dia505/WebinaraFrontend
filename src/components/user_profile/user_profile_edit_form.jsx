@@ -51,11 +51,12 @@ function UserProfileEditForm({ closeForm }) {
                 console.log("User id: ", userId);
 
                 const response = await axios.get(
-                    `http://localhost:3000/api/user/${userId}`,
+                    `https://localhost:443/api/user/${userId}`,
                     {
                         headers: {
                             Authorization: `Bearer ${authToken}`,
                         },
+                        withCredentials: true
                     }
                 );
 
@@ -110,13 +111,14 @@ function UserProfileEditForm({ closeForm }) {
                 formData.append("profilePicture", updatedProfilePicture);
 
                 const pictureResponse = await fetch(
-                    `http://localhost:3000/api/user/${userId}/profile-picture`,
+                    `https://localhost:443/api/user/${userId}/profile-picture`,
                     {
                         method: "PUT",
                         headers: {
                             Authorization: `Bearer ${authToken}`,
                         },
                         body: formData,
+                        credentials: 'include'
                     }
                 );
 
@@ -125,7 +127,7 @@ function UserProfileEditForm({ closeForm }) {
             }
 
             const response = await fetch(
-                `http://localhost:3000/api/user/${userId}`,
+                `https://localhost:443/api/user/${userId}`,
                 {
                     method: "PUT",
                     headers: {
@@ -133,6 +135,7 @@ function UserProfileEditForm({ closeForm }) {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify(updatedData),
+                    credentials: 'include'
                 }
             );
 

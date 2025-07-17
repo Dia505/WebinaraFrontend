@@ -23,11 +23,12 @@ function UserProfile() {
                 const userId = decoded._id || decoded.id;
 
                 const response = await axios.get(
-                    `http://localhost:3000/api/user/${userId}`,
+                    `https://localhost:443/api/user/${userId}`,
                     {
                         headers: {
                             Authorization: `Bearer ${authToken}`,
                         },
+                        withCredentials: true
                     }
                 );
 
