@@ -8,41 +8,13 @@ import "../css_files/navigation/nav_bar.css";
 import UserMenuWindow from "./user_menu_window";
 
 function NavBar() {
-    const { authToken } = useAuth();
-    const isLoggedIn = !!authToken;
+    const { user } = useAuth();
+    const isLoggedIn = !!user;
 
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [user, setUser] = useState(null);
     const [isMenuWindowOpen, setIsMenuWindowOpen] = useState(false);
-
-    useEffect(() => {
-        const fetchUserDetails = async () => {
-            try {
-                if (!authToken) return;
-
-                const decoded = jwtDecode(authToken);
-                const userId = decoded._id || decoded.id;
-
-                const response = await axios.get(
-                    `https://localhost:443/api/user/${userId}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${authToken}`,
-                        },
-                        withCredentials: true
-                    }
-                );
-
-                setUser(response.data);
-            } catch (error) {
-                console.error("Error fetching user details:", error);
-            }
-        };
-
-        fetchUserDetails();
-    }, [authToken]);
 
     return (
         <>
