@@ -116,6 +116,12 @@ function UserProfileEditForm({ closeForm }) {
                 }
             );
 
+            if (!response.ok) {
+                // Extract error message from backend
+                const errorData = await response.json();
+                throw new Error(errorData.message || "Failed to update profile");
+            }
+
             const result = await response.json();
 
             toast.success("Profile updated!", {
@@ -132,7 +138,12 @@ function UserProfileEditForm({ closeForm }) {
 
         } catch (err) {
             console.error("Error updating profile:", err);
-            toast.error("Failed to update profile");
+            toast.error(err.message || "Failed to update profile", {
+                position: "top-center",
+                closeOnClick: true,
+                pauseOnHover: false,
+                theme: "colored"
+            });
         }
     };
 

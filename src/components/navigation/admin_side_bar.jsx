@@ -5,6 +5,7 @@ import dashboard from "../../assets/dashboard.png";
 import logoutIcon from "../../assets/logout.png";
 import webinar from "../../assets/webinar.png";
 import "../css_files/navigation/admin_side_bar.css";
+import profile from "../../assets/profile.png";
 
 function AdminSideBar() {
     const location = useLocation();
@@ -36,6 +37,13 @@ function AdminSideBar() {
                         <div className={location.pathname === "/webinars" ? "admin-side-bar-selected-btn" : "admin-side-bar-btn-div"}>
                             <img className="admin-side-bar-webinar-icon" src={webinar} />
                             <p>Webinars</p>
+                        </div>
+                    </Link>
+
+                    <Link to="/admin-profile">
+                        <div className={location.pathname === "/admin-profile" ? "admin-side-bar-selected-btn" : "admin-side-bar-btn-div"}>
+                            <img className="admin-side-bar-icon" src={profile} />
+                            <p>Profile</p>
                         </div>
                     </Link>
                 </div>

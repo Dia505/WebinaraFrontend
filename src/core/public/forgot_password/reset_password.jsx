@@ -57,11 +57,37 @@ function ResetPassword() {
             });
             navigate("/login");
         } catch (err) {
-            console.log(err.response ? err.response.data.message : 'Something went wrong');
+            const message = err.response?.data?.message;
+
+            if (message === "You cannot reuse a previous password") {
+                toast.error(message, {
+                    position: "top-center",
+                    autoClose: 4000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: true,
+                    theme: "colored",
+                });
+                return;
+            }
+
+            // fallback error
+            toast.error("Failed to reset password", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                theme: "colored",
+            });
+
+            console.error("Reset password error:", err);
         }
     };
 
-    return(
+    return (
         <>
             <div className="reset-password-main-window">
                 <div className='reset-password-left-section'>

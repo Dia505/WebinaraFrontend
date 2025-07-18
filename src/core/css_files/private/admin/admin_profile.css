@@ -1,0 +1,54 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    overflow-x: hidden;
+    background-color: white;
+}
+
+.admin-profile-main-window {
+    display: flex;
+}
+
+.admin-profile-main-div {
+    display: flex;
+    flex-direction: column;
+    margin-left: 250px;
+    padding-left: 7vw;
+    padding-bottom: 7vh;
+    margin-top: -40vh;
+    gap: 3vh;
+    width: 70vw;
+}
+
+.admin-profile-title-btn-div {
+    display: flex;
+    gap: 20vw;
+    align-items: baseline;
+}
+
+.admin-profile-title {
+    font-size: 22px;
+    margin-top: 0;
+    color: black;
+}
+
+.admin-profile-edit-btn {
+    height: 40px;
+    cursor: pointer;
+}
+
+.admin-profile-details-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-profile-detail {
+    color: black;
+}
+
+.admin-profile-detail-title {
+    color: #666666;
+    font-size: 18px;
+}

@@ -21,7 +21,8 @@ const ResetPassword = lazy(() => import("./core/public/forgot_password/reset_pas
 const Dashboard = lazy(() => import("./core/private/admin/dashboard"));
 const Webinars = lazy(() => import("./core/private/admin/webinars"));
 const WebinarDetails = lazy(() => import("./core/private/admin/webinar_details"));
- 
+const AdminProfile = lazy(() => import("./core/private/admin/admin_profile"));
+
 function App() {
   const routes = [
     //--------------------------------Public Routes---------------------------------------
@@ -148,6 +149,13 @@ function App() {
       path: "/webinar-details/:_id",
       element: (
         <AuthRoute requiredRole="admin" element={<Suspense><WebinarDetails /></Suspense>} />
+      )
+    },
+
+    {
+      path: "/admin-profile",
+      element: (
+        <AuthRoute requiredRole="admin" element={<Suspense><AdminProfile /></Suspense>} />
       )
     },
   ]

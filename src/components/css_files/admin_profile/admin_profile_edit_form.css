@@ -1,0 +1,88 @@
+input {
+    border: 1px solid;
+    border-radius: 10px;
+    border-color: black;
+    background-color: transparent;
+    height: 28px;
+    width: 300px;
+    color: black;
+    outline: none;
+    padding-left: 15px;
+    padding-top: 4px;
+    padding-bottom: 2px;
+}
+
+.input-error {
+    border-color: red;
+}
+
+.input-error:focus {
+    border-width: 2px;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+    margin-bottom: 0px;
+}
+
+input:focus {
+    border-width: 2px;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+    -webkit-text-fill-color: black !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.admin-edit-profile-form {
+    display: flex;
+    flex-direction: column;
+    margin-left: 250px;
+    padding-left: 7vw;
+    padding-bottom: 7vh;
+    margin-top: -30vh;
+    gap: 3vh;
+    width: 70vw;
+}
+
+.admin-edit-profile-title {
+    font-size: 22px;
+    margin-top: 0;
+    color: black;
+}
+
+.admin-edit-profile-input-label {
+    color: #666666;
+    font-size: 18px;
+}
+
+.admin-edit-profile-btns-div {
+    display: flex;
+    gap: 15px;
+    margin-top: 5vh;
+    margin-left: 35vw;
+}
+
+.admin-edit-profile-cancel-btn {
+    border: 2px solid black;
+    border-radius: 15px;
+    background: transparent;
+    color: black;
+    font-family: "Playfair Display";
+    font-weight: bold;
+    font-size: 15px;
+    width: 14vw;
+}
+
+.admin-edit-profile-update-btn {
+    background-color: black;
+    border-radius: 15px;
+    color: white;
+    font-family: "Playfair Display";
+    font-weight: bold;
+    font-size: 15px;
+    width: 14vw;
+}
