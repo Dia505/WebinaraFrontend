@@ -1,7 +1,6 @@
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../context/auth_context";
 
 import facebook from "../../assets/facebook2.png";
@@ -20,12 +19,11 @@ import "../css_files/public/view_webinar.css";
 
 function ViewWebinar() {
     const { _id } = useParams();
-    const { authToken } = useAuth();
+    const { authToken, user } = useAuth();
     const [webinar, setWebinar] = useState(null);
     const [isFullyBooked, setIsFullyBooked] = useState(false);
     const [showBookingForm, setShowBookingForm] = useState(false);
     const navigate = useNavigate();
-    const [user, setUser] = useState(null);
     const [alreadyBooked, setAlreadyBooked] = useState(false);
 
     const formatTo12Hour = (timeStr) => {
@@ -41,6 +39,14 @@ function ViewWebinar() {
             hour12: true,
         }).toLowerCase();
     };
+
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.state?.openBookingForm) {
+            setShowBookingForm(true);
+        }
+    }, [location.state]);
 
     useEffect(() => {
         const fetchWebinarDetails = async () => {
@@ -89,33 +95,6 @@ function ViewWebinar() {
             checkIfBooked();
         }
     }, [_id, authToken]);
-
-    useEffect(() => {
-        const fetchUserDetails = async () => {
-            try {
-                if (!authToken) return;
-
-                const decoded = jwtDecode(authToken);
-                const userId = decoded._id;
-
-                const response = await axios.get(
-                    `https://localhost:443/api/user/${userId}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${authToken}`,
-                        },
-                        withCredentials: true
-                    }
-                );
-
-                setUser(response.data);
-            } catch (error) {
-                console.error("Error fetching user details:", error);
-            }
-        };
-
-        fetchUserDetails();
-    }, [authToken]);
 
     return (
         <>
@@ -181,25 +160,25 @@ function ViewWebinar() {
                                 Fully booked
                             </div>
                         )
-                        : alreadyBooked ? (
-                            <div className="view-webinar-already-booked-div">
-                                Seat booked ✅
-                            </div>
-                        )
-                        : (webinar?.totalSeats != null) && (
-                            <button
-                                className="view-webinar-ticket-btn"
-                                onClick={() => {
-                                    if (authToken) {
-                                        setShowBookingForm(true);
-                                    } else {
-                                        navigate("/login");
-                                    }
-                                }}
-                            >
-                                Book seats
-                            </button>
-                        )}
+                            : alreadyBooked ? (
+                                <div className="view-webinar-already-booked-div">
+                                    Seat booked ✅
+                                </div>
+                            )
+                                : (webinar?.totalSeats != null) && (
+                                    <button
+                                        className="view-webinar-ticket-btn"
+                                        onClick={() => {
+                                            if (user) {
+                                                setShowBookingForm(true);
+                                            } else {
+                                                navigate("/login");
+                                            }
+                                        }}
+                                    >
+                                        Book seats
+                                    </button>
+                                )}
                     </div>
 
                     <div className="view-webinar-host-div">
@@ -254,7 +233,7 @@ function ViewWebinar() {
 
                 <Footer />
 
-                {showBookingForm && (
+                {showBookingForm && webinar && (
                     <>
                         <div className="view-webinar-overlay" onClick={() => setShowBookingForm(false)}></div>
                         <div className="view-webinar-form-modal">

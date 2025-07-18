@@ -1,13 +1,12 @@
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../../../context/auth_context";
 
 import noWebinars from "../../../assets/no_webinars.png";
+import AdminSideBar from "../../../components/navigation/admin_side_bar";
 import CreateWebinarForm from "../../../components/webinars/create_webinar_form";
 import Insights from "../../../components/webinars/insights";
-import AdminSideBar from "../../../components/navigation/admin_side_bar";
 import WebinarCard from "../../../components/webinars/webinar_card";
 import "../../css_files/private/admin/webinars.css";
 
@@ -22,9 +21,6 @@ function Webinars() {
         setSelectedWebinarForInsights(webinar);
         setShowInsights(true);
     };
-
-    const decoded = jwtDecode(authToken);
-    const adminId = decoded._id || decoded.id;
 
     const location = useLocation();
 
@@ -46,7 +42,7 @@ function Webinars() {
         };
 
         fetchWebinars();
-    }, [adminId]);
+    }, []);
 
     useEffect(() => {
         if (location.state?.openCreateWebinarForm) {

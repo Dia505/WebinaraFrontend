@@ -1,55 +1,25 @@
-import axios from "axios";
-import { jwtDecode } from "jwt-decode";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../../../context/auth_context";
 
 import edit from "../../../assets/edit.png";
-import "../../css_files/private/user/user_profile.css";
 import NavBar from "../../../components/navigation/nav_bar";
 import UserSideBar from "../../../components/navigation/user_side_bar";
 import UserProfileEditForm from "../../../components/user_profile/user_profile_edit_form";
+import "../../css_files/private/user/user_profile.css";
 
 function UserProfile() {
-    const { authToken } = useAuth();
-    const [user, setUser] = useState(null);
+    const { user } = useAuth();
     const [showEditProfileForm, setShowEditProfileForm] = useState(false);
 
-    useEffect(() => {
-        const fetchUserDetails = async () => {
-            try {
-                if (!authToken) return;
-
-                const decoded = jwtDecode(authToken);
-                const userId = decoded._id || decoded.id;
-
-                const response = await axios.get(
-                    `https://localhost:443/api/user/${userId}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${authToken}`,
-                        },
-                        withCredentials: true
-                    }
-                );
-
-                setUser(response.data);
-            } catch (error) {
-                console.error("Error fetching user details:", error);
-            }
-        };
-
-        fetchUserDetails();
-    }, [authToken]);
-
-    return(
+    return (
         <>
             <div className="user-profile-main-window">
                 <div className="user-profile-nav-bar-div">
-                    <NavBar/>
+                    <NavBar />
                 </div>
 
                 <div className="user-profile-side-bar-content-div">
-                    <UserSideBar/>
+                    <UserSideBar />
 
                     {showEditProfileForm ? (
                         <UserProfileEditForm closeForm={() => setShowEditProfileForm(false)} />
@@ -91,11 +61,6 @@ function UserProfile() {
                                     <div className="user-profile-detail-div">
                                         <p className="user-profile-detail-title">Email address</p>
                                         <p className="user-profile-detail">{user?.email}</p>
-                                    </div>
-
-                                    <div className="user-profile-detail-div">
-                                        <p className="user-profile-detail-title">Password</p>
-                                        <p className="user-profile-detail">{user?.password ? "•".repeat(user?.password.length) : ""}</p>
                                     </div>
                                 </div>
                             </div>

@@ -9,8 +9,8 @@ function WebinarGrid() {
     const [fullyBookedWebinars, setFullyBookedWebinars] = useState([]);
     const [alreadyBookedWebinars, setAlreadyBookedWebinars] = useState([]);
     const navigate = useNavigate();
-    const { authToken } = useAuth();
-
+    const { authToken, user } = useAuth();
+    
     const formatTo12Hour = (timeStr) => {
         if (!timeStr) return "";
         const [hour, minute] = timeStr.split(":");
@@ -159,8 +159,8 @@ function WebinarGrid() {
                                     className="webinar-btn"
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        if (authToken) {
-                                            navigate(`/webinar-details/${webinar._id}`, {
+                                        if (user) {
+                                            navigate(`/view-webinar/${webinar._id}`, {
                                                 state: { openBookingForm: true },
                                             });
                                         } else {

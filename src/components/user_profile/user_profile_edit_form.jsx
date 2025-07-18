@@ -1,6 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
 import { toast } from "react-toastify";
@@ -35,48 +33,29 @@ function UserProfileEditForm({ closeForm }) {
         mode: "all",
     });
 
-    const { authToken } = useAuth();
-    const [user, setUser] = useState(null);
+    const { user, authToken } = useAuth();
     const [image, setImage] = useState("");
     const [updatedProfilePicture, setUpdatedProfilePicture] = useState(null);
     const [userId, setUserId] = useState(null);
 
     useEffect(() => {
         const fetchUserDetails = async () => {
-            if (!authToken) return;
             try {
-                const decoded = jwtDecode(authToken);
-                const userId = decoded._id;
-
-                console.log("User id: ", userId);
-
-                const response = await axios.get(
-                    `https://localhost:443/api/user/${userId}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${authToken}`,
-                        },
-                        withCredentials: true
-                    }
-                );
-
-                const data = response.data;
-                setUser(data);
-                setValue("fullName", data.fullName);
-                setValue("mobileNumber", data.mobileNumber);
-                setValue("address", data.address);
-                setValue("city", data.city);
-                setValue("email", data.email);
-                setValue("password", data.password);
-                setImage(data?.profilePicture);
-                setUserId(data._id);
+                setValue("fullName", user.fullName);
+                setValue("mobileNumber", user.mobileNumber);
+                setValue("address", user.address);
+                setValue("city", user.city);
+                setValue("email", user.email);
+                setValue("password", user.password);
+                setImage(user?.profilePicture);
+                setUserId(user._id);
             } catch (error) {
                 console.error("Error fetching user details:", error);
             }
         };
 
         fetchUserDetails();
-    }, [authToken]);
+    }, []);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -88,8 +67,6 @@ function UserProfileEditForm({ closeForm }) {
     };
 
     const onSubmit = async (data) => {
-        if (!authToken) return;
-
         const updatedData = {
             fullName: data.fullName,
             mobileNumber: data.mobileNumber,

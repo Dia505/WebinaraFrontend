@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/auth_context";
 
 import calendar from "../../assets/calendar.png";
 import clock from "../../assets/clock.png";
-import levelIcon from "../../assets/level.png";
 import languageIcon from "../../assets/language.png";
+import levelIcon from "../../assets/level.png";
 import loading from "../../assets/loading.gif";
 import "../css_files/view_webinar/book_seats_form.css";
 

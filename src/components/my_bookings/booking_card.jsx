@@ -19,6 +19,8 @@ function BookingCard({ webinarPhoto, title, level, language, date, startTime, en
         }).toLowerCase();
     };
 
+    console.log("Host full name: ", hostFullName);
+
     return (
         <>
             <div className="booking-card-main-div">

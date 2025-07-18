@@ -9,7 +9,7 @@ import "../css_files/home/webinar_grid.css";
 
 function ExploreWebinarGrid({ webinars, fullyBookedWebinars, alreadyBookedWebinars }) {
     const navigate = useNavigate();
-    const { authToken } = useAuth();
+    const { user } = useAuth();
 
     const formatTo12Hour = (timeStr) => {
         if (!timeStr) return "";
@@ -104,8 +104,8 @@ function ExploreWebinarGrid({ webinars, fullyBookedWebinars, alreadyBookedWebina
                                     className="webinar-btn"
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        if (authToken) {
-                                            navigate(`/webinar-details/${webinar._id}`, {
+                                        if (user) {
+                                            navigate(`/view-webinar/${webinar._id}`, {
                                                 state: { openBookingForm: true },
                                             });
                                         } else {

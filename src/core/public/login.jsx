@@ -1,9 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import * as yup from "yup";
 
 import { useAuth } from "../../context/auth_context";
@@ -27,37 +27,43 @@ function Login() {
 
     const navigate = useNavigate();
 
-    const { login } = useAuth();
+    const { user, login } = useAuth();
 
     const loginUser = useMutation({
         mutationKey: "LOGIN",
         mutationFn: async (data) => {
-            const response = await axios.post("https://localhost:443/api/auth/login", data);
-            return response.data;
+            return await login(data);
         },
-        onSuccess: (response) => {
-            console.log(response);
+        onSuccess: (user) => {
+            console.log("Login success, user: ", user);
 
-            login(response.token);
+            if (!user) {
+                console.warn("No user returned from login!");
+                return;
+            }
 
-            if (response.role === "user") {
+            if (user.role === "user") {
                 navigate("/");
-            } else if (response.role === "admin") {
+            } else if (user.role === "admin") {
                 navigate("/dashboard");
             }
         },
         onError: (error) => {
-            console.log(error);
-            console.log(error.response?.data);
-
             const errData = error.response?.data;
-
             if (error.response?.status === 403 && errData?.field && errData?.message) {
                 setError(errData.field, { type: "manual", message: errData.message });
                 return;
             }
 
-            alert(errData?.message || "Login failed!");
+            toast.error("Login failed", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                theme: "colored",
+            });
         },
     });
 

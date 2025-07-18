@@ -12,7 +12,7 @@ import "../css_files/view_webinar/similar_webinars.css";
 function SimilarWebinars({ category, currentWebinarId }) {
     const [similarWebinars, setSimilarWebinars] = useState([]);
     const navigate = useNavigate();
-    const { authToken } = useAuth();
+    const { authToken, user } = useAuth();
     const [fullyBookedWebinars, setFullyBookedWebinars] = useState([]);
     const [alreadyBookedWebinars, setAlreadyBookedWebinars] = useState([]);
 
@@ -172,8 +172,8 @@ function SimilarWebinars({ category, currentWebinarId }) {
                                         className="webinar-btn"
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            if (authToken) {
-                                                navigate(`/webinar-details/${webinar._id}`, {
+                                            if (user) {
+                                                navigate(`/view-webinar/${webinar._id}`, {
                                                     state: { openBookingForm: true },
                                                 });
                                             } else {

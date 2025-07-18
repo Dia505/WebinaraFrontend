@@ -16,6 +16,7 @@ input {
     width: 300px;
     outline: none;
     padding-left: 7px;
+    color: white;
 }
 
 .input-error {

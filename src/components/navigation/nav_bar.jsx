@@ -1,6 +1,4 @@
-import axios from "axios";
-import { jwtDecode } from "jwt-decode";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth_context";
 
@@ -27,9 +25,6 @@ function NavBar() {
                     </Link>
                     <Link to="/explore">
                         <p className={location.pathname === "/explore" ? "active-link" : ""}>Explore</p>
-                    </Link>
-                    <Link to="/contact">
-                        <p className={location.pathname === "/contact" ? "active-link" : ""}>Contact</p>
                     </Link>
                 </div>
 

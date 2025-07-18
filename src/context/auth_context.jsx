@@ -1,9 +1,10 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true); // new
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -13,10 +14,15 @@ export const AuthProvider = ({ children }) => {
                 });
                 if (res.ok) {
                     const data = await res.json();
-                    setUser(data.user); 
+                    setUser(data.user);
+                } else {
+                    setUser(null);
                 }
             } catch (err) {
                 console.error("Failed to fetch user:", err);
+                setUser(null);
+            } finally {
+                setLoading(false); 
             }
         };
         fetchUser();
@@ -30,12 +36,11 @@ export const AuthProvider = ({ children }) => {
             body: JSON.stringify(credentials),
         });
 
-        if (res.ok) {
-            const data = await res.json();
-            setUser(data.user); 
-        } else {
-            throw new Error("Login failed");
-        }
+        if (!res.ok) throw new Error("Login failed");
+
+        const user = await res.json();
+        setUser(user);
+        return user;
     };
 
     const logout = async () => {
@@ -51,8 +56,10 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const isAuthenticated = !!user;
+
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user, isAuthenticated, loading, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
