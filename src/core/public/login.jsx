@@ -49,10 +49,22 @@ function Login() {
             }
         },
         onError: (error) => {
-            const errData = error.response?.data;
-            if (error.response?.status === 403 && errData?.field && errData?.message) {
-                setError(errData.field, { type: "manual", message: errData.message });
-                return;
+            console.log("Error object:", error);
+
+            // Instead of error.response, check error.message directly
+            if (error.status === 403) {
+                if (error.message && typeof error.message === "string") {
+                    toast.error(error.message, {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        theme: "colored",
+                    });
+                    return;
+                }
             }
 
             toast.error("Login failed", {
@@ -64,7 +76,7 @@ function Login() {
                 draggable: true,
                 theme: "colored",
             });
-        },
+        }
     });
 
     const onSubmit = (values) => {

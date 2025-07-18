@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
                 console.error("Failed to fetch user:", err);
                 setUser(null);
             } finally {
-                setLoading(false); 
+                setLoading(false);
             }
         };
         fetchUser();
@@ -36,7 +36,21 @@ export const AuthProvider = ({ children }) => {
             body: JSON.stringify(credentials),
         });
 
-        if (!res.ok) throw new Error("Login failed");
+        if (!res.ok) {
+            // Try to parse the error message from response JSON
+            let errorData;
+            try {
+                errorData = await res.json();
+            } catch {
+                errorData = { message: "Login failed" };
+            }
+
+            // Throw an object that contains the error message and status for React Query
+            const error = new Error(errorData.message || "Login failed");
+            error.status = res.status;
+            error.data = errorData;
+            throw error;
+        }
 
         const user = await res.json();
         setUser(user);
