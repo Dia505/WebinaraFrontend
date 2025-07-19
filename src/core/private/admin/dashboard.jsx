@@ -1,9 +1,9 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../context/auth_context";
-import axios from "axios";
 
-import AdminSideBar from "../../../components/navigation/admin_side_bar";
 import CreateAdminForm from "../../../components/dashboard/create_admin_form";
+import AdminSideBar from "../../../components/navigation/admin_side_bar";
 import "../../css_files/private/admin/dashboard.css";
 
 function Dashboard() {
@@ -12,6 +12,7 @@ function Dashboard() {
     const [webinarCount, setWebinarCount] = useState(0);
     const { authToken } = useAuth();
     const [showCreateAdminForm, setShowCreateAdminForm] = useState(false);
+    const [userLog, setUserLog] = useState([]);
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -49,6 +50,24 @@ function Dashboard() {
         };
 
         fetchWebinars();
+    }, [authToken]);
+
+    useEffect(() => {
+        const fetchUserLog = async () => {
+            try {
+                const response = await axios.get(`https://localhost:443/api/user-log`, {
+                    headers: {
+                        Authorization: `Bearer ${authToken}`
+                    },
+                    withCredentials: true
+                });
+                setUserLog(response.data);
+            } catch (error) {
+                console.error("Failed to fetch user log:", error);
+            }
+        };
+
+        fetchUserLog();
     }, [authToken]);
 
     return (
@@ -111,6 +130,40 @@ function Dashboard() {
                                 })}
                             </tbody>
                         </table>
+                    </div>
+
+                    <div>
+                        <p className="user-log-text">User Log</p>
+
+                        <div className="dashboard-table-wrapper">
+                            <table className="dashboard-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>User ID</th>
+                                        <th>URL</th>
+                                        <th>Method</th>
+                                        <th>Timestamp</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {userLog.map((ul, index) => {
+                                        const methodClass = `method-${ul.method.toLowerCase()}`;
+                                        return (
+                                            <tr key={ul?._id} className={methodClass}>
+                                                <td>{index + 1}</td>
+                                                <td>
+                                                    {ul.userId}
+                                                </td>
+                                                <td>{ul.url}</td>
+                                                <td>{ul.method}</td>
+                                                <td>{ul.timestamp}</td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     {showCreateAdminForm && (

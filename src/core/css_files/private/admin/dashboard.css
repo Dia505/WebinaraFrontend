@@ -17,7 +17,7 @@ body {
     margin-left: 250px;
     padding-left: 4vw;
     padding-bottom: 7vh;
-    margin-top: -15vh;
+    margin-top: -5vh;
     gap: 5vh;
     width: 70vw;
 }
@@ -139,4 +139,23 @@ body {
     border-radius: 20px;
     background-color: white;
     padding: 50px;
+}
+
+.user-log-text {
+    color: black;
+    margin: 0;
+    font-size: 18px;
+}
+
+.method-get {
+  background-color: #d4edda; 
+}
+.method-post {
+  background-color: #fff3cd; 
+}
+.method-put {
+  background-color: #cce5ff; 
+}
+.method-delete {
+  background-color: #f8d7da; 
 }
