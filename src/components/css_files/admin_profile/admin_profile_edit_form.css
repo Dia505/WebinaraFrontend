@@ -86,3 +86,13 @@ input:-webkit-autofill {
     font-size: 15px;
     width: 14vw;
 }
+
+@media (max-width: 1060px) {
+    .admin-edit-profile-form {
+        margin-left: 0px;
+    }
+
+    .admin-edit-profile-cancel-btn, .admin-edit-profile-update-btn {
+        width: 100px;
+    }
+}

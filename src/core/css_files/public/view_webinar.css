@@ -103,7 +103,6 @@ body {
     width: 20vw;
     height: 7vh;
     outline: none;
-
 }
 
 .view-webinar-fully-booked-div {
@@ -233,4 +232,80 @@ body {
     border: 4px black solid;
     border-radius: 20px;
     padding-bottom: 50px;
+}
+
+@media (max-width: 1110px) {
+    .webinar-details-img {
+        width: 70vw;
+    }
+}
+
+@media (max-width: 1020px) {
+    .view-webinar-top-section {
+        padding-left: 3vw;
+    }
+}
+
+@media (max-width: 1000px) {
+    .view-webinar-host-inner-div {
+        flex-direction: column;
+    }
+
+    .view-webinar-host-img {
+        height: 100%;
+        width: 100%;
+        border-radius: 10px;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .view-webinar-host-bio {
+        width: 55vw;
+    }
+}
+
+@media (max-width: 875px) {
+    .view-webinar-details {
+        flex-wrap: wrap;
+        gap: 3vw;
+        padding-right: 4vw;
+    }
+
+    .view-webinar-top-section {
+        padding-top: 15vh;
+        height: 50vh;
+    }
+}
+
+@media (max-width: 860px) {
+    .webinar-details-img {
+        height: 60vw;
+    }
+
+    .view-webinar-subtitle-btn-div {
+        flex-direction: column;
+        gap: 0vw;
+        align-items: end;
+        padding-left: 10vw;
+        padding-right: 10vw;
+    }
+}
+
+@media (max-width: 800px) {
+    .view-webinar-host-div {
+        margin-left: 6vw;
+    }
+}
+
+@media (max-width: 720px) {
+    .view-webinar-form-modal {
+        max-width: 600px;
+        width: 80%;
+    }
+}
+
+@media (max-width: 590px) {
+    .view-webinar-ticket-btn {
+        width: 150px;
+    }
 }

@@ -148,14 +148,56 @@ body {
 }
 
 .method-get {
-  background-color: #d4edda; 
+    background-color: #d4edda;
 }
+
 .method-post {
-  background-color: #fff3cd; 
+    background-color: #fff3cd;
 }
+
 .method-put {
-  background-color: #cce5ff; 
+    background-color: #cce5ff;
 }
+
 .method-delete {
-  background-color: #f8d7da; 
+    background-color: #f8d7da;
+}
+
+@media (max-width: 1150px) {
+    .dashboard-insights-div {
+        margin-left: 13vw;
+    }
+}
+
+@media (max-width: 1060px) {
+    .admin-side-bar-div {
+        display: none;
+    }
+
+    .dashboard-main-div {
+        margin-left: 5vw;
+    }
+}
+
+@media (max-width: 700px) {
+    .dashboard-insights-div {
+        flex-direction: column;
+    }
+
+    .dashboard-insight {
+        display: flex;
+        flex-direction: column;
+        border-radius: 15px;
+        border: 2px solid #7d97f9;
+        background-color: #232541;
+        align-items: center;
+        height: 200px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .dashboard-create-admin-btn {
+        height: 70px;
+    }
 }

@@ -103,7 +103,7 @@ input {
     font-weight: bold;
     transition: background-color 0.3s ease-in-out 0s;
     margin-left: 2vw;
-    width: 10vw;
+    width: 150px;
 }
 
 .booking-form-button:hover {
@@ -133,8 +133,8 @@ input {
     }
 }
 
-@media (max-width: 564px) {
-    .booking-form-close-btn {
-        margin-left: 75vw;
+@media (max-width: 530px) {
+    .booking-form-btn-div {
+        margin-left: 0vw;
     }
 }

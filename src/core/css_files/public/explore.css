@@ -147,3 +147,22 @@ select option {
 .no-results-message {
     color: black;
 }
+
+@media (max-width: 1200px) {
+    .no-results-img {
+        height: 40vw;
+    }
+}
+
+@media (max-width: 850px) {
+    .explore-filter-level1 {
+        flex-wrap: wrap;
+        padding-left: 15vh;
+    }
+}
+
+@media (max-width: 650px) {
+    .no-results-img {
+        height: 60vw;
+    }
+}

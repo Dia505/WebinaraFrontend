@@ -199,8 +199,13 @@ select {
         align-items: center;
     }
 
-    .user-edit-profile-cancel-btn, .user-edit-profile-update-btn {
+    .user-edit-profile-cancel-btn,
+    .user-edit-profile-update-btn {
         width: 20vw;
+    }
+
+    .user-edit-profile-form {
+        padding-bottom: 10vh;
     }
 }
 
