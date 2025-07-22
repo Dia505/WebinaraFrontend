@@ -263,6 +263,13 @@ input:-webkit-autofill {
     display: none;
 }
 
+.login-loading {
+    height: 30px;
+    width: 30px;
+    margin-left: 140px;
+    margin-top: 4vh;
+}
+
 @media screen and (max-width: 1220px) {
     .login-main-window {
         padding-left: 5vw;

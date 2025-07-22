@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 
+import loading from "../../assets/loading2.gif";
 import { useAuth } from "../../context/auth_context";
 import "../css_files/public/login.css";
 
@@ -27,14 +28,18 @@ function Login() {
 
     const navigate = useNavigate();
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const { user, login } = useAuth();
 
     const loginUser = useMutation({
         mutationKey: "LOGIN",
         mutationFn: async (data) => {
+            setIsLoading(true);
             return await login(data);
         },
-        onSuccess: (user) => {
+        onSuccess: (user, variables) => {
+            setIsLoading(false);
             console.log("Login success, user: ", user);
 
             if (!user) {
@@ -45,10 +50,11 @@ function Login() {
             if (user.role === "user") {
                 navigate("/");
             } else if (user.role === "admin") {
-                navigate("/dashboard");
+                navigate("/admin-otp", { state: { email: variables.email } });
             }
         },
         onError: (error) => {
+            setIsLoading(false);
             console.log("Error object:", error);
 
             // Instead of error.response, check error.message directly
@@ -169,7 +175,10 @@ function Login() {
                                 <p className='forgot-password-text' onClick={() => navigate("/email-for-otp")}>Forgot password?</p>
                             </div>
 
-                            <button type="submit" className='login-button'>Log In</button>
+                            {isLoading
+                                ? <img src={loading} className="login-loading" />
+                                : <button type="submit" className='login-button'>Log In</button>
+                            }
 
                             <div className='sign-up-div'>
                                 <p className='new-to-localloop-text'>New to Webinara?</p>
