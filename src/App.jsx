@@ -22,6 +22,7 @@ const Dashboard = lazy(() => import("./core/private/admin/dashboard"));
 const Webinars = lazy(() => import("./core/private/admin/webinars"));
 const WebinarDetails = lazy(() => import("./core/private/admin/webinar_details"));
 const AdminProfile = lazy(() => import("./core/private/admin/admin_profile"));
+const ChangePassword = lazy(() => import("./core/public/change_password"));
 
 function App() {
   const routes = [
@@ -111,6 +112,16 @@ function App() {
       element: (
         <Suspense>
           <ResetPassword />
+        </Suspense>
+      ),
+      errorElement: <>error</>
+    },
+
+    {
+      path: "/change-password",
+      element: (
+        <Suspense>
+          <ChangePassword />
         </Suspense>
       ),
       errorElement: <>error</>

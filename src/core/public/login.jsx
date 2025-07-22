@@ -53,6 +53,29 @@ function Login() {
 
             // Instead of error.response, check error.message directly
             if (error.status === 403) {
+                if (error.forcePasswordReset) {
+                    // Save token temporarily
+                    localStorage.setItem("token", error.token); // or use your auth context
+
+                    toast.warning("Password expired. Please change your password.", {
+                        position: "top-center",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        theme: "colored",
+                    });
+
+                    navigate("/change-password", {
+                        state: {
+                            userId: error._id
+                        }
+                    });
+
+                    return;
+                }
+
                 if (error.message && typeof error.message === "string") {
                     toast.error(error.message, {
                         position: "top-center",
