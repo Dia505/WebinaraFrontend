@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../../../context/auth_context";
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 import noWebinars from "../../../assets/no_webinars.png";
 import AdminSideBar from "../../../components/navigation/admin_side_bar";
@@ -27,7 +28,7 @@ function Webinars() {
     useEffect(() => {
         const fetchWebinars = async () => {
             try {
-                const response = await axios.get(`https://localhost:443/api/webinar`,
+                const response = await axios.get(`${VITE_API_URL}/api/webinar`,
                     {
                         headers: {
                             Authorization: `Bearer ${authToken}`

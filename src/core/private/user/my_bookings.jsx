@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../context/auth_context";
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 import BookingCard from "../../../components/my_bookings/booking_card";
 import NavBar from "../../../components/navigation/nav_bar";
@@ -16,7 +17,7 @@ function MyBookings() {
     useEffect(() => {
         const fetchUpcomingBookings = async () => {
             try {
-                const response = await axios.get("https://localhost:443/api/booking/upcoming",
+                const response = await axios.get(`${VITE_API_URL}/api/booking/upcoming`,
                     {
                         headers: {
                             Authorization: `Bearer ${authToken}`,
@@ -36,7 +37,7 @@ function MyBookings() {
     useEffect(() => {
         const fetchPastBookings = async () => {
             try {
-                const response = await axios.get("https://localhost:443/api/booking/past",
+                const response = await axios.get(`${VITE_API_URL}/api/booking/past`,
                     {
                         headers: {
                             Authorization: `Bearer ${authToken}`,

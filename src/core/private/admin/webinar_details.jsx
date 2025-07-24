@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../../../context/auth_context";
+const VITE_API_URL = import.meta.env.VITE_API_URL;  
 
 import deleteIcon from "../../../assets/delete.png";
 import editIcon from "../../../assets/edit.png";
@@ -43,7 +44,7 @@ function WebinarDetails() {
     useEffect(() => {
         const fetchWebinarDetails = async () => {
             try {
-                const response = await axios.get(`https://localhost:443/api/webinar/${_id}`);
+                const response = await axios.get(`${VITE_API_URL}/api/webinar/${_id}`);
                 setWebinar(response.data);
             } catch (error) {
                 console.error("Error fetching webinar:", error);
@@ -54,14 +55,14 @@ function WebinarDetails() {
 
     const handleDeleteWebinar = async () => {
         try {
-            await axios.delete(`https://localhost:443/api/webinar/${webinar._id}`, {
+            await axios.delete(`${VITE_API_URL}/api/webinar/${webinar._id}`, {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
                 withCredentials: true
             });
 
-            await axios.delete(`https://localhost:443/api/host/${webinar.hostId._id}`, {
+            await axios.delete(`${VITE_API_URL}/api/host/${webinar.hostId._id}`, {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },

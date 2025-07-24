@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import * as yup from "yup";
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 import '../css_files/public/register.css';
 
@@ -51,7 +52,7 @@ function Register() {
         mutationKey: "SAVEDATA",
         mutationFn: (requestData) => {
             console.log(requestData);
-            return axios.post("https://localhost:443/api/user", requestData);
+            return axios.post(`${VITE_API_URL}/api/user`, requestData);
         },
         onSuccess: (data) => {
             toast.success("Registration successful!", {

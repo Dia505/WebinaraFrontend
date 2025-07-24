@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useAuth } from "../../context/auth_context";
+const VITE_API_URL = import.meta.env.VITE_API_URL;  
 
 import "../css_files/admin_profile/admin_profile_edit_form.css";
 
@@ -59,7 +60,7 @@ function AdminProfileEditForm({ closeForm }) {
 
         try {
             const response = await fetch(
-                `https://localhost:443/api/auth/${userId}`,
+                `${VITE_API_URL}/api/auth/${userId}`,
                 {
                     method: "PUT",
                     headers: {

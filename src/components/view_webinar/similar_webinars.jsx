@@ -6,6 +6,7 @@ import blueClock from "../../assets/blue_clock.png";
 import blueLanguage from "../../assets/blue_language.png";
 import blueLevel from "../../assets/blue_level.png";
 import { useAuth } from "../../context/auth_context";
+const VITE_API_URL = import.meta.env.VITE_API_URL;      
 
 import "../css_files/view_webinar/similar_webinars.css";
 
@@ -35,7 +36,7 @@ function SimilarWebinars({ category, currentWebinarId }) {
 
         const fetchSimilarWebinars = async () => {
             try {
-                const response = await axios.get(`https://localhost:443/api/webinar/webinar-category?category=${category}`);
+                const response = await axios.get(`${VITE_API_URL}/api/webinar/webinar-category?category=${category}`);
                 let webinars = response.data;
 
                 webinars = webinars.filter(webinar => webinar._id !== currentWebinarId);
@@ -51,7 +52,7 @@ function SimilarWebinars({ category, currentWebinarId }) {
                     if (!webinar._id || webinar.totalSeats === null) continue;
 
                     const fullBookingResponse = await axios.get(
-                        `https://localhost:443/api/webinar/check-full-booking/${webinar._id}`
+                        `${VITE_API_URL}/api/webinar/check-full-booking/${webinar._id}`
                     );
 
                     const isFullyBooked = fullBookingResponse?.data?.full;
@@ -68,7 +69,7 @@ function SimilarWebinars({ category, currentWebinarId }) {
                     if (webinar.totalSeats === null) continue;
 
                     const alreadyBookedResponse = await axios.get(
-                        `https://localhost:443/api/booking/check-booking/${webinar._id}`, {
+                        `${VITE_API_URL}/api/booking/check-booking/${webinar._id}`, {
                         headers: {
                             Authorization: `Bearer ${authToken}`
                         },

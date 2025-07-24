@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useAuth } from "../../context/auth_context";
+const VITE_API_URL = import.meta.env.VITE_API_URL;  
 
 import "../css_files/user_profile/user_profile_edit_form.css";
 
@@ -88,7 +89,7 @@ function UserProfileEditForm({ closeForm }) {
                 formData.append("profilePicture", updatedProfilePicture);
 
                 const pictureResponse = await fetch(
-                    `https://localhost:443/api/user/${userId}/profile-picture`,
+                    `${VITE_API_URL}/api/user/${userId}/profile-picture`,
                     {
                         method: "PUT",
                         headers: {
@@ -104,7 +105,7 @@ function UserProfileEditForm({ closeForm }) {
             }
 
             const response = await fetch(
-                `https://localhost:443/api/user/${userId}`,
+                `${VITE_API_URL}/api/user/${userId}`,
                 {
                     method: "PUT",
                     headers: {

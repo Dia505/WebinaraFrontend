@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useAuth } from '../../context/auth_context';
+const VITE_API_URL = import.meta.env.VITE_API_URL;      
 
 import "../css_files/webinars/create_webinar_form.css";
 
@@ -165,7 +166,7 @@ function EditWebinarForm({ webinar, closeForm }) {
                 formData.append("profilePicture", selectedHostImg);
 
                 const hostProfilePictureResponse = await fetch(
-                    `https://localhost:443/api/host/${webinar.hostId._id}/profile-picture`,
+                    `${VITE_API_URL}/api/host/${webinar.hostId._id}/profile-picture`,
                     {
                         method: "PUT",
                         headers: {
@@ -178,7 +179,7 @@ function EditWebinarForm({ webinar, closeForm }) {
             }
 
             const hostReponse = await fetch(
-                `https://localhost:443/api/host/${webinar.hostId._id}`,
+                `${VITE_API_URL}/api/host/${webinar.hostId._id}`,
                 {
                     method: "PUT",
                     headers: {
@@ -202,7 +203,7 @@ function EditWebinarForm({ webinar, closeForm }) {
                 totalSeats: limitedSeats ? data.totalSeats : null
             }
 
-            await fetch(`https://localhost:443/api/webinar/${webinar._id}`, {
+            await fetch(`${VITE_API_URL}/api/webinar/${webinar._id}`, {
                 method: "PUT",
                 headers: {
                     Authorization: `Bearer ${authToken}`,
@@ -216,7 +217,7 @@ function EditWebinarForm({ webinar, closeForm }) {
                 const imageForm = new FormData();
                 imageForm.append("webinarPhoto", selectedFile);
 
-                await fetch(`https://localhost:443/api/webinar/${webinar._id}/webinar-image`, {
+                await fetch(`${VITE_API_URL}/api/webinar/${webinar._id}/webinar-image`, {
                     method: "PUT",
                     headers: {
                         Authorization: `Bearer ${authToken}`,

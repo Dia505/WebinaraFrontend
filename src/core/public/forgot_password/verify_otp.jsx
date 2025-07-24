@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import axios from "axios";
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 import "../../css_files/public/forgot_password/verify_otp.css";
 
@@ -30,7 +31,7 @@ function VerifyOtp() {
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post("https://localhost:443/api/reset/verify-otp", {
+            const response = await axios.post(`${VITE_API_URL}/api/reset/verify-otp`, {
                 email: email,
                 otp: data.otp,
             });

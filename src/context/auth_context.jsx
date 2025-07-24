@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const res = await fetch("https://localhost:443/api/user/me", {
+                const res = await fetch(`${VITE_API_URL}/api/user/me`, {
                     credentials: "include",
                 });
                 if (res.ok) {
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = async (credentials) => {
-        const res = await fetch("https://localhost:443/api/auth/login", {
+        const res = await fetch(`${VITE_API_URL}/api/auth/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await fetch("https://localhost:443/api/auth/logout", {
+            await fetch(`${VITE_API_URL}/api/auth/logout`, {
                 method: "POST",
                 credentials: "include",
             });

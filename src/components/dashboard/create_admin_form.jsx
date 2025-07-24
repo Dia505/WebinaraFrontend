@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useAuth } from '../../context/auth_context';
+const VITE_API_URL = import.meta.env.VITE_API_URL;              
 
 import "../css_files/dashboard/create_admin_form.css";
 
@@ -42,7 +43,7 @@ function CreateAdminForm({ closeForm }) {
         mutationKey: "SAVEDATA",
         mutationFn: (requestData) => {
             console.log(requestData);
-            return axios.post("https://localhost:443/api/auth/register",
+            return axios.post(`${VITE_API_URL}/api/auth/register`,
                 requestData,
                 {
                     headers: {

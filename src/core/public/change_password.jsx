@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import * as yup from "yup";
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 import "../css_files/public/forgot_password/reset_password.css";
 
@@ -57,7 +58,7 @@ function ChangePassword() {
             }
 
             const response = await axios.put(
-                `https://localhost:443/api/user/${userId}`,
+                `${VITE_API_URL}/api/user/${userId}`,
                 {
                     newPassword: data.password,
                 },

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/auth_context";
+const VITE_API_URL = import.meta.env.VITE_API_URL;          
 
 import calendar from "../../assets/calendar.png";
 import clock from "../../assets/clock.png";
@@ -37,7 +38,7 @@ function BookSeatsForm({ webinarId, webinarPhoto, title, level, language, date, 
         };
 
         try {
-            const response = await fetch("https://localhost:443/api/booking",
+            const response = await fetch(`${VITE_API_URL}/api/booking`,
                 {
                     method: "POST",
                     headers: {

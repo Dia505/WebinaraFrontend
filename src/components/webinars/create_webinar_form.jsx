@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useAuth } from '../../context/auth_context';
+const VITE_API_URL = import.meta.env.VITE_API_URL;          
 
 import createWebinarImg from "../../assets/create_webinar_img.jpg";
 import "../css_files/webinars/create_webinar_form.css";
@@ -143,7 +144,7 @@ function CreateWebinarForm({ closeForm }) {
             });
             if (selectedHostImg) hostFormData.append("profilePicture", selectedHostImg);
 
-            const hostResponse = await axios.post("https://localhost:443/api/host", hostFormData, {
+            const hostResponse = await axios.post(`${VITE_API_URL}/api/host`, hostFormData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${authToken}`,
@@ -168,7 +169,7 @@ function CreateWebinarForm({ closeForm }) {
 
             if (selectedFile) webinarFormData.append("webinarPhoto", selectedFile);
 
-            const webinarResponse = await axios.post("https://localhost:443/api/webinar", webinarFormData, {
+            const webinarResponse = await axios.post(`${VITE_API_URL}/api/webinar`, webinarFormData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${authToken}`,

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth_context";
 import "../css_files/home/webinar_grid.css";
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 function WebinarGrid() {
     const [webinars, setWebinars] = useState([]);
@@ -10,7 +11,7 @@ function WebinarGrid() {
     const [alreadyBookedWebinars, setAlreadyBookedWebinars] = useState([]);
     const navigate = useNavigate();
     const { authToken, user } = useAuth();
-    
+
     const formatTo12Hour = (timeStr) => {
         if (!timeStr) return "";
         const [hour, minute] = timeStr.split(":");
@@ -26,7 +27,7 @@ function WebinarGrid() {
     useEffect(() => {
         const fetchWebinars = async () => {
             try {
-                const webinarResponse = await axios.get("https://localhost:443/api/webinar/home-webinars");
+                const webinarResponse = await axios.get(`${VITE_API_URL}/api/webinar/home-webinars`);
                 const webinarsData = webinarResponse.data;
                 setWebinars(webinarsData);
 
@@ -36,7 +37,7 @@ function WebinarGrid() {
                     if (webinar.totalSeats === null) continue;
 
                     const fullBookingResponse = await axios.get(
-                        `https://localhost:443/api/webinar/check-full-booking/${webinar._id}`
+                        `${VITE_API_URL}/api/webinar/check-full-booking/${webinar._id}`
                     );
 
                     const isFullyBooked = fullBookingResponse?.data?.full;
@@ -53,7 +54,7 @@ function WebinarGrid() {
                     if (webinar.totalSeats === null) continue;
 
                     const alreadyBookedResponse = await axios.get(
-                        `https://localhost:443/api/booking/check-booking/${webinar._id}`, {
+                        `${VITE_API_URL}/api/booking/check-booking/${webinar._id}`, {
                         headers: {
                             Authorization: `Bearer ${authToken}`
                         },

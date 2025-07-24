@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import * as yup from "yup";
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 import "../../css_files/public/forgot_password/reset_password.css";
 
@@ -40,7 +41,7 @@ function ResetPassword() {
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.put("https://localhost:443/api/reset/reset-password", {
+            const response = await axios.put(`${VITE_API_URL}/api/reset/reset-password`, {
                 email: email,
                 otp: otp,
                 newPassword: data.password,

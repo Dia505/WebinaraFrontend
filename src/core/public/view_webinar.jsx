@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../context/auth_context";
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 import facebook from "../../assets/facebook2.png";
 import instagram from "../../assets/instagram.png";
@@ -51,13 +52,13 @@ function ViewWebinar() {
     useEffect(() => {
         const fetchWebinarDetails = async () => {
             try {
-                const response = await axios.get(`https://localhost:443/api/webinar/${_id}`);
+                const response = await axios.get(`${VITE_API_URL}/api/webinar/${_id}`);
                 const webinarData = response.data;
                 setWebinar(webinarData);
 
                 if (webinarData.totalSeats != null) {
                     const fullyBookedResponse = await axios.get(
-                        `https://localhost:443/api/webinar/check-full-booking/${_id}`
+                        `${VITE_API_URL}/api/webinar/check-full-booking/${_id}`
                     );
                     setIsFullyBooked(fullyBookedResponse.data?.full ?? false);
                     return;
@@ -77,7 +78,7 @@ function ViewWebinar() {
         const checkIfBooked = async () => {
             try {
                 const response = await axios.get(
-                    `https://localhost:443/api/booking/check-booking/${_id}`,
+                    `${VITE_API_URL}/api/booking/check-booking/${_id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${authToken}`

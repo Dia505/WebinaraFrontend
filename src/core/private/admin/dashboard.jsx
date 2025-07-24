@@ -5,6 +5,7 @@ import { useAuth } from "../../../context/auth_context";
 import CreateAdminForm from "../../../components/dashboard/create_admin_form";
 import AdminSideBar from "../../../components/navigation/admin_side_bar";
 import "../../css_files/private/admin/dashboard.css";
+const VITE_API_URL = import.meta.env.VITE_API_URL;  
 
 function Dashboard() {
     const [users, setUsers] = useState([]);
@@ -17,7 +18,7 @@ function Dashboard() {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get(`https://localhost:443/api/user`, {
+                const response = await axios.get(`${VITE_API_URL}/api/user`, {
                     headers: {
                         Authorization: `Bearer ${authToken}`
                     },
@@ -36,7 +37,7 @@ function Dashboard() {
     useEffect(() => {
         const fetchWebinars = async () => {
             try {
-                const response = await axios.get(`https://localhost:443/api/webinar`, {
+                const response = await axios.get(`${VITE_API_URL}/api/webinar`, {
                     headers: {
                         Authorization: `Bearer ${authToken}`
                     },
@@ -55,7 +56,7 @@ function Dashboard() {
     useEffect(() => {
         const fetchUserLog = async () => {
             try {
-                const response = await axios.get(`https://localhost:443/api/user-log`, {
+                const response = await axios.get(`${VITE_API_URL}/api/user-log`, {
                     headers: {
                         Authorization: `Bearer ${authToken}`
                     },

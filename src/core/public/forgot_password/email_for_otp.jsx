@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useState } from "react";
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 import loading from "../../../assets/loading2.gif";
 import "../../css_files/public/forgot_password/email_for_otp.css";
@@ -29,7 +30,7 @@ function EmailForOtp() {
     const onSubmit = async (data) => {
         setIsLoading(true);
         try {
-            const response = await axios.post("https://localhost:443/api/reset/send-otp", data);
+            const response = await axios.post(`${VITE_API_URL}/api/reset/send-otp`, data);
             console.log("Email: ", data.email);
             navigate('/verify-otp', { state: { email: data.email } });
         } catch (error) {
