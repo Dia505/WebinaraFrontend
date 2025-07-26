@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useAuth } from '../../context/auth_context';
-const VITE_API_URL = import.meta.env.VITE_API_URL;              
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 import "../css_files/dashboard/create_admin_form.css";
 
@@ -39,15 +39,25 @@ function CreateAdminForm({ closeForm }) {
 
     const { authToken } = useAuth();
 
+    const CSRF_URL = `${VITE_API_URL}/api/csrf-token`;
+
     const registerAdmin = useMutation({
         mutationKey: "SAVEDATA",
-        mutationFn: (requestData) => {
+        mutationFn: async (requestData) => {
             console.log(requestData);
+            
+            const csrfResponse = await axios.get(CSRF_URL, {
+                withCredentials: true,
+            });
+
+            const csrfToken = csrfResponse.data.csrfToken;
+
             return axios.post(`${VITE_API_URL}/api/auth/register`,
                 requestData,
                 {
                     headers: {
-                        Authorization: `Bearer ${authToken}`
+                        Authorization: `Bearer ${authToken}`,
+                        "X-CSRF-Token": csrfToken,
                     },
                     withCredentials: true
                 }

@@ -55,6 +55,8 @@ function EditWebinarForm({ webinar, closeForm }) {
 
     const navigate = useNavigate();
 
+    const CSRF_URL = `${VITE_API_URL}/api/csrf-token`;
+
     const {
         register,
         handleSubmit,
@@ -153,6 +155,16 @@ function EditWebinarForm({ webinar, closeForm }) {
 
     const onSubmit = async (data) => {
         try {
+            const csrfResponse = await fetch(CSRF_URL, {
+                credentials: 'include' 
+            });
+
+            if (!csrfResponse.ok) {
+                throw new Error("Failed to fetch CSRF token");
+            }
+
+            const { csrfToken } = await csrfResponse.json();
+
             const updatedHost = {
                 fullName: data.host.fullName,
                 bio: data.host.bio,
@@ -171,6 +183,7 @@ function EditWebinarForm({ webinar, closeForm }) {
                         method: "PUT",
                         headers: {
                             Authorization: `Bearer ${authToken}`,
+                            "X-CSRF-Token": csrfToken
                         },
                         body: formData,
                         credentials: 'include'
@@ -185,6 +198,7 @@ function EditWebinarForm({ webinar, closeForm }) {
                     headers: {
                         Authorization: `Bearer ${authToken}`,
                         "Content-Type": "application/json",
+                        "X-CSRF-Token": csrfToken
                     },
                     body: JSON.stringify(updatedHost),
                     credentials: 'include'
@@ -208,6 +222,7 @@ function EditWebinarForm({ webinar, closeForm }) {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                     "Content-Type": "application/json",
+                    "X-CSRF-Token": csrfToken
                 },
                 body: JSON.stringify(updatedWebinar),
                 credentials: 'include'
@@ -221,6 +236,7 @@ function EditWebinarForm({ webinar, closeForm }) {
                     method: "PUT",
                     headers: {
                         Authorization: `Bearer ${authToken}`,
+                        "X-CSRF-Token": csrfToken
                     },
                     body: imageForm,
                     credentials: 'include'

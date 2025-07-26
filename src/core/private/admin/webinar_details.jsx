@@ -19,6 +19,8 @@ function WebinarDetails() {
     const navigate = useNavigate();
     const [showWebinarEditForm, setShowWebinarEditForm] = useState(false);
 
+    const CSRF_URL = `${VITE_API_URL}/api/csrf-token`;
+
     useEffect(() => {
         if (showDeleteWebinarPopUp) {
             document.body.style.overflow = 'hidden';
@@ -55,9 +57,20 @@ function WebinarDetails() {
 
     const handleDeleteWebinar = async () => {
         try {
+            const csrfResponse = await fetch(CSRF_URL, {
+                credentials: 'include' 
+            });
+
+            if (!csrfResponse.ok) {
+                throw new Error("Failed to fetch CSRF token");
+            }
+
+            const { csrfToken } = await csrfResponse.json();
+
             await axios.delete(`${VITE_API_URL}/api/webinar/${webinar._id}`, {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
+                    "X-CSRF-Token": csrfToken
                 },
                 withCredentials: true
             });
@@ -65,6 +78,7 @@ function WebinarDetails() {
             await axios.delete(`${VITE_API_URL}/api/host/${webinar.hostId._id}`, {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
+                    "X-CSRF-Token": csrfToken
                 },
                 withCredentials: true
             });

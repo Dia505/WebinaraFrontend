@@ -16,6 +16,8 @@ function BookSeatsForm({ webinarId, webinarPhoto, title, level, language, date, 
     const { handleSubmit } = useForm();
     const [isLoading, setIsLoading] = useState(false);
 
+    const CSRF_URL = `${VITE_API_URL}/api/csrf-token`;
+
     const formatTo12Hour = (timeStr) => {
         if (!timeStr) return "";
 
@@ -38,12 +40,23 @@ function BookSeatsForm({ webinarId, webinarPhoto, title, level, language, date, 
         };
 
         try {
+            const csrfResponse = await fetch(CSRF_URL, {
+                credentials: 'include' 
+            });
+
+            if (!csrfResponse.ok) {
+                throw new Error("Failed to fetch CSRF token");
+            }
+
+            const { csrfToken } = await csrfResponse.json();
+
             const response = await fetch(`${VITE_API_URL}/api/booking`,
                 {
                     method: "POST",
                     headers: {
                         Authorization: `Bearer ${authToken}`,
                         "Content-Type": "application/json",
+                        "X-CSRF-Token": csrfToken
                     },
                     credentials: 'include',
                     body: JSON.stringify(bookingData),

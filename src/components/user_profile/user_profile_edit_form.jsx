@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useAuth } from "../../context/auth_context";
-const VITE_API_URL = import.meta.env.VITE_API_URL;  
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 import "../css_files/user_profile/user_profile_edit_form.css";
 
@@ -38,6 +38,8 @@ function UserProfileEditForm({ closeForm }) {
     const [image, setImage] = useState("");
     const [updatedProfilePicture, setUpdatedProfilePicture] = useState(null);
     const [userId, setUserId] = useState(null);
+
+    const CSRF_URL = `${VITE_API_URL}/api/csrf-token`;
 
     useEffect(() => {
         const fetchUserDetails = async () => {
@@ -84,6 +86,16 @@ function UserProfileEditForm({ closeForm }) {
         }
 
         try {
+            const csrfResponse = await fetch(CSRF_URL, {
+                credentials: 'include' 
+            });
+
+            if (!csrfResponse.ok) {
+                throw new Error("Failed to fetch CSRF token");
+            }
+
+            const { csrfToken } = await csrfResponse.json();
+
             if (image !== user.profilePicture && updatedProfilePicture) {
                 const formData = new FormData();
                 formData.append("profilePicture", updatedProfilePicture);
@@ -94,6 +106,7 @@ function UserProfileEditForm({ closeForm }) {
                         method: "PUT",
                         headers: {
                             Authorization: `Bearer ${authToken}`,
+                            "X-CSRF-Token": csrfToken
                         },
                         body: formData,
                         credentials: 'include'
@@ -111,6 +124,7 @@ function UserProfileEditForm({ closeForm }) {
                     headers: {
                         Authorization: `Bearer ${authToken}`,
                         "Content-Type": "application/json",
+                        "X-CSRF-Token": csrfToken
                     },
                     body: JSON.stringify(updatedData),
                     credentials: 'include'

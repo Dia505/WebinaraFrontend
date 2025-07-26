@@ -60,6 +60,8 @@ function CreateWebinarForm({ closeForm }) {
     const [chipInput, setChipInput] = useState("");
     const [chips, setChips] = useState([]);
 
+    const CSRF_URL = `${VITE_API_URL}/api/csrf-token`;
+
     const navigate = useNavigate();
 
     const {
@@ -125,6 +127,16 @@ function CreateWebinarForm({ closeForm }) {
 
     const submitWebinar = async (data) => {
         try {
+            const csrfResponse = await fetch(CSRF_URL, {
+                credentials: 'include' 
+            });
+
+            if (!csrfResponse.ok) {
+                throw new Error("Failed to fetch CSRF token");
+            }
+
+            const { csrfToken } = await csrfResponse.json();
+
             // Step 1: Create host first
             const hostFormData = new FormData();
             hostFormData.append("fullName", data.host.fullName);
@@ -148,6 +160,7 @@ function CreateWebinarForm({ closeForm }) {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${authToken}`,
+                    "X-CSRF-Token": csrfToken
                 },
                 withCredentials: true
             });
@@ -173,6 +186,7 @@ function CreateWebinarForm({ closeForm }) {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${authToken}`,
+                    "X-CSRF-Token": csrfToken
                 },
                 withCredentials: true
             });

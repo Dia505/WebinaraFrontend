@@ -33,6 +33,8 @@ function AdminProfileEditForm({ closeForm }) {
     const { user, authToken } = useAuth();
     const [userId, setUserId] = useState(null);
 
+    const CSRF_URL = `${VITE_API_URL}/api/csrf-token`;
+
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
@@ -59,6 +61,16 @@ function AdminProfileEditForm({ closeForm }) {
         }
 
         try {
+            const csrfResponse = await fetch(CSRF_URL, {
+                credentials: 'include' 
+            });
+
+            if (!csrfResponse.ok) {
+                throw new Error("Failed to fetch CSRF token");
+            }
+
+            const { csrfToken } = await csrfResponse.json();
+
             const response = await fetch(
                 `${VITE_API_URL}/api/auth/${userId}`,
                 {
@@ -66,6 +78,7 @@ function AdminProfileEditForm({ closeForm }) {
                     headers: {
                         Authorization: `Bearer ${authToken}`,
                         "Content-Type": "application/json",
+                        "X-CSRF-Token": csrfToken
                     },
                     body: JSON.stringify(updatedData),
                     credentials: 'include'
