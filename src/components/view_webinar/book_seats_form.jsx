@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useAuth } from "../../context/auth_context";
-const VITE_API_URL = import.meta.env.VITE_API_URL;          
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 import calendar from "../../assets/calendar.png";
 import clock from "../../assets/clock.png";
@@ -12,7 +11,6 @@ import loading from "../../assets/loading.gif";
 import "../css_files/view_webinar/book_seats_form.css";
 
 function BookSeatsForm({ webinarId, webinarPhoto, title, level, language, date, startTime, endTime, fullName, mobileNumber, email, closeForm }) {
-    const { authToken } = useAuth();
     const { handleSubmit } = useForm();
     const [isLoading, setIsLoading] = useState(false);
 
@@ -41,7 +39,7 @@ function BookSeatsForm({ webinarId, webinarPhoto, title, level, language, date, 
 
         try {
             const csrfResponse = await fetch(CSRF_URL, {
-                credentials: 'include' 
+                credentials: 'include'
             });
 
             if (!csrfResponse.ok) {
@@ -54,7 +52,6 @@ function BookSeatsForm({ webinarId, webinarPhoto, title, level, language, date, 
                 {
                     method: "POST",
                     headers: {
-                        Authorization: `Bearer ${authToken}`,
                         "Content-Type": "application/json",
                         "X-CSRF-Token": csrfToken
                     },

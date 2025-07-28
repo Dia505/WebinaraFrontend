@@ -1,15 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
-import { useAuth } from "../../context/auth_context";
 const VITE_API_URL = import.meta.env.VITE_API_URL;
 
+import noResultsImg from "../../assets/no_search_result.png";
 import searchIcon from "../../assets/search_icon.png";
 import ExploreWebinarGrid from "../../components/explore/explore_webinar_grid";
 import Footer from "../../components/navigation/footer";
 import NavBar from "../../components/navigation/nav_bar";
 import "../css_files/public/explore.css";
-import noResultsImg from "../../assets/no_search_result.png";
 
 function Explore() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -20,7 +19,6 @@ function Explore() {
     const [webinars, setWebinars] = useState([]);
     const [fullyBookedWebinars, setFullyBookedWebinars] = useState([]);
     const [alreadyBookedWebinars, setAlreadyBookedWebinars] = useState([]);
-    const {authToken} = useAuth();
 
     const { query } = useParams();
     const [searchParams] = useSearchParams();
@@ -60,25 +58,22 @@ function Explore() {
 
                     const alreadyBooked = [];
 
-                for (const webinar of webinarsData) {
-                    if (webinar.totalSeats === null) continue;
+                    for (const webinar of webinarsData) {
+                        if (webinar.totalSeats === null) continue;
 
-                    const alreadyBookedResponse = await axios.get(
-                        `${VITE_API_URL}/api/booking/check-booking/${webinar._id}`, {
-                        headers: {
-                            Authorization: `Bearer ${authToken}`
-                        },
-                        withCredentials: true
+                        const alreadyBookedResponse = await axios.get(
+                            `${VITE_API_URL}/api/booking/check-booking/${webinar._id}`, {
+                            withCredentials: true
+                        }
+                        );
+
+                        const isAlreadyBooked = alreadyBookedResponse?.data?.alreadyBooked;
+                        if (isAlreadyBooked) {
+                            alreadyBooked.push(webinar);
+                        }
                     }
-                    );
 
-                    const isAlreadyBooked = alreadyBookedResponse?.data?.alreadyBooked;
-                    if (isAlreadyBooked) {
-                        alreadyBooked.push(webinar);
-                    }
-                }
-
-                setAlreadyBookedWebinars(alreadyBooked);
+                    setAlreadyBookedWebinars(alreadyBooked);
                 } catch (error) {
                     console.error("Error fetching webinars:", error);
                 }

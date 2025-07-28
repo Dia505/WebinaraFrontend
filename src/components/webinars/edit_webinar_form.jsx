@@ -4,8 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import * as yup from "yup";
-import { useAuth } from '../../context/auth_context';
-const VITE_API_URL = import.meta.env.VITE_API_URL;      
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 import "../css_files/webinars/create_webinar_form.css";
 
@@ -40,8 +39,6 @@ const fullWebinarSchema = yup.object().shape({
 });
 
 function EditWebinarForm({ webinar, closeForm }) {
-    const { authToken } = useAuth();
-
     const [previewImage, setPreviewImage] = useState("");
     const [selectedFile, setSelectedFile] = useState(null);
     const [subtitleLength, setSubtitleLength] = useState(0);
@@ -156,7 +153,7 @@ function EditWebinarForm({ webinar, closeForm }) {
     const onSubmit = async (data) => {
         try {
             const csrfResponse = await fetch(CSRF_URL, {
-                credentials: 'include' 
+                credentials: 'include'
             });
 
             if (!csrfResponse.ok) {
@@ -182,7 +179,6 @@ function EditWebinarForm({ webinar, closeForm }) {
                     {
                         method: "PUT",
                         headers: {
-                            Authorization: `Bearer ${authToken}`,
                             "X-CSRF-Token": csrfToken
                         },
                         body: formData,
@@ -196,7 +192,6 @@ function EditWebinarForm({ webinar, closeForm }) {
                 {
                     method: "PUT",
                     headers: {
-                        Authorization: `Bearer ${authToken}`,
                         "Content-Type": "application/json",
                         "X-CSRF-Token": csrfToken
                     },
@@ -220,7 +215,6 @@ function EditWebinarForm({ webinar, closeForm }) {
             await fetch(`${VITE_API_URL}/api/webinar/${webinar._id}`, {
                 method: "PUT",
                 headers: {
-                    Authorization: `Bearer ${authToken}`,
                     "Content-Type": "application/json",
                     "X-CSRF-Token": csrfToken
                 },
@@ -235,7 +229,6 @@ function EditWebinarForm({ webinar, closeForm }) {
                 await fetch(`${VITE_API_URL}/api/webinar/${webinar._id}/webinar-image`, {
                     method: "PUT",
                     headers: {
-                        Authorization: `Bearer ${authToken}`,
                         "X-CSRF-Token": csrfToken
                     },
                     body: imageForm,

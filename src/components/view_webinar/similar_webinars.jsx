@@ -5,15 +5,13 @@ import blueCalendar from "../../assets/blue_calendar.png";
 import blueClock from "../../assets/blue_clock.png";
 import blueLanguage from "../../assets/blue_language.png";
 import blueLevel from "../../assets/blue_level.png";
-import { useAuth } from "../../context/auth_context";
-const VITE_API_URL = import.meta.env.VITE_API_URL;      
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 import "../css_files/view_webinar/similar_webinars.css";
 
 function SimilarWebinars({ category, currentWebinarId }) {
     const [similarWebinars, setSimilarWebinars] = useState([]);
     const navigate = useNavigate();
-    const { authToken, user } = useAuth();
     const [fullyBookedWebinars, setFullyBookedWebinars] = useState([]);
     const [alreadyBookedWebinars, setAlreadyBookedWebinars] = useState([]);
 
@@ -70,9 +68,6 @@ function SimilarWebinars({ category, currentWebinarId }) {
 
                     const alreadyBookedResponse = await axios.get(
                         `${VITE_API_URL}/api/booking/check-booking/${webinar._id}`, {
-                        headers: {
-                            Authorization: `Bearer ${authToken}`
-                        },
                         withCredentials: true
                     }
                     );

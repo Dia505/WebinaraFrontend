@@ -55,9 +55,6 @@ function WebinarGrid() {
 
                     const alreadyBookedResponse = await axios.get(
                         `${VITE_API_URL}/api/booking/check-booking/${webinar._id}`, {
-                        headers: {
-                            Authorization: `Bearer ${authToken}`
-                        },
                         withCredentials: true
                     }
                     );

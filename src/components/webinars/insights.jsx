@@ -1,11 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useAuth } from "../../context/auth_context";
 import "../css_files/webinars/insights.css";
-const VITE_API_URL = import.meta.env.VITE_API_URL;                  
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 function Insights({ webinar, closeForm }) {
-    const { authToken } = useAuth();
     const [totalBookingCount, setTotalBookingCount] = useState(0);
     const [bookingList, setBookingList] = useState([]);
 
@@ -14,9 +12,6 @@ function Insights({ webinar, closeForm }) {
             try {
                 const response = await axios.get(`${VITE_API_URL}/api/booking/webinar/${webinar?._id}`,
                     {
-                        headers: {
-                            Authorization: `Bearer ${authToken}`
-                        },
                         withCredentials: true,
                     }
                 );

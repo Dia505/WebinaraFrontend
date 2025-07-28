@@ -2,8 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useAuth } from "../../../context/auth_context";
-const VITE_API_URL = import.meta.env.VITE_API_URL;  
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 import deleteIcon from "../../../assets/delete.png";
 import editIcon from "../../../assets/edit.png";
@@ -15,7 +14,6 @@ function WebinarDetails() {
     const { _id } = useParams();
     const [webinar, setWebinar] = useState(null);
     const [showDeleteWebinarPopUp, setShowDeleteWebinarPopUp] = useState(false);
-    const { authToken } = useAuth();
     const navigate = useNavigate();
     const [showWebinarEditForm, setShowWebinarEditForm] = useState(false);
 
@@ -58,7 +56,7 @@ function WebinarDetails() {
     const handleDeleteWebinar = async () => {
         try {
             const csrfResponse = await fetch(CSRF_URL, {
-                credentials: 'include' 
+                credentials: 'include'
             });
 
             if (!csrfResponse.ok) {
@@ -69,7 +67,6 @@ function WebinarDetails() {
 
             await axios.delete(`${VITE_API_URL}/api/webinar/${webinar._id}`, {
                 headers: {
-                    Authorization: `Bearer ${authToken}`,
                     "X-CSRF-Token": csrfToken
                 },
                 withCredentials: true
@@ -77,7 +74,6 @@ function WebinarDetails() {
 
             await axios.delete(`${VITE_API_URL}/api/host/${webinar.hostId._id}`, {
                 headers: {
-                    Authorization: `Bearer ${authToken}`,
                     "X-CSRF-Token": csrfToken
                 },
                 withCredentials: true

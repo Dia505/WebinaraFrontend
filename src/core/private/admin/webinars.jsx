@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useAuth } from "../../../context/auth_context";
 const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 import noWebinars from "../../../assets/no_webinars.png";
@@ -13,7 +12,6 @@ import "../../css_files/private/admin/webinars.css";
 
 function Webinars() {
     const [webinars, setWebinars] = useState([]);
-    const { authToken } = useAuth();
     const [showCreateWebinarForm, setShowCreateWebinarForm] = useState(false);
     const [showInsights, setShowInsights] = useState(false);
     const [selectedWebinarForInsights, setSelectedWebinarForInsights] = useState(null);
@@ -30,9 +28,6 @@ function Webinars() {
             try {
                 const response = await axios.get(`${VITE_API_URL}/api/webinar`,
                     {
-                        headers: {
-                            Authorization: `Bearer ${authToken}`
-                        },
                         withCredentials: true
                     }
                 );

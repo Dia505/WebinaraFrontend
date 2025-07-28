@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useAuth } from "../../../context/auth_context";
 const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 import BookingCard from "../../../components/my_bookings/booking_card";
@@ -9,7 +8,6 @@ import UserSideBar from "../../../components/navigation/user_side_bar";
 import "../../css_files/private/user/my_bookings.css";
 
 function MyBookings() {
-    const { authToken } = useAuth();
     const [upcomingBookings, setUpcomingBookings] = useState([]);
     const [pastBookings, setPastBookings] = useState([]);
     const [selectedFilter, setSelectedFilter] = useState("upcoming");
@@ -19,9 +17,6 @@ function MyBookings() {
             try {
                 const response = await axios.get(`${VITE_API_URL}/api/booking/upcoming`,
                     {
-                        headers: {
-                            Authorization: `Bearer ${authToken}`,
-                        },
                         withCredentials: true,
                     }
                 );
@@ -32,16 +27,13 @@ function MyBookings() {
         };
 
         fetchUpcomingBookings();
-    }, [authToken]);
+    }, []);
 
     useEffect(() => {
         const fetchPastBookings = async () => {
             try {
                 const response = await axios.get(`${VITE_API_URL}/api/booking/past`,
                     {
-                        headers: {
-                            Authorization: `Bearer ${authToken}`,
-                        },
                         withCredentials: true,
                     }
                 );
@@ -52,7 +44,7 @@ function MyBookings() {
         };
 
         fetchPastBookings();
-    }, [authToken]);
+    }, []);
 
     return (
         <>
@@ -110,7 +102,7 @@ function MyBookings() {
                                         endTime={webinar?.webinarDetails?.endTime}
                                         title={webinar?.webinarDetails?.title}
                                         hostFullName={webinar?.webinarDetails?.hostFullName}
-                                
+
                                     />
                                 ))
                             )}

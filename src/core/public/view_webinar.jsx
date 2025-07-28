@@ -20,7 +20,7 @@ import "../css_files/public/view_webinar.css";
 
 function ViewWebinar() {
     const { _id } = useParams();
-    const { authToken, user } = useAuth();
+    const { user } = useAuth();
     const [webinar, setWebinar] = useState(null);
     const [isFullyBooked, setIsFullyBooked] = useState(false);
     const [showBookingForm, setShowBookingForm] = useState(false);
@@ -80,9 +80,6 @@ function ViewWebinar() {
                 const response = await axios.get(
                     `${VITE_API_URL}/api/booking/check-booking/${_id}`,
                     {
-                        headers: {
-                            Authorization: `Bearer ${authToken}`
-                        },
                         withCredentials: true
                     }
                 );
@@ -92,10 +89,10 @@ function ViewWebinar() {
             }
         };
 
-        if (_id && authToken) {
+        if (_id) {
             checkIfBooked();
         }
-    }, [_id, authToken]);
+    }, [_id]);
 
     return (
         <>

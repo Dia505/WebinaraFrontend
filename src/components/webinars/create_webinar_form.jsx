@@ -5,8 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import * as yup from "yup";
-import { useAuth } from '../../context/auth_context';
-const VITE_API_URL = import.meta.env.VITE_API_URL;          
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 import createWebinarImg from "../../assets/create_webinar_img.jpg";
 import "../css_files/webinars/create_webinar_form.css";
@@ -47,8 +46,6 @@ const fullWebinarSchema = yup.object().shape({
 });
 
 function CreateWebinarForm({ closeForm }) {
-    const { authToken } = useAuth();
-
     const [previewImage, setPreviewImage] = useState(createWebinarImg);
     const [selectedFile, setSelectedFile] = useState(null);
     const [subtitleLength, setSubtitleLength] = useState(0);
@@ -128,7 +125,7 @@ function CreateWebinarForm({ closeForm }) {
     const submitWebinar = async (data) => {
         try {
             const csrfResponse = await fetch(CSRF_URL, {
-                credentials: 'include' 
+                credentials: 'include'
             });
 
             if (!csrfResponse.ok) {
@@ -159,7 +156,6 @@ function CreateWebinarForm({ closeForm }) {
             const hostResponse = await axios.post(`${VITE_API_URL}/api/host`, hostFormData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
-                    Authorization: `Bearer ${authToken}`,
                     "X-CSRF-Token": csrfToken
                 },
                 withCredentials: true
@@ -185,7 +181,6 @@ function CreateWebinarForm({ closeForm }) {
             const webinarResponse = await axios.post(`${VITE_API_URL}/api/webinar`, webinarFormData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
-                    Authorization: `Bearer ${authToken}`,
                     "X-CSRF-Token": csrfToken
                 },
                 withCredentials: true

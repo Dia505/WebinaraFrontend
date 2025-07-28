@@ -4,9 +4,7 @@ import axios from "axios";
 import { useForm } from 'react-hook-form';
 import { toast } from "react-toastify";
 import * as yup from "yup";
-import { useAuth } from '../../context/auth_context';
 const VITE_API_URL = import.meta.env.VITE_API_URL;
-
 import "../css_files/dashboard/create_admin_form.css";
 
 const adminSchema = yup.object().shape({
@@ -45,7 +43,7 @@ function CreateAdminForm({ closeForm }) {
         mutationKey: "SAVEDATA",
         mutationFn: async (requestData) => {
             console.log(requestData);
-            
+
             const csrfResponse = await axios.get(CSRF_URL, {
                 withCredentials: true,
             });
@@ -56,7 +54,6 @@ function CreateAdminForm({ closeForm }) {
                 requestData,
                 {
                     headers: {
-                        Authorization: `Bearer ${authToken}`,
                         "X-CSRF-Token": csrfToken,
                     },
                     withCredentials: true

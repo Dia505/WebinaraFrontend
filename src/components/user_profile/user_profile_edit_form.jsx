@@ -34,7 +34,7 @@ function UserProfileEditForm({ closeForm }) {
         mode: "all",
     });
 
-    const { user, authToken } = useAuth();
+    const { user } = useAuth();
     const [image, setImage] = useState("");
     const [updatedProfilePicture, setUpdatedProfilePicture] = useState(null);
     const [userId, setUserId] = useState(null);
@@ -105,7 +105,6 @@ function UserProfileEditForm({ closeForm }) {
                     {
                         method: "PUT",
                         headers: {
-                            Authorization: `Bearer ${authToken}`,
                             "X-CSRF-Token": csrfToken
                         },
                         body: formData,
@@ -122,7 +121,6 @@ function UserProfileEditForm({ closeForm }) {
                 {
                     method: "PUT",
                     headers: {
-                        Authorization: `Bearer ${authToken}`,
                         "Content-Type": "application/json",
                         "X-CSRF-Token": csrfToken
                     },
