@@ -35,8 +35,6 @@ function CreateAdminForm({ closeForm }) {
         mode: "all",
     });
 
-    const { authToken } = useAuth();
-
     const CSRF_URL = `${VITE_API_URL}/api/csrf-token`;
 
     const registerAdmin = useMutation({
